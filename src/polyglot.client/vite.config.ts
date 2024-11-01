@@ -49,7 +49,27 @@ export default defineConfig({
             '^/weatherforecast': {
                 target: 'https://localhost:7099/',
                 secure: false
-            }
+            },
+            '^/ping-auth': {
+                target: 'https://localhost:7099/',
+                secure: false
+            },
+            '^/login': {
+                target: 'https://localhost:7099/',
+                secure: false
+            },
+            '^/logout': {
+                target: 'https://localhost:7099/',
+                secure: false
+            },
+            '^/signin-oidc': {
+                target: 'https://localhost:7099/',
+                secure: false,
+            },
+            '^/signout-callback-oidc': {
+                target: 'https://localhost:7099/',
+                secure: false,
+            },
         },
         port: 5173,
         https: {

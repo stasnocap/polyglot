@@ -47,6 +47,12 @@ export default function Weather() {
 
   async function populateWeatherData() {
     const response = await fetch('weatherforecast');
+    
+    if (response.status === 401) {
+      window.location.href = `/login?redirectUri=${window.location.pathname}`;
+      return;
+    }
+    
     const data = await response.json();
     setForecasts(data);
   }
