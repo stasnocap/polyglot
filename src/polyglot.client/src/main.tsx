@@ -12,12 +12,22 @@ import ErrorPage from "./error-page.tsx";
 import Index from "./routes/contacts/index";
 import Root from "./routes/root.tsx";
 import Weather from "./components/weather.tsx";
+import Home from "./routes/home.tsx";
+import Lessons from "./routes/lessons.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
     children: [
+      {
+        path: "",
+        element: <Home />
+      },
+      {
+        path: "lessons",
+        element: <Lessons />
+      },
       {
         path: "weather",
         element: <Weather/>

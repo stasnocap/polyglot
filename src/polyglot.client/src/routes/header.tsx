@@ -64,6 +64,11 @@ export default function Header() {
           </RouterLink>
         </NavbarItem>
         <NavbarItem>
+          <RouterLink to="/lessons" color="foreground">
+            Lessons
+          </RouterLink>
+        </NavbarItem>
+        <NavbarItem>
           <RouterLink to="/contacts" className={({isActive, isPending}) =>
             isActive
               ? "active"
