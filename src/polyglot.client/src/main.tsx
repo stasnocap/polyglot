@@ -1,65 +1,68 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
+import {NextUIProvider} from '@nextui-org/react'
 import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root, { loader as rootLoader, action as rootAction } from "./routes/root.tsx";
-import Contact, {
-  loader as contactLoader,
-  action as contactAction,
-} from "./routes/contact";
-import EditContact, {
-  action as editAction,
-} from "./routes/edit";
-import { action as destroyAction } from "./routes/destroy";
+import {createBrowserRouter, RouterProvider,} from "react-router-dom";
+import ContactRoot, {loader as rootLoader, action as rootAction} from "./routes/contacts/contacts-root.tsx";
+import Contact, {loader as contactLoader, action as contactAction,} from "./routes/contacts/contact";
+import EditContact, {action as editAction,} from "./routes/contacts/edit";
+import {action as destroyAction} from "./routes/contacts/destroy";
 
 import ErrorPage from "./error-page.tsx";
-import Index from "./routes/index";
+import Index from "./routes/contacts/index";
+import Root from "./routes/root.tsx";
+import Weather from "./components/weather.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
+    element: <Root/>,
     children: [
       {
-        errorElement: <ErrorPage />,
+        path: "weather",
+        element: <Weather/>
+      },
+      {
+        path: "contacts",
+        element: <ContactRoot/>,
+        errorElement: <ErrorPage/>,
+        loader: rootLoader,
+        action: rootAction,
         children: [
-          { index: true, element: <Index /> },
           {
-            path: "contacts/:contactId",
-            element: <Contact />,
-            loader: contactLoader,
-            action: contactAction,
-          },
-          {
-            path: "contacts/:contactId/edit",
-            element: <EditContact />,
-            loader: contactLoader,
-            action: editAction,
-          },
-          {
-            path: "contacts/:contactId/destroy",
-            action: destroyAction,
-            errorElement: <div>Oops! There was an error.</div>,
-          },
-        ]
-      }
-    ],
-  },
-  {
-    path: "contacts/:contactId",
-    element: <Contact />,
+            errorElement: <ErrorPage/>,
+            children: [
+              {index: true, element: <Index/>},
+              {
+                path: ":contactId",
+                element: <Contact/>,
+                loader: contactLoader,
+                action: contactAction,
+              },
+              {
+                path: ":contactId/edit",
+                element: <EditContact/>,
+                loader: contactLoader,
+                action: editAction,
+              },
+              {
+                path: ":contactId/destroy",
+                action: destroyAction,
+                errorElement: <div>Oops! There was an error.</div>,
+              },
+            ]
+          }
+        ],
+      },
+    ]
   },
 ]);
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <NextUIProvider>
+      <RouterProvider router={router}/>
+    </NextUIProvider>
   </StrictMode>,
 )
