@@ -1,5 +1,6 @@
 import {Button, ButtonGroup, Divider} from "@nextui-org/react";
 import React, {useState} from "react";
+import {BackspaceIcon} from "../../icons/backspace-icon.tsx";
 
 interface Exercise {
   exerciseId: string,
@@ -29,6 +30,7 @@ interface ClickHistory {
   wordGroupIndex: number,
 }
 
+const clickHistory : ClickHistory[] = [];
 export default function Exercise() {
   const maxShowGroupCount: number = 4;
 
@@ -38,42 +40,42 @@ export default function Exercise() {
     rusPhrase: "Ты не увидишь.",
     wordGroups: [
       {
-        words: ['I', 'You', 'He', 'She', 'It', 'We'],
+        words: ['1', '1', '1', '1', '1', '1'],
         type: 1,
 
         index: 0,
         visible: false,
       },
       {
-        words: ['can not', 'could not', 'may not', 'might not', 'will not', 'shall not'],
+        words: ['2', '2', '2', '2', '2', '2'],
         type: 2,
 
         index: 0,
         visible: false,
       },
       {
-        words: ['see.', 'abide.', 'arise.', 'awake.', 'bear.', 'beat.'],
+        words: ['3', '3', '3', '3', '3', '3'],
         type: 3,
 
         index: 0,
         visible: false,
       },
       {
-        words: ['I', 'You', 'He', 'She', 'It', 'We'],
+        words: ['4', '4', '4', '4', '4', '4'],
         type: 1,
 
         index: 0,
         visible: false,
       },
       {
-        words: ['can not', 'could not', 'may not', 'might not', 'will not', 'shall not'],
+        words: ['5', '5', '5', '5', '5', '5'],
         type: 2,
 
         index: 0,
         visible: false,
       },
       {
-        words: ['see.', 'abide.', 'arise.', 'awake.', 'bear.', 'beat.'],
+        words: ['6', '6', '6', '6', '6', '6'],
         type: 3,
 
         index: 0,
@@ -92,18 +94,18 @@ export default function Exercise() {
     wordGroup.visible = true;
   });
 
-  const emptyEngPhrase = 'Переведите предложение';
+  const emptyEngPhrase = ['Переведите предложение'];
   const [engPhrase, setEngPhrase] = useState(emptyEngPhrase)
   const [shownGroups, setShownGroups] = useState(exercise.wordGroups.slice(0, maxShowGroupCount));
-  const clickHistory : ClickHistory[] = [];
+  const [isBackspaceDisabled, setIsBackspaceDisabled] = useState(true);
 
   function handleButtonClick(event: React.MouseEvent<HTMLButtonElement>) {
     const button = event.target as HTMLInputElement;
     const word = button.textContent!;
 
-    const newEngPhrase: string = engPhrase === emptyEngPhrase
-      ? word
-      : engPhrase + ' ' + word;
+    const newEngPhrase = engPhrase[engPhrase.length - 1] === emptyEngPhrase[0]
+      ? [word]
+      : [...engPhrase, word];
     
     const groupIndex = Number(button.parentElement!.dataset['groupIndex']);
     const wordGroupIndex = Number(button.parentElement!.dataset['wordGroupIndex']);
@@ -125,6 +127,22 @@ export default function Exercise() {
 
     setShownGroups(shownGroups);
     setEngPhrase(newEngPhrase);
+    setIsBackspaceDisabled(false);
+  }
+  
+  function handleBackspaceClick() {
+    const lastClick = clickHistory.pop();
+    
+    if (lastClick) {
+      shownGroups[lastClick.groupIndex] = exercise.wordGroups[lastClick.wordGroupIndex]
+      shownGroups[lastClick.groupIndex].visible = true;
+    }
+
+    engPhrase.pop();
+    
+    setShownGroups([...shownGroups]);
+    setIsBackspaceDisabled(clickHistory.length <= 0);
+    setEngPhrase(engPhrase.length == 0 ? emptyEngPhrase : engPhrase);
   }
 
   return (
@@ -133,8 +151,14 @@ export default function Exercise() {
         {exercise.rusPhrase}
       </div>
       <Divider className="my-4"/>
-      <div className="text-3xl text-gray-400">
-        {engPhrase}
+      <div className="flex justify-between">
+        <div className="text-3xl text-gray-400">
+          {engPhrase.join(' ')}
+        </div>
+        <Button variant="light" className="text-xl text-gray-500" isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
+          BACKSPACE
+          <BackspaceIcon width={32} height={32} />
+        </Button>
       </div>
       <Divider className="my-4"/>
       <div className="grid grid-cols-2 gap-5">
