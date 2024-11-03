@@ -13,7 +13,8 @@ import Index from "./routes/contacts/index";
 import Root from "./routes/root.tsx";
 import Weather from "./components/weather.tsx";
 import Home from "./routes/home.tsx";
-import Lessons from "./routes/lessons.tsx";
+import Lessons from "./routes/lessons/lessons.tsx";
+import Exercise from "./routes/lessons/exercise.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "lessons",
         element: <Lessons />
+      },
+      {
+        path: "lessons/:lessonNumber",
+        element: <Exercise />
       },
       {
         path: "weather",
