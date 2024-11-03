@@ -29,12 +29,8 @@ public class AccountController : ControllerBase
     [HttpGet("ping-auth")]
     public IActionResult PingAuth()
     {
-        if (!User.Identity?.IsAuthenticated ?? false)
-        {
-            return Unauthorized();
-        }
-
         var email = User.FindFirstValue(ClaimTypes.Email);
+        
         return Ok(new { Email = email });
     }
 }

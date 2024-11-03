@@ -14,10 +14,11 @@ export default function Header() {
     async function fetchUser() {
       const response = await fetch('/ping-auth');
 
-      if (response.status === 200) {
         const json = await response.json();
-        setUser({email: json.email});
-      }
+        
+        if (json.email) {
+            setUser({email: json.email});
+        }
     }
 
     fetchUser()
