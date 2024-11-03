@@ -4,8 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(options =>
@@ -19,7 +17,7 @@ builder.Services.AddAuthentication(options =>
         options.RequireHttpsMetadata = false;
         options.Authority = "http://localhost:8080/realms/myrealm";
         options.ClientId = "myclient";
-        options.ClientSecret = "RJimxkXfscfvi76sgDqiTpMQ0D63kL8b";
+        options.ClientSecret = "hwk7GqcMe2cOEkqHAZji6RqI9DRMWe7I";
         options.ResponseType = "code";
         options.SaveTokens = true;
         options.Scope.Add("openid");
@@ -48,8 +46,6 @@ var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
-
-// Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
 
