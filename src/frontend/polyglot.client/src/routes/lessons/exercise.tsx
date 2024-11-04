@@ -189,7 +189,7 @@ export default function Exercise() {
         {loading
           ? (<Skeleton className="h-9 w-2/6 rounded-lg bg-default-200"/>)
           : (<div className="text-3xl text-gray-400">{engPhrase.join(' ')}</div>)}
-        <Button variant="light" className="text-xl text-gray-500" isDisabled={isBackspaceDisabled || loading} onClick={handleBackspaceClick}>
+        <Button variant="light" className="text-xl text-gray-500" isLoading={loading} isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
           BACKSPACE
           <BackspaceIcon width={32} height={32}/>
         </Button>
@@ -199,7 +199,7 @@ export default function Exercise() {
         {shownGroups.map((wordGroup, i) => (
           <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>
             {wordGroup.words.map((word, j) => (
-              <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isDisabled={loading || wordGroup.disabled}>
+              <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isLoading={loading} isDisabled={wordGroup.disabled}>
                 {loading
                   ? (<Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>)
                   : (<>{wordGroup.disabled ? "" : word}</>)}

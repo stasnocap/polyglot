@@ -1,5 +1,6 @@
-import {Card, CardHeader, CardBody, Divider, CardFooter, Button} from "@nextui-org/react";
+import {Card, CardHeader, CardBody, Divider, CardFooter, Button, Skeleton} from "@nextui-org/react";
 import {Link} from "react-router-dom";
+import {useState} from "react";
 
 interface Lesson {
   id: string,
@@ -9,7 +10,8 @@ interface Lesson {
 }
 
 export default function Lessons() {
-  let array: Lesson[] = Array(5);
+  const array: Lesson[] = Array(5);
+  const [loading, setLoading] = useState(false);
 
   for (let i = 0; i < array.length; i++) {
     const number = i + 1;
@@ -17,22 +19,28 @@ export default function Lessons() {
   }
 
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
       {array.map((x) =>
         <Card className="max-w-[400px]" key={x.number}>
           <CardHeader className="flex gap-3">
             <div className="flex flex-col">
-              <p className="text-lg font-medium">Урок {x.number}</p>
+              <p className="text-lg font-medium text-gray-800">
+                {loading
+                  ? (<Skeleton className="h-7 w-20 rounded-lg bg-default-200"/>)
+                  : (<>Урок {x.number}</>)}
+              </p>
             </div>
           </CardHeader>
           <Divider/>
           <CardBody>
-            <p>{x.name}</p>
+            {loading
+              ? (<Skeleton className="h-7 w-44 rounded-lg bg-default-200"/>)
+              : (<p>{x.name}</p>)}
           </CardBody>
           <Divider/>
           <CardFooter className="flex justify-between">
-            <Button className="bg-gradient-to-tr from-primary-300 to-primary-500 text-white shadow-lg">Подробнее</Button>
-            <Button className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
+            <Button className="bg-gradient-to-tr from-primary-300 to-primary-500 text-white shadow-lg" isLoading={loading}>Подробнее</Button>
+            <Button className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg" isLoading={loading}>
               <Link to={x.number.toString()} className="after:absolute after:inset-0">
                 Let's go
               </Link>
