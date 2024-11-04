@@ -1,6 +1,9 @@
 import {Button, ButtonGroup, Divider, Skeleton} from "@nextui-org/react";
 import React, {useState} from "react";
 import {BackspaceIcon} from "../../icons/backspace-icon.tsx";
+import {ExerciseStarIcon} from "../../icons/exercise-star-icon.tsx";
+import {CheckIcon} from "../../icons/check-icon.tsx";
+import {CloseIcon} from "../../icons/close-icon.tsx";
 
 interface Exercise {
   exerciseId: string,
@@ -128,11 +131,9 @@ export default function Exercise() {
     if (newEngPhrase.length == exercise.wordGroups.length) {
       shownGroups.forEach(group => group.disabled = false);
       setLoading(true);
-      setIsBackspaceDisabled(true);
-    } else {
-      setIsBackspaceDisabled(false);
     }
 
+    setIsBackspaceDisabled(false);
     setShownGroups(shownGroups);
     setEngPhrase(newEngPhrase);
   }
@@ -154,17 +155,41 @@ export default function Exercise() {
 
   return (
     <div>
-      <div className="text-3xl">
-        {loading 
-          ? (<Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>)
-          : (<>{exercise.rusPhrase}</>)}
+      <div className="flex justify-between text-3xl">
+        <div className="flex-1">
+          {loading
+            ? (<Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>)
+            : (<div className="text-gray-700">{exercise.rusPhrase}</div>)}
+        </div>
+        <div>
+          <div className="flex items-center">
+            <div className="flex items-center me-2">
+              <ExerciseStarIcon height={32} width={32}/>
+              {loading
+                ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
+                : (<span className="text-gray-500">{exercise.scoreRating.rate.toFixed(1)}</span>)}
+            </div>
+            <div className="flex items-center me-2">
+              <CheckIcon height={32} width={32}/>
+              {loading
+                ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
+                : (<span className="text-success">{exercise.scoreRating.correctNumber}</span>)}
+            </div>
+            <div className="flex items-center">
+              <CloseIcon height={32} width={32}/>
+              {loading
+                ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
+                : (<span className="text-danger">{exercise.scoreRating.wrongNumber}</span>)}
+            </div>
+          </div>
+        </div>
       </div>
       <Divider className="my-4"/>
       <div className="flex justify-between">
         {loading
           ? (<Skeleton className="h-9 w-2/6 rounded-lg bg-default-200"/>)
           : (<div className="text-3xl text-gray-400">{engPhrase.join(' ')}</div>)}
-        <Button variant="light" className="text-xl text-gray-500" isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
+        <Button variant="light" className="text-xl text-gray-500" isDisabled={isBackspaceDisabled || loading} onClick={handleBackspaceClick}>
           BACKSPACE
           <BackspaceIcon width={32} height={32}/>
         </Button>
