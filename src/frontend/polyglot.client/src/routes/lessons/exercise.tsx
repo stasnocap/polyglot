@@ -164,19 +164,19 @@ export default function Exercise() {
         <div>
           <div className="flex items-center">
             <div className="flex items-center me-2">
-              <ExerciseStarIcon height={32} width={32}/>
+              <ExerciseStarIcon height={40} width={40}/>
               {loading
                 ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
-                : (<span className="text-gray-500">{exercise.scoreRating.rate.toFixed(1)}</span>)}
+                : (<span className="text-gray-700">{exercise.scoreRating.rate.toFixed(1)}</span>)}
             </div>
             <div className="flex items-center me-2">
-              <CheckIcon height={32} width={32}/>
+              <CheckIcon height={40} width={40}/>
               {loading
                 ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
                 : (<span className="text-success">{exercise.scoreRating.correctNumber}</span>)}
             </div>
             <div className="flex items-center">
-              <CloseIcon height={32} width={32}/>
+              <CloseIcon height={40} width={40}/>
               {loading
                 ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
                 : (<span className="text-danger">{exercise.scoreRating.wrongNumber}</span>)}
