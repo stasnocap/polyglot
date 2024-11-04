@@ -17,7 +17,8 @@ builder.Services.AddAuthentication(options =>
         options.RequireHttpsMetadata = false;
         options.Authority = "http://localhost:8080/realms/myrealm";
         options.ClientId = "myclient";
-        options.ClientSecret = "hwk7GqcMe2cOEkqHAZji6RqI9DRMWe7I";
+        options.ClientSecret = "RJimxkXfscfvi76sgDqiTpMQ0D63kL8b";
+        // options.ClientSecret = "hwk7GqcMe2cOEkqHAZji6RqI9DRMWe7I";
         options.ResponseType = "code";
         options.SaveTokens = true;
         options.Scope.Add("openid");
