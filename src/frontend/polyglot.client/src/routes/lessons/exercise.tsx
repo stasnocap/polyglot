@@ -199,7 +199,7 @@ export default function Exercise() {
         {shownGroups.map((wordGroup, i) => (
           <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>
             {wordGroup.words.map((word, j) => (
-              <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isLoading={loading} isDisabled={wordGroup.disabled}>
+              <Button color="secondary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isLoading={loading} isDisabled={wordGroup.disabled}>
                 {loading
                   ? (<Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>)
                   : (<>{wordGroup.disabled ? "" : word}</>)}

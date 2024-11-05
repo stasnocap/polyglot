@@ -39,8 +39,8 @@ export default function Lessons() {
           </CardBody>
           <Divider/>
           <CardFooter className="flex justify-between">
-            <Button className="bg-gradient-to-tr from-primary-300 to-primary-500 text-white shadow-lg" isLoading={loading}>Подробнее</Button>
-            <Button className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg" isLoading={loading}>
+            <Button className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg" isLoading={loading}>Подробнее</Button>
+            <Button className="bg-gradient-to-tr from-pink-500 to-secondary-500 text-white shadow-lg" isLoading={loading}>
               <Link to={x.number.toString()} className="after:absolute after:inset-0">
                 Let's go
               </Link>

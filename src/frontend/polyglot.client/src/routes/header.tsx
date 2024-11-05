@@ -81,13 +81,13 @@ export default function Header() {
         <RouterLink to="/">
           <NavbarBrand>
             <PolyglotLogo height={32} width={32}/>
-            <p className="font-bold text-inherit ms-2">POLYGLOT</p>
+            <p className="font-bold text-inherit ms-2 text-secondary-400">POLYGLOT</p>
           </NavbarBrand>
         </RouterLink>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link as="div" color="secondary">
+          <Link as="div" color="foreground">
             <RouterLink to="/lessons">
               Lessons
             </RouterLink>
