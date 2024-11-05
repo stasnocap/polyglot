@@ -8,28 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 namespace Polyglot.Server.Controllers;
 
 [ApiController]
+[Route("")]
 public class AccountController : ControllerBase
 {
     [Authorize]
     [HttpGet("login")]
-    public IActionResult Login(string? redirectUri)
+    public IActionResult Login(Uri? redirectUri)
     {
-        redirectUri ??= "/";
-        return Redirect(redirectUri);
+        redirectUri ??= new Uri("/");
+        return Redirect(redirectUri.ToString());
     }
 
     [Authorize]
     [HttpGet("logout")]
-    public async Task Logout(string? redirectUri)
+    public async Task Logout(Uri? redirectUri)
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = redirectUri });
+        await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = redirectUri?.ToString() });
     }
 
     [HttpGet("ping-auth")]
     public IActionResult PingAuth()
     {
-        var email = User.FindFirstValue(ClaimTypes.Email);
+        string? email = User.FindFirstValue(ClaimTypes.Email);
         
         return Ok(new { Email = email });
     }
