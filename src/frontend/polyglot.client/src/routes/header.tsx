@@ -141,38 +141,44 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
             <DropdownItem
               key="purple"
               onClick={() => switchTheme("purple")}
+              textValue="purple"
             >
               <Palette theme="Purple" colors={["#F4EEFF", "#DCD6F7", "#A6B1E1", "#424874"]} isLightTheme={true}/>
             </DropdownItem>
             <DropdownItem
               key="cream"
               onClick={() => switchTheme("cream")}
+              textValue="cream"
             >
               <Palette theme="Cream" colors={["#FFF5E4", "#FFE3E1", "#FFD1D1", "#FF9494"]} isLightTheme={true}/>
             </DropdownItem>
             <DropdownItem
               key="skin"
               onClick={() => switchTheme("skin")}
+              textValue="skin"
             >
               <Palette theme="Skin" colors={["#FFC7C7", "#FFE2E2", "#F6F6F6", "#8785A2"]} isLightTheme={true}/>
             </DropdownItem>
             <DropdownItem
               key="teal"
               onClick={() => switchTheme("teal")}
+              textValue="teal"
             >
               <Palette theme="Teal" colors={["#222831", "#393E46", "#00ADB5", "#EEEEEE"]} isLightTheme={false}/>
             </DropdownItem>
             <DropdownItem
               key="navy"
               onClick={() => switchTheme("navy")}
+              textValue="navy"
             >
               <Palette theme="Navy" colors={["#1B262C", "#0F4C75", "#3282B8", "#BBE1FA"]} isLightTheme={false}/>
             </DropdownItem>
             <DropdownItem
               key="night"
               onClick={() => switchTheme("night")}
+              textValue="night"
             >
-              <Palette theme="Night" colors={["#27374D", "#526D82", "#9DB2BF", "#DDE6ED"]} isLightTheme={false}/>
+              <Palette theme="Night" colors={["#27374D", "#526D82", "#9DB2BF", "#DDE6ED"]} isLightTheme={false} />
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

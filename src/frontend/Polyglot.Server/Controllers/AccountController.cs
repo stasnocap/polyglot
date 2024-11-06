@@ -15,8 +15,7 @@ public class AccountController : ControllerBase
     [HttpGet("login")]
     public IActionResult Login(Uri? redirectUri)
     {
-        redirectUri ??= new Uri("/");
-        return Redirect(redirectUri.ToString());
+        return Redirect(redirectUri?.ToString()?? "/");
     }
 
     [Authorize]
