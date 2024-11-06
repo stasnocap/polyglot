@@ -159,7 +159,7 @@ export default function Exercise() {
         <div className="flex-1">
           {loading
             ? (<Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>)
-            : (<div className="text-gray-700">{exercise.rusPhrase}</div>)}
+            : (<div className="text-primary">{exercise.rusPhrase}</div>)}
         </div>
         <div>
           <div className="flex items-center">
@@ -167,7 +167,7 @@ export default function Exercise() {
               <ExerciseStarIcon height={40} width={40}/>
               {loading
                 ? (<Skeleton className="h-9 w-8 rounded-lg bg-default-200"/>)
-                : (<span className="text-gray-700">{exercise.scoreRating.rate.toFixed(1)}</span>)}
+                : (<span className="text-primary">{exercise.scoreRating.rate.toFixed(1)}</span>)}
             </div>
             <div className="flex items-center me-2">
               <CheckIcon height={40} width={40}/>
@@ -188,8 +188,8 @@ export default function Exercise() {
       <div className="flex justify-between">
         {loading
           ? (<Skeleton className="h-9 w-2/6 rounded-lg bg-default-200"/>)
-          : (<div className="text-3xl text-gray-400">{engPhrase.join(' ')}</div>)}
-        <Button variant="light" className="text-xl text-gray-500" isLoading={loading} isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
+          : (<div className="text-3xl text-primary-100">{engPhrase.join(' ')}</div>)}
+        <Button variant="light" color="primary" className="text-xl" isLoading={loading} isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
           BACKSPACE
           <BackspaceIcon width={32} height={32}/>
         </Button>
@@ -199,7 +199,7 @@ export default function Exercise() {
         {shownGroups.map((wordGroup, i) => (
           <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>
             {wordGroup.words.map((word, j) => (
-              <Button color="secondary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isLoading={loading} isDisabled={wordGroup.disabled}>
+              <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isLoading={loading} isDisabled={wordGroup.disabled}>
                 {loading
                   ? (<Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>)
                   : (<>{wordGroup.disabled ? "" : word}</>)}

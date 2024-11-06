@@ -73,11 +73,10 @@ const router = createBrowserRouter([
   },
 ]);
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NextUIProvider>
-      <RouterProvider router={router}/>
+    <NextUIProvider className="h-full w-full">
+      <RouterProvider router={router} />
     </NextUIProvider>
   </StrictMode>,
 )
