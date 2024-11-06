@@ -1,8 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
@@ -12,13 +13,15 @@ builder.Services.AddAuthentication(options =>
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
     .AddCookie()
-    .AddOpenIdConnect(options =>
+    .AddOpenIdConnect((options) =>
     {
         options.RequireHttpsMetadata = false;
         options.Authority = "http://localhost:8080/realms/myrealm";
         options.ClientId = "myclient";
-        options.ClientSecret = "RJimxkXfscfvi76sgDqiTpMQ0D63kL8b";
-        // options.ClientSecret = "hwk7GqcMe2cOEkqHAZji6RqI9DRMWe7I";
+#pragma warning disable S125
+        // options.ClientSecret = "RJimxkXfscfvi76sgDqiTpMQ0D63kL8b";
+#pragma warning restore S125
+        options.ClientSecret = "hwk7GqcMe2cOEkqHAZji6RqI9DRMWe7I";
         options.ResponseType = "code";
         options.SaveTokens = true;
         options.Scope.Add("openid");
@@ -30,7 +33,7 @@ builder.Services.AddAuthentication(options =>
 
         options.Events.OnRedirectToIdentityProvider = RedirectOnlyOnLoginEndpoint;
 
-        Task RedirectOnlyOnLoginEndpoint(RedirectContext redirectContext)
+        static Task RedirectOnlyOnLoginEndpoint(RedirectContext redirectContext)
         {
             if (redirectContext.HttpContext.Request.Path != "/login")
             {
@@ -38,12 +41,12 @@ builder.Services.AddAuthentication(options =>
                 redirectContext.HttpContext.Response.Headers["Location"] = "/login";
                 redirectContext.HandleResponse();
             }
-            
+
             return Task.CompletedTask;
         }
     });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -57,4 +60,4 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
-app.Run();
+await app.RunAsync();
