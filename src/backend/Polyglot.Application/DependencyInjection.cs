@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Polyglot.Application.Abstractions.Behaviors;
+using Polyglot.Application.Exercises.GetExercise;
 
 namespace Polyglot.Application;
 
@@ -20,6 +21,8 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
+
+        services.AddScoped<ExerciseConverter>();
 
         return services;
     }

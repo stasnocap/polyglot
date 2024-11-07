@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\backend\Polyglot.Domain\Polyglot.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\backend\Polyglot.Domain\Polyglot.Domain.csproj" />
   </ItemGroup>
 
 </Project>

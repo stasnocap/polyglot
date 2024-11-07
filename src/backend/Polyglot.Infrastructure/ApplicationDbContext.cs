@@ -67,6 +67,7 @@ public sealed class ApplicationDbContext(
     
                 
     [SuppressMessage("Usage", "EF1001:Internal EF Core API usage.")]
+    [SuppressMessage("Major Code Smell", "S3011:Reflection should not be used to increase accessibility of classes, methods, or fields")]
     public IQueryable<object> GetAll(Type type)
     {
         MethodInfo setSource = GetType() .GetMethod("Microsoft.EntityFrameworkCore.Internal.IDbContextDependencies.get_SetSource", BindingFlags.NonPublic | BindingFlags.Instance)!;

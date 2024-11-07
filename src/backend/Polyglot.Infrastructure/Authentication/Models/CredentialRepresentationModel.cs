@@ -1,6 +1,6 @@
 ﻿namespace Polyglot.Infrastructure.Authentication.Models;
 
-internal class CredentialRepresentationModel
+internal sealed class CredentialRepresentationModel
 {
     public string Algorithm { get; set; }
 

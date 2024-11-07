@@ -18,6 +18,7 @@ using Polyglot.Domain.Lessons;
 using Polyglot.Domain.Scores;
 using Polyglot.Domain.Users;
 using Polyglot.Domain.Vocabulary;
+using Polyglot.Domain.Vocabulary.Adjectives;
 using Polyglot.Infrastructure.Authentication;
 using Polyglot.Infrastructure.Authorization;
 using Polyglot.Infrastructure.Caching;
@@ -75,6 +76,7 @@ public static class DependencyInjection
         services.AddScoped<IScoreRepository, ScoreRepository>();
         
         services.AddScoped<IVocabularyRepository, VocabularyRepository>();
+        services.AddScoped<IAdjectiveRepository, AdjectiveRepository>();
         services.AddScoped<ComparisonAdjectiveRepository>();
         services.AddScoped<NounRepository>();
         services.AddScoped<VerbRepository>();
