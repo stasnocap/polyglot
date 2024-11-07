@@ -48,4 +48,14 @@ public sealed class User : Entity
     {
         IdentityId = identityId;
     }
+
+    public Result AddScore(Guid scoreId)
+    {
+        if (_scoreIds.Contains(scoreId))
+        {
+            return Result.Failure(UserErrors.ScoreAlreadyAdded);
+        }
+        
+        return Result.Success();
+    }
 }

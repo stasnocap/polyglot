@@ -25,7 +25,7 @@ public sealed class Score : Entity
     {
         var score = new Score(Guid.NewGuid(), rating, userId, lessonId);
 
-        score.RaiseDomainEvent(new ScoreCreatedDomainEvent(score.Id));
+        score.RaiseDomainEvent(new ScoreCreatedDomainEvent(score.Id, userId, lessonId));
 
         return score;
     }

@@ -11,4 +11,8 @@ public static class UserErrors
     public static readonly Error InvalidCredentials = new(
         "User.InvalidCredentials",
         "The provided credentials were invalid");
+
+    public static readonly Error ScoreAlreadyAdded = new(
+        "User.ScoreAlreadyAdded",
+        "The score is already added");
 }
