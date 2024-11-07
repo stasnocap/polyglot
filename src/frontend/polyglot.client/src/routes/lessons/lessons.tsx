@@ -11,6 +11,7 @@ interface Lesson {
 
 export default function Lessons() {
   const array: Lesson[] = Array(5);
+  // @ts-ignore
   const [loading, setLoading] = useState(false);
 
   for (let i = 0; i < array.length; i++) {

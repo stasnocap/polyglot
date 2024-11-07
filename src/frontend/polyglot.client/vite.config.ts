@@ -42,27 +42,27 @@ export default defineConfig({
   server: {
     proxy: {
       '^/weatherforecast': {
-        target: 'https://localhost:7264/',
+        target: 'https://localhost:6001/',
         secure: false
       },
       '^/ping-auth': {
-        target: 'https://localhost:7264/',
+        target: 'https://localhost:6001/',
         secure: false
       },
       '^/login': {
-        target: 'https://localhost:7264/',
+        target: 'https://localhost:6001/',
         secure: false
       },
       '^/logout': {
-        target: 'https://localhost:7264/',
+        target: 'https://localhost:6001/',
         secure: false
       },
       '^/signin-oidc': {
-        target: 'https://localhost:7264/',
+        target: 'https://localhost:6001/',
         secure: false,
       },
       '^/signout-callback-oidc': {
-        target: 'https://localhost:7264/',
+        target: 'https://localhost:6001/',
         secure: false,
       },
     },

@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyglot.Application.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docker-compose", "docker-compose.dcproj", "{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "polyglot.client", "src\frontend\polyglot.client\polyglot.client.esproj", "{9F93661F-B4DB-45E7-AA44-BD986CF2A405}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,7 @@ Global
 		{7E4319A8-4465-4036-AE9E-354C84E05569} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
 		{8051AF95-40B1-4479-91DB-595B7D99E28F} = {FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}
 		{3EEBD7C9-C5DB-41E1-B846-C2F37B62B4A1} = {FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}
+		{9F93661F-B4DB-45E7-AA44-BD986CF2A405} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BD326A4A-EB7A-4047-B213-F8A968D40EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -80,5 +83,9 @@ Global
 		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{9F93661F-B4DB-45E7-AA44-BD986CF2A405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F93661F-B4DB-45E7-AA44-BD986CF2A405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F93661F-B4DB-45E7-AA44-BD986CF2A405}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F93661F-B4DB-45E7-AA44-BD986CF2A405}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,13 @@
 ﻿version: '3.4'
 
 services:
+  polyglot.server:
+    image: ${DOCKER_REGISTRY-}polyglotserver
+    container_name: Polyglot.Server
+    build:
+      context: .
+      dockerfile: src/frontend/Polyglot.Server/Dockerfile
+      
   polyglot.api:
     image: ${DOCKER_REGISTRY-}polyglotapi
     container_name: Polyglot.Api
