@@ -4,6 +4,8 @@ namespace Polyglot.Domain.Vocabulary.ComparisonAdjectives;
 
 public sealed record ComparativeForm(string Value)
 {
+    public static implicit operator string(ComparativeForm comparativeForm) => comparativeForm.Value;
+    
     public static bool Is(Text text)
     {
         return text.Value.StartsWith("more", StringComparison.InvariantCulture) || text.Value.EndsWith("er", StringComparison.InvariantCulture);

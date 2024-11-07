@@ -4,6 +4,8 @@ namespace Polyglot.Domain.Vocabulary.ComparisonAdjectives;
 
 public sealed record SuperlativeForm(string Value)
 {
+    public static implicit operator string(SuperlativeForm superlativeForm) => superlativeForm.Value;
+    
     public static bool Is(Text text)
     {
         return text.Value.StartsWith("most", StringComparison.InvariantCulture) || text.Value.EndsWith("est", StringComparison.InvariantCulture);

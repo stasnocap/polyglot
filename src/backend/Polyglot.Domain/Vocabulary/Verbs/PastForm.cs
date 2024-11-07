@@ -4,6 +4,8 @@ namespace Polyglot.Domain.Vocabulary.Verbs;
 
 public sealed record PastForm(string Value)
 {
+    public static implicit operator string(PastForm pastForm) => pastForm.Value;
+    
     public static bool Is(Text text)
     {
         return text.Value.EndsWith("ed", StringComparison.InvariantCulture);

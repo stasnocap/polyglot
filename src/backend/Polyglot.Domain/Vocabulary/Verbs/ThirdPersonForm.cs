@@ -5,6 +5,8 @@ namespace Polyglot.Domain.Vocabulary.Verbs;
 public sealed record ThirdPersonForm(string Value)
 {
     private static readonly IReadOnlyCollection<string> EsEndings = ["ch", "s", "sh", "x", "z"];
+    
+    public static implicit operator string(ThirdPersonForm form) => form.Value;
 
     public static bool Is(Text text)
     {

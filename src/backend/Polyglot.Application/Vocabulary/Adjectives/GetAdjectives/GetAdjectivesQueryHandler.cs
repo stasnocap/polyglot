@@ -6,7 +6,7 @@ using Polyglot.Domain.Vocabulary.Adjectives;
 
 namespace Polyglot.Application.Vocabulary.Adjectives.GetAdjectives;
 
-public class GetAdjectivesQueryHandler(IVocabularyRepository _repository) : IQueryHandler<GetAdjectivesQuery, PagedList<AdjectiveResponse>>
+public class GetAdjectivesQueryHandler(IAdjectiveRepository _repository) : IQueryHandler<GetAdjectivesQuery, PagedList<AdjectiveResponse>>
 {
     public async Task<Result<PagedList<AdjectiveResponse>>> Handle(GetAdjectivesQuery request, CancellationToken cancellationToken)
     {

@@ -7,25 +7,15 @@ using Polyglot.Domain.Abstractions;
 
 namespace Polyglot.Application.Users.GetLoggedInUser;
 
-internal sealed class GetLoggedInUserQueryHandler
-    : IQueryHandler<GetLoggedInUserQuery, UserResponse>
+internal sealed class GetLoggedInUserQueryHandler(
+    ISqlConnectionFactory sqlConnectionFactory,
+    IUserContext userContext) : IQueryHandler<GetLoggedInUserQuery, UserResponse>
 {
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    private readonly IUserContext _userContext;
-
-    public GetLoggedInUserQueryHandler(
-        ISqlConnectionFactory sqlConnectionFactory,
-        IUserContext userContext)
-    {
-        _sqlConnectionFactory = sqlConnectionFactory;
-        _userContext = userContext;
-    }
-
     public async Task<Result<UserResponse>> Handle(
         GetLoggedInUserQuery request,
         CancellationToken cancellationToken)
     {
-        using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+        using IDbConnection connection = sqlConnectionFactory.CreateConnection();
 
         const string sql = """
             SELECT
@@ -41,7 +31,7 @@ internal sealed class GetLoggedInUserQueryHandler
             sql,
             new
             {
-                _userContext.IdentityId
+                userContext.IdentityId
             });
 
         return user;

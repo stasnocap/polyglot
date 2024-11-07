@@ -4,6 +4,8 @@ namespace Polyglot.Domain.Vocabulary.Nouns;
 
 public sealed record PluralForm(string Value)
 {
+    public static implicit operator string(PluralForm pluralForm) => pluralForm.Value;
+    
     public static bool Is(Text singularNoun)
     {
         return singularNoun.Value.EndsWith('s');

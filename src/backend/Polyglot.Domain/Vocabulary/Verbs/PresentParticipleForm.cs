@@ -4,6 +4,8 @@ namespace Polyglot.Domain.Vocabulary.Verbs;
 
 public sealed record PresentParticipleForm(string Value)
 {
+    public static implicit operator string(PresentParticipleForm presentParticipleForm) => presentParticipleForm.Value;
+    
     public static bool Is(Text text)
     {
         return text.Value.EndsWith("ing", StringComparison.InvariantCulture);
