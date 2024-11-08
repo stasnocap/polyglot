@@ -11,10 +11,9 @@ public class VerbTests
     public void CreateIrregularVerb_Should_SetPropertyValue()
     {
         // Act
-        var verb = Verb.CreateIrregularVerb(VerbData.Id, VerbData.Text, VerbData.PastForm, VerbData.PastParticipleForm);
-        
+        var verb = Verb.CreateIrregularVerb(VerbData.Text, VerbData.PastForm, VerbData.PastParticipleForm);
+
         // Assert
-        verb.Id.Should().Be(VerbData.Id);
         verb.Text.Should().Be(VerbData.Text);
         verb.PastForm.Should().Be(VerbData.PastForm);
         verb.PastParticipleForm.Should().Be(VerbData.PastParticipleForm);
@@ -28,8 +27,8 @@ public class VerbTests
         var presentParticipleForm = PresentParticipleForm.From(VerbData.Text, true);
 
         // Act
-        var verb = Verb.CreateIrregularVerb(VerbData.Id, VerbData.Text, VerbData.PastForm, VerbData.PastParticipleForm);
-        
+        var verb = Verb.CreateIrregularVerb(VerbData.Text, VerbData.PastForm, VerbData.PastParticipleForm);
+
         // Assert
         verb.PresentParticipleForm.Value.Should().Be(presentParticipleForm.Value);
     }
@@ -41,8 +40,8 @@ public class VerbTests
         var thirdPersonForm = ThirdPersonForm.From(VerbData.Text);
 
         // Act
-        var verb = Verb.CreateIrregularVerb(VerbData.Id, VerbData.Text, VerbData.PastForm, VerbData.PastParticipleForm);
-        
+        var verb = Verb.CreateIrregularVerb(VerbData.Text, VerbData.PastForm, VerbData.PastParticipleForm);
+
         // Assert
         verb.ThirdPersonForm.Value.Should().Be(thirdPersonForm.Value);
     }

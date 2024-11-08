@@ -32,17 +32,18 @@ public class ExerciseConverter(
         }
 
         int? currentUserId = _userContext.UserId;
-        
+
+        Score? score = lesson.Scores.FirstOrDefault(x => x.UserId == currentUserId);
+
         return new ExerciseResponse
         {
             ExerciseId = exercise.Id,
             LessonId = lesson.Id,
             RusPhrase = exercise.RusPhrase.Value,
             WordGroups = [..wordGroups],
-            RatingCorrectNumber = currentUserId,
-            // RatingCorrectNumber = score?.Rating.CorrectNumber,
-            // RatingWrongNumber = score?.Rating.WrongNumber,
-            // RatingRate = score?.Rating.Rate,
+            RatingCorrectNumber = score?.Rating.CorrectNumber,
+            RatingWrongNumber = score?.Rating.WrongNumber,
+            RatingRate = score?.Rating.Rate,
         };
     }
 }

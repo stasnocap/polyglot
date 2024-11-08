@@ -5,7 +5,6 @@ namespace Polyglot.Domain.UnitTests.Vocabulary.Verbs;
 
 internal static class VerbData
 {
-    public const int Id = 1;
     public static readonly Text Text = new("play");
     public static readonly PastForm PastForm = new("played");
     public static readonly PastParticipleForm PastParticipleForm = new("played");

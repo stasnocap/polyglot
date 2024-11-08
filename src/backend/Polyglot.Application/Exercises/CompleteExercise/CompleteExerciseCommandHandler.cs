@@ -12,7 +12,7 @@ public class CompleteExerciseCommandHandler(
 {
     public async Task<Result<bool>> Handle(CompleteExerciseCommand request, CancellationToken cancellationToken)
     {
-        Lesson? lesson = await _lessonRepository.GetAsync(request.LessonId, cancellationToken);
+        Lesson? lesson = await _lessonRepository.GetByIdAsync(request.LessonId, cancellationToken);
 
         if (lesson is null)
         {

@@ -1,34 +1,27 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using MediatR;
 using Polyglot.Application.Abstractions.Messaging;
 using Polyglot.Application.Exercises.GetExercise;
 using Polyglot.Domain.Abstractions;
 using Polyglot.Domain.Lessons;
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-#pragma warning disable CS9113 // Parameter is unread.
 
 namespace Polyglot.Application.Exercises.GetRandomExercise;
 
-[SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out")]
-public class GetRandomExerciseQueryHandler(
-    ILessonRepository _lessonRepository,
-    ExerciseConverter _exerciseConverter) : IQueryHandler<GetRandomExerciseQuery, ExerciseResponse>
+[SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
+public class GetRandomExerciseQueryHandler(ILessonRepository _lessonRepository, ExerciseConverter _exerciseConverter) : IQueryHandler<GetRandomExerciseQuery, ExerciseResponse>
 {
     public async Task<Result<ExerciseResponse>> Handle(GetRandomExerciseQuery request, CancellationToken cancellationToken)
     {
-        // Lesson? lesson = await _lessonRepository.GetAsync(request.LessonId, cancellationToken);
-        //
-        // if (lesson is null)
-        // {
-        //     return Result.Failure<ExerciseResponse>(LessonErrors.NotFound);
-        // }
-        //
-        // Exercise exercise = await _exerciseRepository.GetRandomAsync(request.LessonId, cancellationToken);
-        //
-        // ExerciseResponse exerciseResult = await _exerciseConverter.ConvertAsync(exercise, lesson, cancellationToken);
-        //
-        // return exerciseResult;
+        Lesson? lesson = await _lessonRepository.GetByIdAsync(request.LessonId, cancellationToken);
 
-        return null;
+        if (lesson is null)
+        {
+            return Result.Failure<ExerciseResponse>(LessonErrors.NotFound);
+        }
+
+        LessonExercise lessonExercise = lesson.Exercises[Random.Shared.Next(lesson.Exercises.Count)];
+
+        ExerciseResponse exerciseResult = await _exerciseConverter.ConvertAsync(lessonExercise.Exercise, lesson, cancellationToken);
+
+        return exerciseResult;
     }
 }

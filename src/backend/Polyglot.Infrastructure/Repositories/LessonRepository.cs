@@ -14,13 +14,6 @@ internal sealed class LessonRepository(ApplicationDbContext dbContext) : Reposit
             .AnyAsync(l => l.Id == lessonId, cancellationToken);
     }
 
-    public Task<Lesson?> GetAsync(int lessonId, CancellationToken cancellationToken)
-    {
-        return DbContext
-            .Set<Lesson>()
-            .FirstOrDefaultAsync(l => l.Id == lessonId, cancellationToken);
-    }
-
     // TODO: fix this
     public Task<List<Lesson>> GetRangeAsync(int? userId, string? searchTerm, CancellationToken cancellationToken)
     {
