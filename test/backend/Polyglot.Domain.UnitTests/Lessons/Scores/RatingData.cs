@@ -1,4 +1,4 @@
-namespace Polyglot.Domain.UnitTests.Scores;
+namespace Polyglot.Domain.UnitTests.Lessons.Scores;
 
 internal static class RatingData
 {

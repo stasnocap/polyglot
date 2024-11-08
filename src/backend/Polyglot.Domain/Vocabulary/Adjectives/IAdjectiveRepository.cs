@@ -5,7 +5,7 @@ namespace Polyglot.Domain.Vocabulary.Adjectives;
 
 public interface IAdjectiveRepository
 {
-    Task<Adjective?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<Adjective?> GetByIdAsync(int id, CancellationToken cancellationToken);
     
     Task<bool> ExistsAsync(Text text, CancellationToken cancellationToken);
     

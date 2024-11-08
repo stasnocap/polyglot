@@ -3,12 +3,13 @@ using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.LetterNumbers;
 
-public sealed class LetterNumber : Entity
+public sealed class LetterNumber
 {
+    public int Id { get; init; }
     public Text Text { get; }
     public Number Number { get; }
 
-    public LetterNumber(Guid id, Text text, Number number) : base(id)
+    public LetterNumber(Text text, Number number)
     {
         Text = text;
         Number = number;

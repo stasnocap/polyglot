@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Polyglot.Domain.Exercises;
+using Polyglot.Domain.Lessons.Exercises;
 
 namespace Polyglot.Infrastructure.Repositories.Vocabulary;
 

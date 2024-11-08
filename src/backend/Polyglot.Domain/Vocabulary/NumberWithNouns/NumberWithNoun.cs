@@ -1,13 +1,13 @@
-using Polyglot.Domain.Abstractions;
 using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.NumberWithNouns;
 
-public sealed class NumberWithNoun : Entity
+public sealed class NumberWithNoun
 {
+    public int Id { get; init; }
     public Text Text { get; }
 
-    public NumberWithNoun(Guid id, Text text) : base(id)
+    public NumberWithNoun(Text text)
     {
         Text = text;
     }

@@ -1,4 +1,4 @@
-﻿using Polyglot.Domain.Exercises;
+﻿using Polyglot.Domain.Lessons.Exercises;
 using Polyglot.Domain.Vocabulary.Adjectives;
 using Polyglot.Domain.Vocabulary.Adverbs;
 using Polyglot.Domain.Vocabulary.Cities;

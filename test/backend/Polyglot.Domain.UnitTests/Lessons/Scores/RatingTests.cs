@@ -1,7 +1,7 @@
 using FluentAssertions;
-using Polyglot.Domain.Scores;
+using Polyglot.Domain.Lessons.Scores;
 
-namespace Polyglot.Domain.UnitTests.Scores;
+namespace Polyglot.Domain.UnitTests.Lessons.Scores;
 
 public class RatingTests
 {

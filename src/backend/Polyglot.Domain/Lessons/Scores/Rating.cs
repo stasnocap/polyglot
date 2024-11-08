@@ -1,4 +1,4 @@
-namespace Polyglot.Domain.Scores;
+namespace Polyglot.Domain.Lessons.Scores;
 
 public sealed record Rating(int CorrectNumber, int WrongNumber, float Rate)
 {

@@ -3,12 +3,13 @@ using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.Compounds;
 
-public sealed class Compound : Entity
+public sealed class Compound
 {
+    public int Id { get; init; }
     public Text Text { get; }
     public CompoundType Type { get; }
 
-    public Compound(Guid id, Text text, CompoundType type) : base(id)
+    public Compound(Text text, CompoundType type)
     {
         Text = text;
         Type = type;

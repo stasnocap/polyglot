@@ -3,11 +3,12 @@ using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.Determiners;
 
-public sealed class Determiner : Entity
+public sealed class Determiner
 {
+    public int Id { get; init; }
     public Text Text { get; }
 
-    public Determiner(Guid id, Text text) : base(id)
+    public Determiner(Text text)
     {
         Text = text;
     }

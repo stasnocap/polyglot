@@ -7,18 +7,18 @@ using Polyglot.Domain.Vocabulary.Adjectives;
 namespace Polyglot.Application.Vocabulary.Adjectives.CreateAdjective;
 
 public class CreateAdjectiveCommandHandler(IAdjectiveRepository _adjectiveRepository,
-    IUnitOfWork _unitOfWork) : ICommandHandler<CreateAdjectiveCommand, Guid>
+    IUnitOfWork _unitOfWork) : ICommandHandler<CreateAdjectiveCommand, int>
 {
-    public async Task<Result<Guid>> Handle(CreateAdjectiveCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateAdjectiveCommand request, CancellationToken cancellationToken)
     {
         var text = new Text(request.Text);
 
         if (await _adjectiveRepository.ExistsAsync(text, cancellationToken))
         {
-            return Result.Failure<Guid>(AdjectiveErrors.AlreadyExists);
+            return Result.Failure<int>(AdjectiveErrors.AlreadyExists);
         }
         
-        var adjective = new Adjective(Guid.NewGuid(), text);
+        var adjective = new Adjective(text);
 
         _adjectiveRepository.Add(adjective);
 

@@ -2,9 +2,9 @@
 
 public sealed class ExerciseResponse
 {
-    public required Guid ExerciseId { get; init; }
+    public required int ExerciseId { get; init; }
     
-    public required int LessonNumber { get; init; }
+    public required int LessonId { get; init; }
     
     public required string RusPhrase { get; init; }
     

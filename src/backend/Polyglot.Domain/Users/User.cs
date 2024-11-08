@@ -1,15 +1,19 @@
-using Polyglot.Domain.Abstractions;
-using Polyglot.Domain.Users.Events;
-
 namespace Polyglot.Domain.Users;
 
-public sealed class User : Entity
+public sealed class User
 {
     private readonly List<Role> _roles = [];
-    private readonly List<Guid> _scoreIds = [];
+    
+    public int Id { get; init; }
 
-    private User(Guid id, FirstName firstName, LastName lastName, Email email)
-        : base(id)
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
+    public Email Email { get; private set; }
+    public string IdentityId { get; private set; } = string.Empty;
+
+    public IReadOnlyList<Role> Roles => [.._roles];
+    
+    private User(FirstName firstName, LastName lastName, Email email)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -21,24 +25,10 @@ public sealed class User : Entity
     {
     }
 
-    public FirstName FirstName { get; private set; }
-
-    public LastName LastName { get; private set; }
-
-    public Email Email { get; private set; }
-
-    public string IdentityId { get; private set; } = string.Empty;
-
-    public IReadOnlyCollection<Role> Roles => [.._roles];
-    
-    public IReadOnlyCollection<Guid> ScoreIds => [.._scoreIds];
-
     public static User Create(FirstName firstName, LastName lastName, Email email)
     {
-        var user = new User(Guid.NewGuid(), firstName, lastName, email);
-
-        user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
-
+        var user = new User(firstName, lastName, email);
+        
         user._roles.Add(Role.Registered);
 
         return user;
@@ -47,15 +37,5 @@ public sealed class User : Entity
     public void SetIdentityId(string identityId)
     {
         IdentityId = identityId;
-    }
-
-    public Result AddScore(Guid scoreId)
-    {
-        if (_scoreIds.Contains(scoreId))
-        {
-            return Result.Failure(UserErrors.ScoreAlreadyAdded);
-        }
-        
-        return Result.Success();
     }
 }

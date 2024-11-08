@@ -3,11 +3,12 @@ using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.Languages;
 
-public sealed class Language : Entity
+public sealed class Language
 {
+    public int Id { get; init; }
     public Text Text { get; }
 
-    public Language(Guid id, Text text) : base(id)
+    public Language(Text text)
     {
         Text = text;
     }

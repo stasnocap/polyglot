@@ -2,4 +2,4 @@
 
 namespace Polyglot.Application.Vocabulary.Adjectives.CreateAdjective;
 
-public record CreateAdjectiveCommand(string Text) : ICommand<Guid>;
+public record CreateAdjectiveCommand(string Text) : ICommand<int>;

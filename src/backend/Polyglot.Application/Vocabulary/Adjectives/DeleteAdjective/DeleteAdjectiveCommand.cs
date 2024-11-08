@@ -2,4 +2,4 @@
 
 namespace Polyglot.Application.Vocabulary.Adjectives.DeleteAdjective;
 
-public record DeleteAdjectiveCommand(Guid Id) : ICommand;
+public record DeleteAdjectiveCommand(int Id) : ICommand;

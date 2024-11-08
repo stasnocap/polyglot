@@ -1,15 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Polyglot.Application.Abstractions.Authentication;
-using Polyglot.Domain.Exercises;
 using Polyglot.Domain.Lessons;
-using Polyglot.Domain.Scores;
+using Polyglot.Domain.Lessons.Exercises;
+using Polyglot.Domain.Lessons.Scores;
 using Polyglot.Domain.Vocabulary;
 
 namespace Polyglot.Application.Exercises.GetExercise;
 
 public class ExerciseConverter(
     IVocabularyRepository _vocabularyRepository,
-    IScoreRepository _scoreRepository,
     IUserContext _userContext)
 {
     private const int WordGroupSize = 6;
@@ -32,23 +31,18 @@ public class ExerciseConverter(
             wordGroups.Add([..words]);
         }
 
-        Guid? currentUserId = _userContext.UserId;
-
-        Score? score = null;
-        if (currentUserId is not null)
-        {
-            score = await _scoreRepository.GetAsync(lesson.Id, currentUserId.Value, cancellationToken);
-        }
-
+        int? currentUserId = _userContext.UserId;
+        
         return new ExerciseResponse
         {
             ExerciseId = exercise.Id,
-            LessonNumber = lesson.Number.Value,
+            LessonId = lesson.Id,
             RusPhrase = exercise.RusPhrase.Value,
             WordGroups = [..wordGroups],
-            RatingCorrectNumber = score?.Rating.CorrectNumber,
-            RatingWrongNumber = score?.Rating.WrongNumber,
-            RatingRate = score?.Rating.Rate,
+            RatingCorrectNumber = currentUserId,
+            // RatingCorrectNumber = score?.Rating.CorrectNumber,
+            // RatingWrongNumber = score?.Rating.WrongNumber,
+            // RatingRate = score?.Rating.Rate,
         };
     }
 }

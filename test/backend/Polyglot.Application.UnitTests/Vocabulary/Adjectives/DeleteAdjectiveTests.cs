@@ -9,7 +9,7 @@ namespace Polyglot.Application.UnitTests.Vocabulary.Adjectives;
 
 public class DeleteAdjectiveTests
 {
-    private readonly DeleteAdjectiveCommand _command = new(Guid.NewGuid());
+    private readonly DeleteAdjectiveCommand _command = new(1);
 
     private readonly IUnitOfWork _unitOfWorkMock;
     private readonly IAdjectiveRepository _adjectiveRepositoryMock;
@@ -44,7 +44,10 @@ public class DeleteAdjectiveTests
     public async Task Handle_Should_DeleteAdjective()
     {
         // Act
-        var adjective = new Adjective(_command.Id, new Text("bad"));
+        var adjective = new Adjective(new Text("bad"))
+        {
+            Id = _command.Id,
+        };
         
         _adjectiveRepositoryMock
             .GetByIdAsync(_command.Id, Arg.Any<CancellationToken>())

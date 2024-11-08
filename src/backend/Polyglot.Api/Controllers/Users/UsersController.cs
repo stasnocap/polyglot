@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
             request.LastName,
             request.Password);
 
-        Result<Guid> result = await _sender.Send(command, cancellationToken);
+        Result<int> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {

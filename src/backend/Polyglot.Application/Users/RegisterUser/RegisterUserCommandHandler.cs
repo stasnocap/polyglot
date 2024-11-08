@@ -8,9 +8,9 @@ namespace Polyglot.Application.Users.RegisterUser;
 internal sealed class RegisterUserCommandHandler(
     IAuthenticationService authenticationService,
     IUserRepository userRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<RegisterUserCommand, Guid>
+    IUnitOfWork unitOfWork) : ICommandHandler<RegisterUserCommand, int>
 {
-    public async Task<Result<Guid>> Handle(
+    public async Task<Result<int>> Handle(
         RegisterUserCommand request,
         CancellationToken cancellationToken)
     {

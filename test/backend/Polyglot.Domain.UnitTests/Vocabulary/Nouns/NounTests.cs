@@ -9,9 +9,10 @@ public class NounTests
     public void Create_Should_SetPropertyValue()
     {
         // Act
-        var noun = Noun.Create(NounData.Text, NounData.NounType);
+        var noun = Noun.Create(NounData.Id, NounData.Text, NounData.NounType);
         
         // Assert
+        noun.Id.Should().Be(NounData.Id);
         noun.Text.Should().Be(NounData.Text);
         noun.Type.Should().Be(NounData.NounType);
     }
@@ -23,7 +24,7 @@ public class NounTests
         var pluralForm = PluralForm.From(NounData.Text);
 
         // Act
-        var noun = Noun.Create(NounData.Text, NounData.NounType);
+        var noun = Noun.Create(NounData.Id, NounData.Text, NounData.NounType);
         
         // Assert
         noun.PluralForm.Value.Should().Be(pluralForm.Value);

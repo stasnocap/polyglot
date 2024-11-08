@@ -5,7 +5,7 @@ namespace Polyglot.Infrastructure.Authentication;
 
 internal sealed class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContext
 {
-    public Guid? UserId =>
+    public int? UserId =>
         httpContextAccessor
             .HttpContext?
             .User

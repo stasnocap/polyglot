@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Polyglot.Domain.Exercises;
+using Polyglot.Domain.Lessons.Exercises;
 using Polyglot.Domain.Shared;
 using Polyglot.Domain.Vocabulary;
 

@@ -9,7 +9,7 @@ namespace Polyglot.Application.UnitTests.Vocabulary.Adjectives;
 
 public class UpdateAdjectiveTests
 {
-    private readonly UpdateAdjectiveCommand _command = new(Guid.NewGuid(), "big");
+    private readonly UpdateAdjectiveCommand _command = new(1, "big");
 
     private readonly IUnitOfWork _unitOfWorkMock;
     private readonly IAdjectiveRepository _adjectiveRepositoryMock;
@@ -44,7 +44,10 @@ public class UpdateAdjectiveTests
     public async Task Handle_Should_ReturnFailure_IfAdjectiveAlreadyExists()
     {
         // Act
-        var adjective = new Adjective(_command.Id, new Text("bad"));
+        var adjective = new Adjective(new Text("bad"))
+        {
+            Id = _command.Id,
+        };
 
         _adjectiveRepositoryMock
             .GetByIdAsync(_command.Id, Arg.Any<CancellationToken>())
@@ -66,7 +69,10 @@ public class UpdateAdjectiveTests
     public async Task Handle_Should_UpdateAdjectiveText()
     {
         // Act
-        var adjective = new Adjective(_command.Id, new Text("bad"));
+        var adjective = new Adjective(new Text("bad"))
+        {
+            Id = _command.Id,
+        };
         
         _adjectiveRepositoryMock
             .GetByIdAsync(_command.Id, Arg.Any<CancellationToken>())

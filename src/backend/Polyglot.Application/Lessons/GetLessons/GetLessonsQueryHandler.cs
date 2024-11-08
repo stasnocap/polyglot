@@ -9,14 +9,13 @@ public class GetLessonsQueryHandler(ILessonRepository _lessonRepository, IUserCo
 {
     public async Task<Result<IReadOnlyList<LessonResponse>>> Handle(GetLessonsQuery request, CancellationToken cancellationToken)
     {
-        Guid? currentUserId = _userContext.UserId;
+        int? currentUserId = _userContext.UserId;
 
         List<Lesson> lessons = await _lessonRepository.GetRangeAsync(currentUserId, request.SearchTerm, cancellationToken);
 
         return Result.Success<IReadOnlyList<LessonResponse>>(lessons.Select(l => new LessonResponse
         {
             Name = l.Name.Value,
-            Number = l.Number.Value,
             LessonId = l.Id
         }).ToList());
     }

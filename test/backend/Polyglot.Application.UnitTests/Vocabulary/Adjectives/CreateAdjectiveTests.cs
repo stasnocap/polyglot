@@ -33,7 +33,7 @@ public class CreateAdjectiveTests
             .Returns(true);
 
         // Arrange
-        Result<Guid> result = await _handler.Handle(_command, CancellationToken.None);
+        Result<int> result = await _handler.Handle(_command, CancellationToken.None);
 
         // Assert
         result.IsFailure.Should().BeTrue();
@@ -49,7 +49,7 @@ public class CreateAdjectiveTests
             .Returns(false);
 
         // Arrange
-        Result<Guid> result = await _handler.Handle(_command, CancellationToken.None);
+        Result<int> result = await _handler.Handle(_command, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeTrue();

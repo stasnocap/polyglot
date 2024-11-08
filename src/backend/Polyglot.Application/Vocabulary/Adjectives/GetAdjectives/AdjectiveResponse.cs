@@ -2,6 +2,6 @@
 
 public record AdjectiveResponse
 {
-    public required Guid Id { get; init; }
+    public required int Id { get; init; }
     public required string Text { get; init; }
 }

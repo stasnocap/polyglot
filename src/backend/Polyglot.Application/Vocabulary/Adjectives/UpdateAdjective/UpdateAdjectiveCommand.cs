@@ -2,4 +2,4 @@
 
 namespace Polyglot.Application.Vocabulary.Adjectives.UpdateAdjective;
 
-public record UpdateAdjectiveCommand(Guid Id, string Text) : ICommand;
+public record UpdateAdjectiveCommand(int Id, string Text) : ICommand;

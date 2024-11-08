@@ -3,12 +3,13 @@ using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.Pronouns;
 
-public sealed class Pronoun : Entity
+public sealed class Pronoun
 {
+    public int Id { get; init; }
     public Text Text { get; }
     public PronounType Type { get; }
 
-    public Pronoun(Guid id, Text text, PronounType type) : base(id)
+    public Pronoun(Text text, PronounType type)
     {
         Text = text;
         Type = type;

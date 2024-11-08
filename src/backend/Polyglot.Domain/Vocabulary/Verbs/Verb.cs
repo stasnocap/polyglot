@@ -1,10 +1,10 @@
-using Polyglot.Domain.Abstractions;
 using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.Verbs;
 
-public sealed class Verb : Entity
+public sealed class Verb
 {
+    public int Id { get; init; }
     public Text Text { get; }
     public PastForm PastForm { get; }
     public PastParticipleForm PastParticipleForm { get; }
@@ -12,7 +12,7 @@ public sealed class Verb : Entity
     public ThirdPersonForm ThirdPersonForm { get; }
     public IsIrregularVerb IsIrregularVerb { get; }
 
-    public Verb(Guid id, Text text, PastForm pastForm, PastParticipleForm pastParticipleForm, PresentParticipleForm presentParticipleForm, ThirdPersonForm thirdPersonForm, IsIrregularVerb isIrregularVerb) : base(id)
+    public Verb(Text text, PastForm pastForm, PastParticipleForm pastParticipleForm, PresentParticipleForm presentParticipleForm, ThirdPersonForm thirdPersonForm, IsIrregularVerb isIrregularVerb)
     {
         Text = text;
         PastForm = pastForm;
@@ -27,15 +27,13 @@ public sealed class Verb : Entity
     {
     }
 
-    public static Verb CreateIrregularVerb(Text text, PastForm pastForm, PastParticipleForm pastParticipleForm)
-    {
-        return CreateIrregularVerb(Guid.NewGuid(), text, pastForm, pastParticipleForm);
-    }
-
-    public static Verb CreateIrregularVerb(Guid verbId, Text text, PastForm pastForm, PastParticipleForm pastParticipleForm)
+    public static Verb CreateIrregularVerb(int verbId, Text text, PastForm pastForm, PastParticipleForm pastParticipleForm)
     {
         var presentParticipleForm = PresentParticipleForm.From(text, stressOnFinalSyllable: true);
         var thirdPersonForm = ThirdPersonForm.From(text);
-        return new Verb(verbId, text, pastForm, pastParticipleForm, presentParticipleForm, thirdPersonForm, new IsIrregularVerb(true));
+        return new Verb(text, pastForm, pastParticipleForm, presentParticipleForm, thirdPersonForm, new IsIrregularVerb(true))
+        {
+            Id = verbId
+        };
     }
 }

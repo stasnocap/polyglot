@@ -2,8 +2,7 @@
 
 public interface ILessonRepository
 {
-    Task<bool> ExistsAsync(Guid lessonId, CancellationToken cancellationToken);
-    Task<LessonNumber?> GetLessonNumberAsync(Guid lessonId, CancellationToken cancellationToken);
-    Task<Lesson?> GetAsync(Guid lessonId, CancellationToken cancellationToken);
-    Task<List<Lesson>> GetRangeAsync(Guid? userId, string? searchTerm, CancellationToken cancellationToken);
+    Task<bool> ExistsAsync(int lessonId, CancellationToken cancellationToken);
+    Task<Lesson?> GetAsync(int lessonId, CancellationToken cancellationToken);
+    Task<List<Lesson>> GetRangeAsync(int? userId, string? searchTerm, CancellationToken cancellationToken);
 }

@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Polyglot.Domain.Exercises;
+namespace Polyglot.Domain.Lessons.Exercises;
 
 public static class WordDecoratorService
 {

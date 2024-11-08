@@ -1,15 +1,15 @@
-using Polyglot.Domain.Abstractions;
 using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.ComparisonAdjectives;
 
-public sealed class ComparisonAdjective : Entity
+public sealed class ComparisonAdjective
 {
+    public int Id { get; init; }
     public Text Text { get; }
     public ComparativeForm ComparativeForm { get; }
     public SuperlativeForm SuperlativeForm { get; }
 
-    public ComparisonAdjective(Guid id, Text text, ComparativeForm comparativeForm, SuperlativeForm superlativeForm) : base(id)
+    public ComparisonAdjective(Text text, ComparativeForm comparativeForm, SuperlativeForm superlativeForm)
     {
         Text = text;
         ComparativeForm = comparativeForm;
@@ -21,10 +21,14 @@ public sealed class ComparisonAdjective : Entity
     {
     }
 
-    public static ComparisonAdjective Create(Guid comparisonAdjectiveId, Text text, SyllablesCount syllablesCount)
+    public static ComparisonAdjective Create(int comparisonAdjectiveId, Text text, SyllablesCount syllablesCount)
     {
         var comparativeForm = ComparativeForm.From(text, syllablesCount);
         var superlativeForm = SuperlativeForm.From(text, syllablesCount);
-        return new ComparisonAdjective(comparisonAdjectiveId, text, comparativeForm, superlativeForm);
+        
+        return new ComparisonAdjective(text, comparativeForm, superlativeForm)
+        {
+            Id = comparisonAdjectiveId
+        };
     }
 }

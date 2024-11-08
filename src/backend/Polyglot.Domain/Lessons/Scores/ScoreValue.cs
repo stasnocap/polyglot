@@ -1,3 +1,3 @@
-namespace Polyglot.Domain.Scores;
+namespace Polyglot.Domain.Lessons.Scores;
 
 public sealed record ScoreValue(int Value);

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Polyglot.Domain.Exercises;
+using Polyglot.Domain.Lessons.Exercises;
 using Polyglot.Domain.Shared;
 using Polyglot.Domain.Vocabulary.ComparisonAdjectives;
 using Polyglot.Infrastructure.Extensions;

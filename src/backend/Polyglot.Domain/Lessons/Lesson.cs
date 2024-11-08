@@ -1,22 +1,22 @@
 using Polyglot.Domain.Abstractions;
-using Polyglot.Domain.Lessons.Events;
+using Polyglot.Domain.Lessons.Exercises;
+using Polyglot.Domain.Lessons.Scores;
 
 namespace Polyglot.Domain.Lessons;
 
-public sealed class Lesson : Entity
+public sealed class Lesson
 {
-    private readonly List<Guid> _exerciseIds = [];
-    private readonly List<Guid> _scoreIds = [];
-    
-    public LessonNumber Number { get; }
-    public LessonName Name { get; }
-    
-    public IReadOnlyCollection<Guid> ExerciseIds => [.._exerciseIds];
-    public IReadOnlyCollection<Guid> ScoreIds => [.._scoreIds];
+    private readonly List<Exercise> _exercises = [];
+    private readonly List<Score> _scores = [];
 
-    private Lesson(Guid id, LessonNumber number, LessonName name) : base(id)
+    public short Id { get; init; }
+    public LessonName Name { get; }
+
+    public IReadOnlyList<Exercise> Exercises => [.._exercises];
+    public IReadOnlyList<Score> Scores => [.._scores];
+
+    public Lesson(LessonName name)
     {
-        Number = number;
         Name = name;
     }
 
@@ -25,41 +25,54 @@ public sealed class Lesson : Entity
     {
     }
 
-    public static Lesson Create(LessonNumber number, LessonName name)
+    public Result AddExercise(Exercise exercise)
     {
-        return Create(Guid.NewGuid(), number, name);
-    }
-
-    public static Lesson Create(Guid lessonId, LessonNumber number, LessonName name)
-    {
-        var lesson = new Lesson(lessonId, number, name);
-        
-        lesson.RaiseDomainEvent(new LessonCreatedDomainEvent(lessonId));
-        
-        return lesson;
-    }
-
-    public Result AddExercise(Guid exerciseId)
-    {
-        if (_exerciseIds.Contains(exerciseId))
+        if (exercise.Words.Count == 0)
         {
-            return Result.Failure(LessonErrors.ExerciseAlreadyAdded);
+            return Result.Failure(LessonErrors.ExerciseWordsAreEmpty);
         }
-        
-        _exerciseIds.Add(exerciseId);
+
+        if (_exercises.Exists(x => x.RusPhrase == exercise.RusPhrase))
+        {
+            return Result.Failure(LessonErrors.ExerciseAlreadyExists);
+        }
+
+        _exercises.Add(exercise);
 
         return Result.Success();
     }
 
-    public Result AddScore(Guid scoreId)
+    public Result<bool> CompleteExercise(string answer, int exerciseId, int? userId)
     {
-        if (_scoreIds.Contains(scoreId))
+        Exercise? exercise = _exercises.Find(x => x.Id == exerciseId);
+
+        if (exercise is null)
         {
-            return Result.Failure(LessonErrors.ScoreAlreadyAdded);
+            return Result.Failure<bool>(LessonErrors.ExerciseNotFound);
         }
-        
-        _scoreIds.Add(scoreId);
-        
-        return Result.Success();
+
+        string correctAnswer = string.Join(' ', exercise.Words.Select(x => x.Text.Value));
+
+        bool isCorrectAnswer = correctAnswer == answer;
+
+        if (userId is null)
+        {
+            return Result.Success(isCorrectAnswer);
+        }
+
+        Score? score = _scores.Find(x => x.UserId == userId);
+
+        score ??= new Score(Rating.Init(), userId.Value);
+
+        if (correctAnswer == answer)
+        {
+            score.Rating.Increase();
+        }
+        else
+        {
+            score.Rating.Decrease();
+        }
+
+        return Result.Success(isCorrectAnswer);
     }
 }

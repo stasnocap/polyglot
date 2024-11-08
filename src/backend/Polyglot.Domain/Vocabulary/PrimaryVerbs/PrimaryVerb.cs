@@ -5,28 +5,30 @@ using Polyglot.Domain.Vocabulary.Verbs;
 
 namespace Polyglot.Domain.Vocabulary.PrimaryVerbs;
 
-public sealed class PrimaryVerb : Entity
+public sealed class PrimaryVerb
 {
     private readonly List<FullNegativeForm> _fullNegativeForms = [];
     private readonly List<ShortNegativeForm> _shortNegativeForms = [];
     private readonly List<AdditionalForm> _additionalForms = [];
 
+    public int Id { get; init; }
+    
     public Text Text { get; }
     public PastForm PastForm { get; }
     public PastParticipleForm PastParticipleForm { get; }
     public PresentParticipleForm PresentParticipleForm { get; }
     public ThirdPersonForm ThirdPersonForm { get; }
     
-    public IReadOnlyCollection<FullNegativeForm> FullNegativeForms => [.._fullNegativeForms];
-    public IReadOnlyCollection<ShortNegativeForm> ShortNegativeForms => [.._shortNegativeForms];
-    public IReadOnlyCollection<AdditionalForm> AdditionalForms => [.._additionalForms];
+    public IReadOnlyList<FullNegativeForm> FullNegativeForms => [.._fullNegativeForms];
+    public IReadOnlyList<ShortNegativeForm> ShortNegativeForms => [.._shortNegativeForms];
+    public IReadOnlyList<AdditionalForm> AdditionalForms => [.._additionalForms];
 
-    public PrimaryVerb(Guid id,
+    public PrimaryVerb(
         Text text,
         PastForm pastForm,
         PastParticipleForm pastParticipleForm,
         PresentParticipleForm presentParticipleForm,
-        ThirdPersonForm thirdPersonForm) : base(id)
+        ThirdPersonForm thirdPersonForm)
     {
         Text = text;
         PastForm = pastForm;

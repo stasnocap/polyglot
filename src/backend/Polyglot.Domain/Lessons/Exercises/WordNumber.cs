@@ -1,4 +1,4 @@
-namespace Polyglot.Domain.Exercises;
+namespace Polyglot.Domain.Lessons.Exercises;
 
 public sealed record WordNumber(int Value)
 {

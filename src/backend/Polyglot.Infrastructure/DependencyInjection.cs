@@ -13,9 +13,9 @@ using Polyglot.Application.Abstractions.Clock;
 using Polyglot.Application.Abstractions.Data;
 using Polyglot.Application.Abstractions.Email;
 using Polyglot.Domain.Abstractions;
-using Polyglot.Domain.Exercises;
 using Polyglot.Domain.Lessons;
-using Polyglot.Domain.Scores;
+using Polyglot.Domain.Lessons.Exercises;
+using Polyglot.Domain.Lessons.Scores;
 using Polyglot.Domain.Users;
 using Polyglot.Domain.Vocabulary;
 using Polyglot.Domain.Vocabulary.Adjectives;
@@ -71,9 +71,7 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IExerciseRepository, ExerciseRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
-        services.AddScoped<IScoreRepository, ScoreRepository>();
         
         services.AddScoped<IVocabularyRepository, VocabularyRepository>();
         services.AddScoped<IAdjectiveRepository, AdjectiveRepository>();

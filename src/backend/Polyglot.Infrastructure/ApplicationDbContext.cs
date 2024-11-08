@@ -49,7 +49,7 @@ public sealed class ApplicationDbContext(
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
-                IReadOnlyCollection<IDomainEvent> domainEvents = entity.GetDomainEvents();
+                IReadOnlyList<IDomainEvent> domainEvents = entity.GetDomainEvents();
 
                 entity.ClearDomainEvents();
 

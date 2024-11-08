@@ -1,14 +1,14 @@
-using Polyglot.Domain.Abstractions;
 using Polyglot.Domain.Shared;
 
 namespace Polyglot.Domain.Vocabulary.Adverbs;
 
-public sealed class Adverb : Entity
+public sealed class Adverb
 {
+    public int Id { get; init; }
     public Text Text { get; }
     public AdverbType Type { get; }
 
-    public Adverb(Guid id, Text text, AdverbType type) : base(id)
+    public Adverb(Text text, AdverbType type)
     {
         Text = text;
         Type = type;
