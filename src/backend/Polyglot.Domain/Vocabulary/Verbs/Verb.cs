@@ -27,13 +27,10 @@ public sealed class Verb
     {
     }
 
-    public static Verb CreateIrregularVerb(int verbId, Text text, PastForm pastForm, PastParticipleForm pastParticipleForm)
+    public static Verb CreateIrregularVerb(Text text, PastForm pastForm, PastParticipleForm pastParticipleForm)
     {
         var presentParticipleForm = PresentParticipleForm.From(text, stressOnFinalSyllable: true);
         var thirdPersonForm = ThirdPersonForm.From(text);
-        return new Verb(text, pastForm, pastParticipleForm, presentParticipleForm, thirdPersonForm, new IsIrregularVerb(true))
-        {
-            Id = verbId
-        };
+        return new Verb(text, pastForm, pastParticipleForm, presentParticipleForm, thirdPersonForm, new IsIrregularVerb(true));
     }
 }

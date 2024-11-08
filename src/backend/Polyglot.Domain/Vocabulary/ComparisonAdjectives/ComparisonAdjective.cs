@@ -21,14 +21,11 @@ public sealed class ComparisonAdjective
     {
     }
 
-    public static ComparisonAdjective Create(int comparisonAdjectiveId, Text text, SyllablesCount syllablesCount)
+    public static ComparisonAdjective Create(Text text, SyllablesCount syllablesCount)
     {
         var comparativeForm = ComparativeForm.From(text, syllablesCount);
         var superlativeForm = SuperlativeForm.From(text, syllablesCount);
-        
-        return new ComparisonAdjective(text, comparativeForm, superlativeForm)
-        {
-            Id = comparisonAdjectiveId
-        };
+
+        return new ComparisonAdjective(text, comparativeForm, superlativeForm);
     }
 }

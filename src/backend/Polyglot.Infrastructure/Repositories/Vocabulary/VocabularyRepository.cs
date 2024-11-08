@@ -1,12 +1,18 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using System.Reflection;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Polyglot.Application.Abstractions.Data;
 using Polyglot.Domain.Lessons.Exercises;
 using Polyglot.Domain.Shared;
 using Polyglot.Domain.Vocabulary;
+using Polyglot.Infrastructure.Data;
 
 namespace Polyglot.Infrastructure.Repositories.Vocabulary;
 
+[SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out")]
 public class VocabularyRepository(
     ApplicationDbContext _dbContext,
     ComparisonAdjectiveRepository comparisonAdjectiveRepository,
@@ -22,6 +28,8 @@ public class VocabularyRepository(
 {
     public async Task<List<string>> GetRandomAsync(Word word, int count, CancellationToken cancellationToken)
     {
+        // IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+
         switch (word.Type)
         {
             case WordType.Adjective:
@@ -31,6 +39,17 @@ public class VocabularyRepository(
             case WordType.Preposition:
             case WordType.QuestionWord:
                 Type wordType = WordTypes.GetWordType(word.Type);
+
+                // string wordText = word.Text.GetWord();
+                // string tableName = TableNames.GetTableName(word.Type);
+                // const string sql = """
+                //               SELECT text FROM @TableName
+                //               WHERE text != @Word
+                //               ORDER BY random()
+                //               LIMIT @Count
+                //               """;
+                //
+                // var words = await connection.QueryAsync(sql, new { TableName = tableName, Word = wordText, Count = count });
 
                 List<object> words = await _dbContext.GetAll(wordType)
                     .AsNoTracking()

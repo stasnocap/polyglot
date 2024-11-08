@@ -22,13 +22,10 @@ public sealed class Noun
     {
     }
 
-    public static Noun Create(int nounId, Text text, NounType type)
+    public static Noun Create(Text text, NounType type)
     {
         var pluralForm = PluralForm.From(text);
-        
-        return new Noun(text, pluralForm, type)
-        {
-            Id = nounId
-        };
+
+        return new Noun(text, pluralForm, type);
     }
 }
