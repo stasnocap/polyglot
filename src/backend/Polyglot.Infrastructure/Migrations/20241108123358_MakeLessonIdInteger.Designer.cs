@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Polyglot.Infrastructure;
@@ -11,9 +12,11 @@ using Polyglot.Infrastructure;
 namespace Polyglot.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241108123358_MakeLessonIdInteger")]
+    partial class MakeLessonIdInteger
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,27 +24,6 @@ namespace Polyglot.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Polyglot.Domain.Lessons.Exercises.Exercise", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RusPhrase")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("character varying(400)")
-                        .HasColumnName("rus_phrase");
-
-                    b.HasKey("Id")
-                        .HasName("pk_exercises");
-
-                    b.ToTable("exercises", (string)null);
-                });
 
             modelBuilder.Entity("Polyglot.Domain.Lessons.Lesson", b =>
                 {
@@ -62,25 +44,6 @@ namespace Polyglot.Infrastructure.Migrations
                         .HasName("pk_lessons");
 
                     b.ToTable("lessons", (string)null);
-                });
-
-            modelBuilder.Entity("Polyglot.Domain.Lessons.LessonExercise", b =>
-                {
-                    b.Property<int>("LessonId")
-                        .HasColumnType("integer")
-                        .HasColumnName("lesson_id");
-
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("integer")
-                        .HasColumnName("exercise_id");
-
-                    b.HasKey("LessonId", "ExerciseId")
-                        .HasName("pk_lesson_exercises");
-
-                    b.HasIndex("ExerciseId")
-                        .HasDatabaseName("ix_lesson_exercises_exercise_id");
-
-                    b.ToTable("lesson_exercises", (string)null);
                 });
 
             modelBuilder.Entity("Polyglot.Domain.Users.Permission", b =>
@@ -263,9 +226,9 @@ namespace Polyglot.Infrastructure.Migrations
                     b.ToTable("role_user", (string)null);
                 });
 
-            modelBuilder.Entity("Polyglot.Domain.Lessons.Exercises.Exercise", b =>
+            modelBuilder.Entity("Polyglot.Domain.Lessons.Lesson", b =>
                 {
-                    b.OwnsMany("Polyglot.Domain.Lessons.Exercises.Word", "Words", b1 =>
+                    b.OwnsMany("Polyglot.Domain.Lessons.Exercises.Exercise", "Exercises", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -274,42 +237,71 @@ namespace Polyglot.Infrastructure.Migrations
 
                             NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
-                            b1.Property<int>("ExerciseId")
+                            b1.Property<int>("LessonId")
                                 .HasColumnType("integer")
-                                .HasColumnName("exercise_id");
+                                .HasColumnName("lesson_id");
 
-                            b1.Property<int>("Number")
-                                .HasColumnType("integer")
-                                .HasColumnName("number");
-
-                            b1.Property<string>("Text")
+                            b1.Property<string>("RusPhrase")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("character varying(50)")
-                                .HasColumnName("text");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("integer")
-                                .HasColumnName("type");
+                                .HasMaxLength(400)
+                                .HasColumnType("character varying(400)")
+                                .HasColumnName("rus_phrase");
 
                             b1.HasKey("Id")
-                                .HasName("pk_words");
+                                .HasName("pk_exercises");
 
-                            b1.HasIndex("ExerciseId")
-                                .HasDatabaseName("ix_words_exercise_id");
+                            b1.HasIndex("LessonId")
+                                .HasDatabaseName("ix_exercises_lesson_id");
 
-                            b1.ToTable("words", (string)null);
+                            b1.ToTable("exercises", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("ExerciseId")
-                                .HasConstraintName("fk_words_exercises_exercise_id");
+                                .HasForeignKey("LessonId")
+                                .HasConstraintName("fk_exercises_lessons_lesson_id");
+
+                            b1.OwnsMany("Polyglot.Domain.Lessons.Exercises.Word", "Words", b2 =>
+                                {
+                                    b2.Property<int>("Id")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("integer")
+                                        .HasColumnName("id");
+
+                                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b2.Property<int>("Id"));
+
+                                    b2.Property<int>("ExerciseId")
+                                        .HasColumnType("integer")
+                                        .HasColumnName("exercise_id");
+
+                                    b2.Property<int>("Number")
+                                        .HasColumnType("integer")
+                                        .HasColumnName("number");
+
+                                    b2.Property<string>("Text")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)")
+                                        .HasColumnName("text");
+
+                                    b2.Property<int>("Type")
+                                        .HasColumnType("integer")
+                                        .HasColumnName("type");
+
+                                    b2.HasKey("Id")
+                                        .HasName("pk_words");
+
+                                    b2.HasIndex("ExerciseId")
+                                        .HasDatabaseName("ix_words_exercise_id");
+
+                                    b2.ToTable("words", (string)null);
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ExerciseId")
+                                        .HasConstraintName("fk_words_exercises_exercise_id");
+                                });
+
+                            b1.Navigation("Words");
                         });
 
-                    b.Navigation("Words");
-                });
-
-            modelBuilder.Entity("Polyglot.Domain.Lessons.Lesson", b =>
-                {
                     b.OwnsMany("Polyglot.Domain.Lessons.Scores.Score", "Scores", b1 =>
                         {
                             b1.Property<int>("Id")
@@ -370,26 +362,9 @@ namespace Polyglot.Infrastructure.Migrations
                                 .IsRequired();
                         });
 
+                    b.Navigation("Exercises");
+
                     b.Navigation("Scores");
-                });
-
-            modelBuilder.Entity("Polyglot.Domain.Lessons.LessonExercise", b =>
-                {
-                    b.HasOne("Polyglot.Domain.Lessons.Exercises.Exercise", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_lesson_exercises_exercises_exercise_id");
-
-                    b.HasOne("Polyglot.Domain.Lessons.Lesson", null)
-                        .WithMany("Exercises")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_lesson_exercises_lessons_lesson_id");
-
-                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("Polyglot.Domain.Users.RolePermission", b =>
@@ -424,11 +399,6 @@ namespace Polyglot.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_role_user_user_users_id");
-                });
-
-            modelBuilder.Entity("Polyglot.Domain.Lessons.Lesson", b =>
-                {
-                    b.Navigation("Exercises");
                 });
 #pragma warning restore 612, 618
         }

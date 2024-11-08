@@ -1,3 +1,4 @@
+#pragma warning disable S125
 using Asp.Versioning.ApiExplorer;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

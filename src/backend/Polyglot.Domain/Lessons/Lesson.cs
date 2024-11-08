@@ -6,13 +6,13 @@ namespace Polyglot.Domain.Lessons;
 
 public sealed class Lesson
 {
-    private readonly List<Exercise> _exercises = [];
+    private readonly List<LessonExercise> _exercises = [];
     private readonly List<Score> _scores = [];
 
-    public short Id { get; init; }
+    public int Id { get; init; }
     public LessonName Name { get; }
 
-    public IReadOnlyList<Exercise> Exercises => [.._exercises];
+    public IReadOnlyList<LessonExercise> Exercises => [.._exercises];
     public IReadOnlyList<Score> Scores => [.._scores];
 
     public Lesson(LessonName name)
@@ -32,26 +32,30 @@ public sealed class Lesson
             return Result.Failure(LessonErrors.ExerciseWordsAreEmpty);
         }
 
-        if (_exercises.Exists(x => x.RusPhrase == exercise.RusPhrase))
+        if (_exercises.Exists(x => x.Exercise.RusPhrase == exercise.RusPhrase))
         {
             return Result.Failure(LessonErrors.ExerciseAlreadyExists);
         }
 
-        _exercises.Add(exercise);
+        _exercises.Add(new LessonExercise
+        {
+            LessonId = Id,
+            Exercise = exercise,
+        });
 
         return Result.Success();
     }
 
     public Result<bool> CompleteExercise(string answer, int exerciseId, int? userId)
     {
-        Exercise? exercise = _exercises.Find(x => x.Id == exerciseId);
+        LessonExercise? lessonExercise = _exercises.Find(x => x.ExerciseId == exerciseId);
 
-        if (exercise is null)
+        if (lessonExercise is null)
         {
             return Result.Failure<bool>(LessonErrors.ExerciseNotFound);
         }
 
-        string correctAnswer = string.Join(' ', exercise.Words.Select(x => x.Text.Value));
+        string correctAnswer = string.Join(' ', lessonExercise.Exercise.Words.Select(x => x.Text.Value));
 
         bool isCorrectAnswer = correctAnswer == answer;
 
