@@ -1,19 +1,12 @@
 ﻿version: '3.4'
 
 services:
-  polyglot.server:
-    image: ${DOCKER_REGISTRY-}polyglotserver
-    container_name: Polyglot.Server
+  polyglot.web:
+    image: ${DOCKER_REGISTRY-}polyglotweb
+    container_name: Polyglot.Web
     build:
       context: .
-      dockerfile: src/frontend/Polyglot.Server/Dockerfile
-      
-  polyglot.api:
-    image: ${DOCKER_REGISTRY-}polyglotapi
-    container_name: Polyglot.Api
-    build:
-      context: .
-      dockerfile: src/backend/Polyglot.Api/Dockerfile
+      dockerfile: src/Polyglot.Web/Dockerfile
     depends_on:
       - polyglot-db
 
