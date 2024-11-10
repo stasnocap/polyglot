@@ -7,7 +7,6 @@ import ContactRoot, {loader as rootLoader, action as rootAction} from "./routes/
 import Contact, {loader as contactLoader, action as contactAction,} from "./routes/contacts/contact";
 import EditContact, {action as editAction,} from "./routes/contacts/edit";
 import {action as destroyAction} from "./routes/contacts/destroy";
-import {loader as exerciseLoader} from "./routes/lessons/exercise.tsx";
 
 import ErrorPage from "./error-page.tsx";
 import Index from "./routes/contacts/index";
@@ -33,7 +32,6 @@ const router = createBrowserRouter([
       {
         path: "lessons/:lessonId",
         element: <Exercise />,
-        loader: exerciseLoader,
       },
       {
         path: "weather",

@@ -3,7 +3,7 @@ import {Button, ButtonGroup, Divider, Skeleton } from "@nextui-org/react";
 
 export default function ExerciseSkeleton() {
   return (
-    <div>
+    <>
       <div className="flex justify-between text-3xl">
         <div className="flex-1">
           <Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>
@@ -29,6 +29,6 @@ export default function ExerciseSkeleton() {
           </ButtonGroup>
         ))}
       </div>
-    </div>
+    </>
   )
 }
