@@ -46,22 +46,28 @@ public sealed class Lesson
         return Result.Success();
     }
 
-    public Result<bool> CompleteExercise(string answer, int exerciseId, int? userId)
+    public Result<CompleteExerciseResult> CompleteExercise(string answer, int exerciseId, int? userId)
     {
         LessonExercise? lessonExercise = _exercises.Find(x => x.ExerciseId == exerciseId);
 
         if (lessonExercise is null)
         {
-            return Result.Failure<bool>(LessonErrors.ExerciseNotFound);
+            return Result.Failure<CompleteExerciseResult>(LessonErrors.ExerciseNotFound);
         }
 
         string correctAnswer = string.Join(' ', lessonExercise.Exercise.Words.Select(x => x.Text.Value));
 
         bool isCorrectAnswer = correctAnswer == answer;
 
+        var completeExerciseResult = new CompleteExerciseResult
+        {
+            Success = isCorrectAnswer,
+            CorrectAnswer = correctAnswer,
+        };
+
         if (userId is null)
         {
-            return Result.Success(isCorrectAnswer);
+            return Result.Success(completeExerciseResult);
         }
 
         Score? score = _scores.Find(x => x.UserId == userId);
@@ -77,6 +83,6 @@ public sealed class Lesson
             score.Rating.Decrease();
         }
 
-        return Result.Success(isCorrectAnswer);
+        return Result.Success(completeExerciseResult);
     }
 }

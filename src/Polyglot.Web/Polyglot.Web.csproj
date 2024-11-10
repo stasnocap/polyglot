@@ -4,10 +4,9 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <SpaRoot>..\polyglot.client</SpaRoot>
+        <SpaRoot>../polyglot.client</SpaRoot>
         <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
         <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
-        <UserSecretsId>73731c13-5195-4dfb-9e0d-274a6b8d3cbb</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>

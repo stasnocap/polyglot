@@ -17,7 +17,7 @@ public class GetRandomExerciseQueryHandler(ILessonRepository _lessonRepository, 
         {
             return Result.Failure<ExerciseResponse>(LessonErrors.NotFound);
         }
-
+        
         LessonExercise lessonExercise = lesson.Exercises[Random.Shared.Next(lesson.Exercises.Count)];
 
         ExerciseResponse exerciseResult = await _exerciseConverter.ConvertAsync(lessonExercise.Exercise, lesson, cancellationToken);
