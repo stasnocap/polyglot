@@ -69,6 +69,43 @@ function mapExercise(exercise: any) : Exercise {
   return model;
 }
 
+const compliments = [
+  "Молодец!",
+  "Отлично!",
+  "Хорошо!",
+  "Гораздо лучше, чем я ожидал!",
+  "Ты меня приятно удивил!",
+  "Великолепно!",
+  "Прекрасно!",
+  "Ты меня очень обрадовал!",
+  "Именно этого я давно ждал от тебя!",
+  "Сказано здорово – просто и ясно!",
+  "Ты, как всегда, точен!",
+  "Очень хороший ответ!",
+  "Талантливо!",
+  "Ты сегодня прыгнул выше головы!",
+  "Я поражен!",
+  "Уже существенно лучше!",
+  "Потрясающе!",
+  "Замечательно!",
+  "Прекрасное начало!",
+  "Так держать!",
+  "Ты на верном пути!",
+  "Здорово!",
+  "Это как раз то, что нужно!",
+  "Я тобой горжусь!",
+  "С каждым разом у тебя получается всё лучше!",
+  "Мы с тобой не зря поработали!",
+  "Я вижу, как ты стараешься!",
+  "Ты растешь над собой!",
+  "Ты многое сделал, я это вижу!",
+  "Теперь у тебя точно все получится!",
+];
+
+function getRandomCompliment() {
+  return compliments[Math.floor(Math.random() * compliments.length)];
+}
+
 let clickHistory: ClickHistory[] = [];
 let exercise: Exercise = null!;
 export default function Exercise() {
@@ -204,16 +241,23 @@ export default function Exercise() {
         </Button>
       </div>
       <Divider className="my-4"/>
-      <div className="grid grid-cols-2 gap-5">
-        {shownGroups.map((wordGroup, i) => (
-          <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>
-            {wordGroup.words.map((word, j) => (
-              <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isDisabled={wordGroup.disabled}>
-                {wordGroup.disabled ? "" : word}
-              </Button>
-            ))}
-          </ButtonGroup>
-        ))}
+      <div className="relative">
+        {completeExerciseResult?.success === true ? (
+          <div className="flex justify-center items-center h-[308px] text-5xl bg-success-200 text-success animate-fade absolute w-full opacity-0">
+            {getRandomCompliment()}
+          </div>
+        ) : (<></>) }
+        <div className="grid grid-cols-2 gap-5">
+          {shownGroups.map((wordGroup, i) => (
+            <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>
+              {wordGroup.words.map((word, j) => (
+                <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isDisabled={wordGroup.disabled}>
+                  {wordGroup.disabled ? "" : word}
+                </Button>
+              ))}
+            </ButtonGroup>
+          ))}
+        </div>
       </div>
     </>
   );
