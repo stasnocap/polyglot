@@ -3,6 +3,7 @@ import {NavLink as RouterLink} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import PolyglotLogo from "../icons/polyglot-logo.tsx";
 import Palette from "../components/palette.tsx";
+import BrushIcon from "../icons/brush-icon.tsx";
 
 interface User {
   email: string;
@@ -29,18 +30,18 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
   }, []);
 
   const login =
-    <>
+    <div className="gap-1 hidden md:flex">
       <NavbarItem>
         <Button as={Link} color="primary" href="/api/v1/users/login" variant="light">
           Log In
         </Button>
       </NavbarItem>
       <NavbarItem>
-        <Button as={Link} color="primary" href="#" variant="flat">
+        <Button as={Link} color="primary" href="#" variant="bordered">
           Sign Up
         </Button>
       </NavbarItem>
-    </>;
+    </div>;
 
   function handleLogoutClick() {
     window.location.href = `/api/v1/users/logout?redirectUri=${window.location.pathname}`;
@@ -77,7 +78,7 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
   }
 
   return (
-    <Navbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen}>
+    <Navbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen} disableAnimation className="sticky">
       <NavbarContent>
         <NavbarMenuToggle
           as="div"
@@ -120,17 +121,19 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent justify="end" className="gap-1">
         <Dropdown className={`${theme} bg-background`}>
           <NavbarItem>
             <DropdownTrigger>
               <Button
+                as="div"
                 disableRipple
                 className="p-0 bg-transparent data-[hover=true]:bg-transparent"
                 radius="sm"
                 variant="light"
+                isIconOnly
               >
-                Themes
+                <BrushIcon height={32} width={32}/>
               </Button>
             </DropdownTrigger>
           </NavbarItem>
@@ -184,7 +187,7 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
         </Dropdown>
         {user.email ? logout : login}
       </NavbarContent>
-      <NavbarMenu>
+      <NavbarMenu className={theme}>
         <NavbarMenuItem key="lessons">
           <Link
             as="div"

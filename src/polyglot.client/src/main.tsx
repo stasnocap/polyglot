@@ -75,7 +75,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NextUIProvider className="h-full w-full">
+    <NextUIProvider className="min-h-screen">
       <RouterProvider router={router} />
     </NextUIProvider>
   </StrictMode>,

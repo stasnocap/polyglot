@@ -6,14 +6,14 @@ export default function ExerciseSkeleton() {
     <>
       <div className="flex justify-between text-3xl">
         <div className="flex-1">
-          <Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>
+          <Skeleton className="h-7 md:h-9 w-3/6 rounded-lg bg-default-200"/>
         </div>
       </div>
       <Divider className="my-4"/>
       <div className="flex justify-between">
-        <Skeleton className="h-9 w-2/6 rounded-lg bg-default-200"/>
+        <Skeleton className="h-7 md:h-9 w-2/6 rounded-lg bg-default-200"/>
         <Button variant="light" color="primary" className="text-xl" isLoading isDisabled>
-          BACKSPACE
+          <span className="hidden md:inline">BACKSPACE</span>
           <BackspaceIcon width={32} height={32}/>
         </Button>
       </div>
@@ -23,7 +23,7 @@ export default function ExerciseSkeleton() {
           <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none">
             {Array(6).fill(0).map((_, j) => (
               <Button color="primary" variant="light" key={j} className="text-2xl p-6" isLoading isDisabled>
-                <Skeleton className="h-9 w-3/6 rounded-lg bg-default-200"/>
+                <Skeleton className="h-9 w-3/6 rounded-lg bg-default-200 hidden md:inline"/>
               </Button>
             ))}
           </ButtonGroup>

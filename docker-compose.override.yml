@@ -5,7 +5,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5000
-      - ASPNETCORE_HTTPS_PORTS=5001
       - ASPNETCORE_Kestrel__Certificates__Default__Password=123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_WEBROOT=/app/bin/Release/net8.0/publish/wwwroot

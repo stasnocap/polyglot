@@ -96,13 +96,9 @@ form[action$="destroy"] button {
   border-width: 0;
 }
 
-@media (min-width: 640px) {
   #root {
-    height: 100%;
-    width: 100%;
+    min-height: 100vh;
   }
-}
-
 
 
 #sidebar {

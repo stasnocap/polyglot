@@ -209,7 +209,7 @@ export default function Exercise() {
 
   return loading ? (<ExerciseSkeleton/>) : (
     <>
-      <div className="flex justify-between text-3xl">
+      <div className="flex justify-between text-lg md:text-3xl">
         <div className="flex-1">
           <div className="text-primary">{rusPhrase}</div>
         </div>
@@ -234,16 +234,16 @@ export default function Exercise() {
       </div>
       <Divider className="my-4"/>
       <div className="flex justify-between">
-        <div className={`text-3xl ${completeExerciseResult?.success === false ? "text-danger" : "text-primary-100"}`}>{completeExerciseResult?.success === false ? completeExerciseResult.correctAnswer : engPhrase.join(' ')}</div>
-        <Button variant="light" color="primary" className="text-xl" isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
-          BACKSPACE
+        <div className={`text-lg md:text-3xl ${completeExerciseResult?.success === false ? "text-danger" : "text-primary-100"}`}>{completeExerciseResult?.success === false ? completeExerciseResult.correctAnswer : engPhrase.join(' ')}</div>
+        <Button variant="light" color="primary" className="text-xl md:text-3xl" isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
+          <span className="hidden md:inline">BACKSPACE</span>
           <BackspaceIcon width={32} height={32}/>
         </Button>
       </div>
       <Divider className="my-4"/>
-      <div className="relative">
+      <div className="relative flex-grow">
         {completeExerciseResult?.success === true ? (
-          <div className="flex justify-center items-center h-[308px] text-5xl bg-success-200 text-success animate-fade absolute w-full opacity-0">
+          <div className="flex justify-center items-center h-full text-xl md:text-5xl bg-success-200 text-success animate-fade absolute w-full opacity-0">
             {getRandomCompliment()}
           </div>
         ) : (<></>) }
@@ -251,7 +251,7 @@ export default function Exercise() {
           {shownGroups.map((wordGroup, i) => (
             <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>
               {wordGroup.words.map((word, j) => (
-                <Button color="primary" variant="light" key={j} className="text-2xl p-6" onClick={handleButtonClick} isDisabled={wordGroup.disabled}>
+                <Button color="primary" variant="light" key={j} className="text-md md:text-2xl p-6" onClick={handleButtonClick} isDisabled={wordGroup.disabled}>
                   {wordGroup.disabled ? "" : word}
                 </Button>
               ))}
