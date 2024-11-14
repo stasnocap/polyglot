@@ -15,6 +15,9 @@ import Weather from "./components/weather.tsx";
 import Home from "./routes/home.tsx";
 import Lessons from "./routes/lessons/lessons.tsx";
 import Exercise from "./routes/lessons/exercise.tsx";
+import LogIn, {action as logInAction} from "./routes/login.tsx";
+import SignUp, {action as signUpAction} from "./routes/signup.tsx";
+import {UserProvider} from "./user-context.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,15 +26,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <Home/>,
+      },
+      {
+        path: "login",
+        element: <LogIn/>,
+        action: logInAction
+      },
+      {
+        path: "signup",
+        element: <SignUp/>,
+        action: signUpAction
       },
       {
         path: "lessons",
-        element: <Lessons />
+        element: <Lessons/>
       },
       {
         path: "lessons/:lessonId",
-        element: <Exercise />,
+        element: <Exercise/>,
       },
       {
         path: "weather",
@@ -76,7 +89,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <NextUIProvider className="min-h-screen">
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router}/>
+      </UserProvider>
     </NextUIProvider>
   </StrictMode>,
 )

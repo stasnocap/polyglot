@@ -42,6 +42,7 @@ internal sealed class ExceptionHandlingMiddleware
             }
 
             context.Response.StatusCode = exceptionDetails.Status;
+            context.Response.ContentType = "application/problem+json";
 
             await context.Response.WriteAsJsonAsync(problemDetails);
         }

@@ -1,10 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Asp.Versioning;
 using Dapper;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,7 +69,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
-        
+
         services.AddScoped<IVocabularyRepository, VocabularyRepository>();
         services.AddScoped<IAdjectiveRepository, AdjectiveRepository>();
         services.AddScoped<ComparisonAdjectiveRepository>();
@@ -95,29 +94,24 @@ public static class DependencyInjection
     private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            })
-            .AddCookie()
-            .AddOpenIdConnect();
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie();
+
+        services.ConfigureOptions<CookieAuthenticationOptionsSetup>();
 
         services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
-
-        services.ConfigureOptions<OpenIdConnectOptionsSetup>();
 
         services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
 
         services.AddTransient<AdminAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
-        {
-            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+            {
+                KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
 
-            httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
-        })
-        .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+                httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
+            })
+            .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
         {
@@ -134,8 +128,6 @@ public static class DependencyInjection
     private static void AddAuthorization(IServiceCollection services)
     {
         services.AddScoped<AuthorizationService>();
-
-        services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
 
         services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
 

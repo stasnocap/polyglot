@@ -3,12 +3,12 @@ using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Polyglot.Application.Users.GetLoggedInUser;
+using Polyglot.Application.Users.LogInUser;
 using Polyglot.Application.Users.RegisterUser;
 using Polyglot.Domain.Abstractions;
+using Polyglot.Infrastructure.Authentication;
 using Polyglot.Infrastructure.Authorization;
 
 namespace Polyglot.Web.Controllers.Users;
@@ -16,24 +16,27 @@ namespace Polyglot.Web.Controllers.Users;
 [ApiController]
 [ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/users")]
-public class UsersController : ControllerBase
+public class UsersController(ISender _sender) : ControllerBase
 {
-    private readonly ISender _sender;
-
-    public UsersController(ISender sender)
-    {
-        _sender = sender;
-    }
-
+    [AllowAnonymous]
     [HttpGet("me")]
     [HasPermission(Permissions.UsersRead)]
-    public async Task<IActionResult> GetLoggedInUser(CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+    public IActionResult GetLoggedInUser()
     {
-        var query = new GetLoggedInUserQuery();
+        if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            return NoContent();
+        }
 
-        Result<UserResponse> result = await _sender.Send(query, cancellationToken);
+        var userResponse = new UserResponse()
+        {
+            FirstName = User.GetFirstName()!,
+            LastName = User.GetLastName()!,
+            Email = User.GetEmail()!,
+        };
 
-        return Ok(result.Value);
+        return Ok(userResponse);
     }
 
     [AllowAnonymous]
@@ -48,38 +51,46 @@ public class UsersController : ControllerBase
             request.LastName,
             request.Password);
 
-        Result<int> result = await _sender.Send(command, cancellationToken);
+        Result<LogInResponse> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
             return BadRequest(result.Error);
         }
+        
+        ClaimsPrincipal principal = ClaimsPrincipalFactory.Create(result.Value);
 
+        await HttpContext.SignInAsync(principal);
+ 
         return Ok(result.Value);
     }
-
-    [Authorize]
-    [HttpGet("login")]
-    public IActionResult LogIn(Uri? redirectUri)
+    
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<IActionResult> LogIn(
+        LogInUserRequest request,
+        CancellationToken cancellationToken)
     {
-        return Redirect(redirectUri?.ToString()?? "/");
+        var command = new LogInUserCommand(request.Email, request.Password);
+
+        Result<LogInResponse> result = await _sender.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Unauthorized(result.Error);
+        }
+
+        ClaimsPrincipal principal = ClaimsPrincipalFactory.Create(result.Value);
+
+        await HttpContext.SignInAsync(principal);
+
+        return Ok();
     }
     
     [Authorize]
     [HttpGet("logout")]
-    public async Task LogOut(Uri? redirectUri)
+    public async Task LogOut()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = redirectUri?.ToString() });
-    }
-    
-    [AllowAnonymous]
-    [HttpGet("ping-auth")]
-    [ProducesResponseType(typeof(PingAuthResponse), StatusCodes.Status200OK)]
-    public IActionResult PingAuth()
-    {
-        string? email = User.FindFirstValue(ClaimTypes.Email);
-        
-        return Ok(new PingAuthResponse(email));
     }
 }

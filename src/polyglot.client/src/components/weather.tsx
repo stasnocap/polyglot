@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {NavigateFunction, useNavigate } from 'react-router-dom';
 
 interface Forecast {
   date: string;
@@ -9,9 +10,10 @@ interface Forecast {
 
 export default function Weather() {
   const [forecasts, setForecasts] = useState<Forecast[]>();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    populateWeatherData();
+    populateWeatherData(navigate);
   }, []);
 
   const contents = forecasts === undefined
@@ -45,12 +47,11 @@ export default function Weather() {
     </div>
   );
 
-  async function populateWeatherData() {
+  async function populateWeatherData(navigate: NavigateFunction) {
     const response = await fetch('api/v1/weatherforecast');
     
     if (response.status === 401) {
-      window.location.href = `/api/v1/users/login?redirectUri=${window.location.pathname}`;
-      return;
+      navigate("/login");
     }
     
     const data = await response.json();

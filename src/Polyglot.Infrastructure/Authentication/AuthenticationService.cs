@@ -16,15 +16,15 @@ internal sealed class AuthenticationService(HttpClient httpClient) : IAuthentica
     {
         var userRepresentationModel = UserRepresentationModel.FromUser(user);
 
-        userRepresentationModel.Credentials = new CredentialRepresentationModel[]
-        {
-            new()
+        userRepresentationModel.Credentials =
+        [
+            new CredentialRepresentationModel
             {
                 Value = password,
                 Temporary = false,
                 Type = PasswordCredentialType
             }
-        };
+        ];
 
         HttpResponseMessage response = await httpClient.PostAsJsonAsync(
             "users",

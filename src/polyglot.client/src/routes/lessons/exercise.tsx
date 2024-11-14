@@ -235,7 +235,7 @@ export default function Exercise() {
       <Divider className="my-4"/>
       <div className="flex justify-between">
         <div className={`text-lg md:text-3xl ${completeExerciseResult?.success === false ? "text-danger" : "text-primary-100"}`}>{completeExerciseResult?.success === false ? completeExerciseResult.correctAnswer : engPhrase.join(' ')}</div>
-        <Button variant="light" color="primary" className="text-xl md:text-3xl" isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
+        <Button variant="light" color="primary" className="text-xl" isDisabled={isBackspaceDisabled} onClick={handleBackspaceClick}>
           <span className="hidden md:inline">BACKSPACE</span>
           <BackspaceIcon width={32} height={32}/>
         </Button>

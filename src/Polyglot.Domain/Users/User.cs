@@ -5,11 +5,11 @@ public sealed class User
     private readonly List<Role> _roles = [];
     
     public int Id { get; init; }
-
+    public string IdentityId { get; private set; } = string.Empty;
+    
     public FirstName FirstName { get; private set; }
     public LastName LastName { get; private set; }
     public Email Email { get; private set; }
-    public string IdentityId { get; private set; } = string.Empty;
 
     public IReadOnlyList<Role> Roles => [.._roles];
     

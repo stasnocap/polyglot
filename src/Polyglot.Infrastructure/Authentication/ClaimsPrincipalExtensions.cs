@@ -1,13 +1,13 @@
 ﻿using System.Security.Claims;
-using Microsoft.IdentityModel.JsonWebTokens;
+using Polyglot.Domain.Users;
 
 namespace Polyglot.Infrastructure.Authentication;
 
-internal static class ClaimsPrincipalExtensions
+public static class ClaimsPrincipalExtensions
 {
     public static int? GetUserId(this ClaimsPrincipal? principal)
     {
-        string? userId = principal?.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        string? userId = principal?.FindFirstValue(nameof(User.IdentityId));
 
         return int.TryParse(userId, out int parsedUserId) ? parsedUserId : null;
     }
@@ -15,5 +15,20 @@ internal static class ClaimsPrincipalExtensions
     public static string? GetIdentityId(this ClaimsPrincipal? principal)
     {
         return principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+    }
+
+    public static string? GetFirstName(this ClaimsPrincipal? principal)
+    {
+        return principal?.FindFirstValue(nameof(User.FirstName));
+    }
+
+    public static string? GetLastName(this ClaimsPrincipal? principal)
+    {
+        return principal?.FindFirstValue(nameof(User.LastName));
+    }
+
+    public static string? GetEmail(this ClaimsPrincipal? principal)
+    {
+        return principal?.FindFirstValue(nameof(User.Email));
     }
 }

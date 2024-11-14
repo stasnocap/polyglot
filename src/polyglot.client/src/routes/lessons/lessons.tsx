@@ -28,7 +28,7 @@ export default function Lessons() {
               <p className="text-lg font-medium">
                 {loading
                   ? (<Skeleton className="h-7 w-20 rounded-lg bg-default-200"/>)
-                  : (<>Урок {x.number}</>)}
+                  : (<>Квест {x.number}</>)}
               </p>
             </div>
           </CardHeader>
@@ -43,7 +43,7 @@ export default function Lessons() {
             <Button className="bg-primary-100" isLoading={loading}>Подробнее</Button>
             <Button color="primary" isLoading={loading}>
               <Link to={x.number.toString()} className="after:absolute after:inset-0 text-primary-50">
-                Let's go
+                Старт!
               </Link>
             </Button>
           </CardFooter>

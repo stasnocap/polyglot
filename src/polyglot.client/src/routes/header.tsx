@@ -1,76 +1,15 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownMenu, Dropdown, DropdownTrigger, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
-import {NavLink as RouterLink} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {NavLink as RouterLink, useNavigate} from "react-router-dom";
+import React, {useState} from "react";
 import PolyglotLogo from "../icons/polyglot-logo.tsx";
 import Palette from "../components/palette.tsx";
 import BrushIcon from "../icons/brush-icon.tsx";
-
-interface User {
-  email: string;
-}
+import {useUser} from "../user-context.tsx";
 
 export default function Header({theme, setTheme}: { theme: string, setTheme: React.Dispatch<React.SetStateAction<string>> }) {
-  let emptyUser: User = {email: ""};
-  const [user, setUser] = useState<User>(emptyUser);
+  const {user, logout} = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    async function fetchUser() {
-      const response = await fetch('/api/v1/users/ping-auth');
-
-      const json = await response.json();
-
-      if (json.email) {
-        setUser({email: json.email});
-      }
-    }
-
-    fetchUser()
-      .catch(e => console.log(e.message));
-  }, []);
-
-  const login =
-    <div className="gap-1 hidden md:flex">
-      <NavbarItem>
-        <Button as={Link} color="primary" href="/api/v1/users/login" variant="light">
-          Log In
-        </Button>
-      </NavbarItem>
-      <NavbarItem>
-        <Button as={Link} color="primary" href="#" variant="bordered">
-          Sign Up
-        </Button>
-      </NavbarItem>
-    </div>;
-
-  function handleLogoutClick() {
-    window.location.href = `/api/v1/users/logout?redirectUri=${window.location.pathname}`;
-  }
-
-  const logout =
-    <>
-      <Dropdown placement="bottom-end" className={`${theme} bg-background`}>
-        <DropdownTrigger>
-          <Avatar
-            isBordered
-            className="transition-transform cursor-pointer"
-            color="primary"
-            name="Jason Hughes"
-            size="sm"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Profile Actions" variant="flat" className="text-foreground">
-          <DropdownItem key="profile" className="h-14 gap-2" textValue={`Signed in as ${user.email}`}>
-            <p className="font-semibold">Signed in as</p>
-            <p className="font-semibold text-primary">{user.email}</p>
-          </DropdownItem>
-          <DropdownItem key="logout" color="danger" onClick={handleLogoutClick}>
-            Log Out
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </>;
+  const navigate = useNavigate();
 
   function switchTheme(theme: string) {
     localStorage.setItem("theme", theme);
@@ -88,20 +27,20 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
         <RouterLink to="/">
           <NavbarBrand>
             <PolyglotLogo height={32} width={32}/>
-            <p className="font-bold text-inherit ms-2 text-primary">POLYGLOT</p>
+            <p className="text-inherit ms-2 font-bold"><span className="text-primary">ENG</span><span className="text-primary-100">QUEST</span></p>
           </NavbarBrand>
         </RouterLink>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link as="div" color="foreground">
+          <Link as="div" color="primary">
             <RouterLink to="/lessons">
-              Lessons
+              Приключение
             </RouterLink>
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link as="div" color="foreground">
+          <Link as="div" color="primary">
             <RouterLink to="/contacts" className={({isActive, isPending}) =>
               isActive
                 ? "active"
@@ -114,14 +53,14 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link as="div" color="foreground">
+          <Link as="div" color="primary">
             <RouterLink to="/weather">
               Weather
             </RouterLink>
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end" className="gap-1">
+      <NavbarContent justify="end" className="gap-2">
         <Dropdown className={`${theme} bg-background`}>
           <NavbarItem>
             <DropdownTrigger>
@@ -146,46 +85,82 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
               onClick={() => switchTheme("purple")}
               textValue="purple"
             >
-              <Palette theme="Purple" colors={["#F4EEFF", "#DCD6F7", "#A6B1E1", "#424874"]} isLightTheme={true}/>
+              <Palette theme="Фиолет" colors={["#F4EEFF", "#DCD6F7", "#A6B1E1", "#424874"]} isLightTheme={true}/>
             </DropdownItem>
             <DropdownItem
               key="cream"
               onClick={() => switchTheme("cream")}
               textValue="cream"
             >
-              <Palette theme="Cream" colors={["#FFF5E4", "#FFE3E1", "#FFD1D1", "#FF9494"]} isLightTheme={true}/>
+              <Palette theme="Крем" colors={["#FFF5E4", "#FFE3E1", "#FFD1D1", "#FF9494"]} isLightTheme={true}/>
             </DropdownItem>
             <DropdownItem
               key="skin"
               onClick={() => switchTheme("skin")}
               textValue="skin"
             >
-              <Palette theme="Skin" colors={["#FFC7C7", "#FFE2E2", "#F6F6F6", "#8785A2"]} isLightTheme={true}/>
+              <Palette theme="Кожа" colors={["#FFC7C7", "#FFE2E2", "#F6F6F6", "#8785A2"]} isLightTheme={true}/>
             </DropdownItem>
             <DropdownItem
               key="teal"
               onClick={() => switchTheme("teal")}
               textValue="teal"
             >
-              <Palette theme="Teal" colors={["#222831", "#393E46", "#00ADB5", "#EEEEEE"]} isLightTheme={false}/>
+              <Palette theme="Бирюза" colors={["#222831", "#393E46", "#00ADB5", "#EEEEEE"]} isLightTheme={false}/>
             </DropdownItem>
             <DropdownItem
               key="navy"
               onClick={() => switchTheme("navy")}
               textValue="navy"
             >
-              <Palette theme="Navy" colors={["#1B262C", "#0F4C75", "#3282B8", "#BBE1FA"]} isLightTheme={false}/>
+              <Palette theme="Флот" colors={["#1B262C", "#0F4C75", "#3282B8", "#BBE1FA"]} isLightTheme={false}/>
             </DropdownItem>
             <DropdownItem
               key="night"
               onClick={() => switchTheme("night")}
               textValue="night"
             >
-              <Palette theme="Night" colors={["#27374D", "#526D82", "#9DB2BF", "#DDE6ED"]} isLightTheme={false} />
+              <Palette theme="Ночь" colors={["#27374D", "#526D82", "#9DB2BF", "#DDE6ED"]} isLightTheme={false}/>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        {user.email ? logout : login}
+        {user ?
+          (<>
+            <Dropdown placement="bottom-end" className={`${theme} bg-background`}>
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  className="transition-transform cursor-pointer"
+                  color="primary"
+                  name="Jason Hughes"
+                  size="sm"
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat" className="text-foreground">
+                <DropdownItem key="profile" className="h-14 gap-2" textValue={`Signed in as ${user.email}`}>
+                  <p className="font-semibold">Вы вошли как</p>
+                  <p className="font-semibold text-primary">{user.email}</p>
+                </DropdownItem>
+                <DropdownItem key="logout" color="danger" onClick={logout}>
+                  Выйти
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </>)
+          :
+          (<div className="gap-1 hidden md:flex">
+            <NavbarItem>
+              <Button as={Link} color="primary" variant="light" onClick={() => navigate("/login")}>
+                Войти
+              </Button>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" variant="flat" onClick={() => navigate("/signup")}>
+                Регистрация
+              </Button>
+            </NavbarItem>
+          </div>)}
       </NavbarContent>
       <NavbarMenu className={theme}>
         <NavbarMenuItem key="lessons">
@@ -196,14 +171,14 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
             size="lg"
           >
             <RouterLink to="/lessons">
-              Lessons
+              Приключение
             </RouterLink>
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem key="contacts">
           <Link
             as="div"
-            color="foreground"
+            color="primary"
             className="w-full"
             size="lg"
           >
@@ -215,7 +190,7 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
         <NavbarMenuItem key="weather">
           <Link
             as="div"
-            color="foreground"
+            color="primary"
             className="w-full"
             size="lg"
           >
@@ -224,38 +199,35 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
             </RouterLink>
           </Link>
         </NavbarMenuItem>
-        {user.email ? (
+        {user ? (
           <NavbarMenuItem key="logout">
             <Link
               color="danger"
               className="w-full"
-              href="/api/v1/users/logout"
+              onClick={logout}
               size="lg"
             >
-              Logout
+              Выйти
             </Link>
           </NavbarMenuItem>
         ) : (
           <>
             <NavbarMenuItem key="login">
-              <Link
-                color="foreground"
-                className="w-full"
-                href="/api/v1/users/login"
-                size="lg"
+              <RouterLink
+                className="w-full text-primary"
+                to="/login"
               >
-                Log In
-              </Link>
+                Войти
+              </RouterLink>
             </NavbarMenuItem>
             <NavbarMenuItem key="register">
-              <Link
+              <RouterLink
                 color="primary"
-                className="w-full"
-                href="/api/v1/users/register"
-                size="lg"
+                className="w-full text-primary"
+                to="/signup"
               >
-                Sign up
-              </Link>
+                Регистрация
+              </RouterLink>
             </NavbarMenuItem>
           </>
         )}

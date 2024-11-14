@@ -6,11 +6,11 @@ public static class UserErrors
 {
     public static readonly Error NotFound = new(
         "User.Found",
-        "The user with the specified identifier was not found");
+        "Пользователь не найден");
 
     public static readonly Error InvalidCredentials = new(
         "User.InvalidCredentials",
-        "The provided credentials were invalid");
+        "Неправильный логин или пароль");
 
     public static readonly Error ScoreAlreadyAdded = new(
         "User.ScoreAlreadyAdded",

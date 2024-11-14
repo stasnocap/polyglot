@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Globalization;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Polyglot.Application.Abstractions.Behaviors;
 using Polyglot.Application.Exercises.GetExercise;
@@ -21,6 +22,8 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
+
+        ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
 
         services.AddScoped<ExerciseConverter>();
 

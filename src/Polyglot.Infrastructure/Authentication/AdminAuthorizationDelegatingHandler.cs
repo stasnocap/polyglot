@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Polyglot.Infrastructure.Authentication.Models;
 
@@ -16,9 +15,7 @@ internal sealed class AdminAuthorizationDelegatingHandler(IOptions<KeycloakOptio
     {
         AuthorizationToken authorizationToken = await GetAuthorizationToken(cancellationToken);
 
-        request.Headers.Authorization = new AuthenticationHeaderValue(
-            JwtBearerDefaults.AuthenticationScheme,
-            authorizationToken.AccessToken);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authorizationToken.AccessToken);
 
         HttpResponseMessage httpResponseMessage = await base.SendAsync(request, cancellationToken);
 
@@ -41,10 +38,9 @@ internal sealed class AdminAuthorizationDelegatingHandler(IOptions<KeycloakOptio
 
         using var authorizationRequest = new HttpRequestMessage(
             HttpMethod.Post,
-            new Uri(_keycloakOptions.TokenUrl))
-        {
-            Content = authorizationRequestContent
-        };
+            new Uri(_keycloakOptions.TokenUrl));
+        
+        authorizationRequest.Content = authorizationRequestContent;
 
         HttpResponseMessage authorizationResponse = await base.SendAsync(authorizationRequest, cancellationToken);
 
