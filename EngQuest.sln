@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{81375476-0034-4918-B92E-A4729F3599A7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BA7055C7-A497-433D-B0C9-32F6E43E164D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docker-compose", "docker-compose.dcproj", "{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Web", "src\EngQuest.Web\EngQuest.Web.csproj", "{2DE40188-0CA0-4827-AC89-6A66B35919E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Application", "src\EngQuest.Application\EngQuest.Application.csproj", "{2F53D297-A4A6-4C24-95AF-AE75025BE925}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "engquest.client", "src\engquest.client\engquest.client.esproj", "{E70ED504-3E82-40B9-8D11-59669A29D34B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Domain", "src\EngQuest.Domain\EngQuest.Domain.csproj", "{FBCDE47A-EEDA-4081-8440-59838884D0BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Infrastructure", "src\EngQuest.Infrastructure\EngQuest.Infrastructure.csproj", "{3B897967-D0C1-493E-AF05-4D9AF8CD88A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Application.UnitTests", "test\EngQuest.Application.UnitTests\EngQuest.Application.UnitTests.csproj", "{1DAB06AB-0F8A-45BF-8F77-A929784727B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Domain.UnitTests", "test\EngQuest.Domain.UnitTests\EngQuest.Domain.UnitTests.csproj", "{A9B01C03-2468-4185-97E0-617FB039BAC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2DE40188-0CA0-4827-AC89-6A66B35919E9} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
+		{2F53D297-A4A6-4C24-95AF-AE75025BE925} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
+		{E70ED504-3E82-40B9-8D11-59669A29D34B} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
+		{FBCDE47A-EEDA-4081-8440-59838884D0BE} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
+		{3B897967-D0C1-493E-AF05-4D9AF8CD88A4} = {BA7055C7-A497-433D-B0C9-32F6E43E164D}
+		{1DAB06AB-0F8A-45BF-8F77-A929784727B0} = {FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}
+		{A9B01C03-2468-4185-97E0-617FB039BAC9} = {FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F53D297-A4A6-4C24-95AF-AE75025BE925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F53D297-A4A6-4C24-95AF-AE75025BE925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F53D297-A4A6-4C24-95AF-AE75025BE925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F53D297-A4A6-4C24-95AF-AE75025BE925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E70ED504-3E82-40B9-8D11-59669A29D34B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70ED504-3E82-40B9-8D11-59669A29D34B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70ED504-3E82-40B9-8D11-59669A29D34B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70ED504-3E82-40B9-8D11-59669A29D34B}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{FBCDE47A-EEDA-4081-8440-59838884D0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBCDE47A-EEDA-4081-8440-59838884D0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBCDE47A-EEDA-4081-8440-59838884D0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBCDE47A-EEDA-4081-8440-59838884D0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B897967-D0C1-493E-AF05-4D9AF8CD88A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B897967-D0C1-493E-AF05-4D9AF8CD88A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B897967-D0C1-493E-AF05-4D9AF8CD88A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B897967-D0C1-493E-AF05-4D9AF8CD88A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DAB06AB-0F8A-45BF-8F77-A929784727B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DAB06AB-0F8A-45BF-8F77-A929784727B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DAB06AB-0F8A-45BF-8F77-A929784727B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DAB06AB-0F8A-45BF-8F77-A929784727B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B01C03-2468-4185-97E0-617FB039BAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B01C03-2468-4185-97E0-617FB039BAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B01C03-2468-4185-97E0-617FB039BAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B01C03-2468-4185-97E0-617FB039BAC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,20 +1,20 @@
 ﻿version: '3.4'
 
 services:
-  polyglot.web:
-    image: ${DOCKER_REGISTRY-}polyglotweb
-    container_name: Polyglot.Web
+  eng-quest.web:
+    image: ${DOCKER_REGISTRY-}eng-questweb
+    container_name: EngQuest.Web
     build:
       context: .
-      dockerfile: src/Polyglot.Web/Dockerfile
+      dockerfile: src/EngQuest.Web/Dockerfile
     depends_on:
-      - polyglot-db
+      - eng-quest-db
 
-  polyglot-db:
+  eng-quest-db:
     image: postgres:latest
-    container_name: Polyglot.Db
+    container_name: EngQuest.Db
     environment:
-      - POSTGRES_DB=polyglot
+      - POSTGRES_DB=eng-quest
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
@@ -22,31 +22,31 @@ services:
     ports:
       - 5432:5432
 
-  polyglot-idp:
+  eng-quest-idp:
     image: quay.io/keycloak/keycloak:latest
-    container_name: Polyglot.Identity
+    container_name: EngQuest.Identity
     command: start-dev --import-realm
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     volumes:
       - ./.containers/identity:/opt/keycloak/data
-      - ./.files/polyglot-realm-export.json:/opt/keycloak/data/import/realm.json
+      - ./.files/eng-quest-realm-export.json:/opt/keycloak/data/import/realm.json
     ports:
       - 18080:8080
 
-  polyglot-seq:
+  eng-quest-seq:
     image: datalust/seq:latest
-    container_name: Polyglot.Seq
+    container_name: EngQuest.Seq
     environment:
       - ACCEPT_EULA=Y
     ports:
       - 5341:5341
       - 8081:80
 
-  polyglot-redis:
+  eng-quest-redis:
     image: redis:latest
-    container_name: Polyglot.Redis
+    container_name: EngQuest.Redis
     restart: always
     ports:
       - '6379:6379'
