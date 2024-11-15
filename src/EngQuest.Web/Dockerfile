@@ -24,4 +24,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY /src/engquest.client/dist /app/wwwroot
+
 ENTRYPOINT ["dotnet", "EngQuest.Web.dll"]
