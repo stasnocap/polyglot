@@ -1,7 +1,7 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownMenu, Dropdown, DropdownTrigger, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
 import {NavLink as RouterLink, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
-import EngQuestLogo from "../icons/eng-quest-logo.tsx";
+import EngQuestLogo from "../icons/engquest-logo.tsx";
 import Palette from "../components/palette.tsx";
 import BrushIcon from "../icons/brush-icon.tsx";
 import {useUser} from "../user-context.tsx";

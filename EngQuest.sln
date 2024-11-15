@@ -8,13 +8,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BA7055C7-A497-433D-B0C9-32F6E43E164D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docker-compose", "docker-compose.dcproj", "{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngQuest.Web", "src\EngQuest.Web\EngQuest.Web.csproj", "{2DE40188-0CA0-4827-AC89-6A66B35919E9}"
 EndProject
@@ -48,10 +47,6 @@ Global
 		{A9B01C03-2468-4185-97E0-617FB039BAC9} = {FFC2820E-AE7C-4BE6-8B5E-23394E6E06E7}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DE40188-0CA0-4827-AC89-6A66B35919E9}.Release|Any CPU.ActiveCfg = Release|Any CPU

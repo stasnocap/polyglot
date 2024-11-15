@@ -11,7 +11,6 @@ COPY ["src/EngQuest.Web/EngQuest.Web.csproj", "src/EngQuest.Web/"]
 COPY ["src/EngQuest.Application/EngQuest.Application.csproj", "src/EngQuest.Application/"]
 COPY ["src/EngQuest.Domain/EngQuest.Domain.csproj", "src/EngQuest.Domain/"]
 COPY ["src/EngQuest.Infrastructure/EngQuest.Infrastructure.csproj", "src/EngQuest.Infrastructure/"]
-COPY ["src/engquest.client/engquest.client.esproj", "src/engquest.client/"]
 RUN dotnet restore "src/EngQuest.Web/EngQuest.Web.csproj"
 COPY . .
 WORKDIR "/src/src/EngQuest.Web"
@@ -24,4 +23,5 @@ RUN dotnet publish "EngQuest.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY /src/engquest.client/dist /app/wwwroot
 ENTRYPOINT ["dotnet", "EngQuest.Web.dll"]
