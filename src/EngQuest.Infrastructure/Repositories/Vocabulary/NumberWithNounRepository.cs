@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using EngQuest.Domain.Lessons.Exercises;
+using EngQuest.Domain.Quests.Objectives;
 
 namespace EngQuest.Infrastructure.Repositories.Vocabulary;
 

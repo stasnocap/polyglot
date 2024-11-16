@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using EngQuest.Application.Abstractions.Behaviors;
-using EngQuest.Application.Exercises.GetExercise;
+using EngQuest.Application.Objectives.GetObjective;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +25,7 @@ public static class DependencyInjection
 
         ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
 
-        services.AddScoped<ExerciseConverter>();
+        services.AddScoped<ObjectiveConverter>();
 
         return services;
     }

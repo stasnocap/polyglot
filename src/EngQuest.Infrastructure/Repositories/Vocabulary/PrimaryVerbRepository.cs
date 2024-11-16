@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using EngQuest.Domain.Lessons.Exercises;
+using EngQuest.Domain.Quests.Objectives;
 using EngQuest.Domain.Shared;
 using EngQuest.Domain.Vocabulary.PrimaryVerbs;
 using EngQuest.Infrastructure.Extensions;

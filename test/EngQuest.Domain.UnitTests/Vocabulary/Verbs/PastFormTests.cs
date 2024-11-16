@@ -75,7 +75,7 @@ public class PastFormTests
     [InlineData("encourage", "encouraged")]
     [InlineData("establish", "established")]
     [InlineData("estimate", "estimated")]
-    [InlineData("exercise", "exercised")]
+    [InlineData("objective", "objectived")]
     [InlineData("expand", "expanded")]
     [InlineData("fry", "fried")]
     [InlineData("guess", "guessed")]

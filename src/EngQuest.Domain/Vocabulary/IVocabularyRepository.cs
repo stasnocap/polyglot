@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using EngQuest.Domain.Lessons.Exercises;
+using EngQuest.Domain.Quests.Objectives;
 using EngQuest.Domain.Shared;
 
 namespace EngQuest.Domain.Vocabulary;

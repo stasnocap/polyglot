@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Exercises\" />
-    <Folder Include="Lessons\" />
+    <Folder Include="Objectives\" />
+    <Folder Include="Quests\" />
     <Folder Include="Vocabulary\Adjectives\" />
   </ItemGroup>
 

@@ -34,7 +34,7 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link as="div" color="primary">
-            <RouterLink to="/lessons">
+            <RouterLink to="/quests">
               Приключение
             </RouterLink>
           </Link>
@@ -163,14 +163,14 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
           </div>)}
       </NavbarContent>
       <NavbarMenu className={theme}>
-        <NavbarMenuItem key="lessons">
+        <NavbarMenuItem key="quests">
           <Link
             as="div"
             color="primary"
             className="w-full"
             size="lg"
           >
-            <RouterLink to="/lessons">
+            <RouterLink to="/quests">
               Приключение
             </RouterLink>
           </Link>

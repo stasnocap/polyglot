@@ -24,6 +24,16 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(400)
             .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
 
+        builder.OwnsOne(user => user.Level, level =>
+        {
+            level.Property(x => x.Value)
+                .HasColumnName("level")
+                .HasDefaultValue(1);
+            
+            level.Property(x => x.Experience)
+                .HasColumnName("level_xp");
+        });
+
         builder.HasIndex(user => user.Email).IsUnique();
 
         builder.HasIndex(user => user.IdentityId).IsUnique();

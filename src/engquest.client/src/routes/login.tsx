@@ -37,7 +37,7 @@ export default function LogIn() {
     fetchUser()
       .then(() => {
         setIsLoading(false);
-        navigate('/lessons');
+        navigate('/quests');
       });
   }, [result]);
 

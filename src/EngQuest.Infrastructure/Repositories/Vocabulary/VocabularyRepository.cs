@@ -5,7 +5,7 @@ using System.Reflection;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using EngQuest.Application.Abstractions.Data;
-using EngQuest.Domain.Lessons.Exercises;
+using EngQuest.Domain.Quests.Objectives;
 using EngQuest.Domain.Shared;
 using EngQuest.Domain.Vocabulary;
 using EngQuest.Infrastructure.Data;

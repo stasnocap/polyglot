@@ -13,8 +13,8 @@ import Index from "./routes/contacts/index";
 import Root from "./routes/root.tsx";
 import Weather from "./components/weather.tsx";
 import Home from "./routes/home.tsx";
-import Lessons from "./routes/lessons/lessons.tsx";
-import Exercise from "./routes/lessons/exercise.tsx";
+import Quests from "./routes/quests/quests.tsx";
+import Objective from "./routes/quests/objective.tsx";
 import LogIn, {action as logInAction} from "./routes/login.tsx";
 import SignUp, {action as signUpAction} from "./routes/signup.tsx";
 import {UserProvider} from "./user-context.tsx";
@@ -39,12 +39,12 @@ const router = createBrowserRouter([
         action: signUpAction
       },
       {
-        path: "lessons",
-        element: <Lessons/>
+        path: "quests",
+        element: <Quests/>
       },
       {
-        path: "lessons/:lessonId",
-        element: <Exercise/>,
+        path: "quests/:questId",
+        element: <Objective/>,
       },
       {
         path: "weather",

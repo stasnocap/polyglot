@@ -21,7 +21,7 @@ export default function Home() {
           </div>
         </div>
         <Button radius="lg" className="bg-gradient-to-tr from-blue-500 to-pink-500 text-white text-2xl shadow-xl p-7">
-          <Link to="/lessons" className="after:absolute after:inset-0 text-background">
+          <Link to="/quests" className="after:absolute after:inset-0 text-background">
             Начать приключение
           </Link>
         </Button>

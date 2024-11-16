@@ -46,7 +46,7 @@ export default function SignUp() {
     fetchUser()
       .then(() => {
         setIsLoading(false);
-        navigate('/lessons');
+        navigate('/quests');
       });
   }, [result]);
 
