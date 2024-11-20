@@ -43,6 +43,10 @@ function getOrCreateUnauthorizedLevel(): Level {
   return level;
 }
 
+function resetLevel() {
+  localStorage.removeItem("level");
+}
+
 // Create a provider component
 export const UserProvider: React.FC<{ children: ReactNode }> = ({children}) => {
   const [user, setUser] = useState<User | null>(null);
@@ -67,6 +71,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({children}) => {
   const logout = async () => {
     await fetch('api/v1/users/logout');
     setUser(null);
+    resetLevel();
     setLevel(getOrCreateUnauthorizedLevel());
   }
   

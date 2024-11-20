@@ -24,7 +24,7 @@ public sealed class Level : Entity
             {
                 for (int i = 1; i <= 200; i++)
                 {
-                    if (!level.GainExperience(quest))
+                    if (!level.GainExperience(quest).NewLevel)
                     {
                         _requiredXp[quest + 1] = level.Experience;
                         continue;
@@ -64,22 +64,29 @@ public sealed class Level : Entity
     {
     }
 
-    public bool GainExperience(int questId)
+    public GainExperienceResult GainExperience(int questId)
     {
+        var result = new GainExperienceResult();
+
         if (Value > questId)
         {
-            return false;
+            return result;
         }
 
-        Experience += 10 + 2 * questId;
+        int gainedExperience = 10 + 2 * questId;
+        
+        Experience += gainedExperience;
+
+        result.GainedExperience = gainedExperience;
 
         if (Experience > 50 * Math.Pow(Value + 1, 2.2))
         {
             Value++;
-            return true;
+            result.NewLevel = true;
+            return result;
         }
 
-        return false;
+        return result;
     }
 
     public void SetUserId(int userId)

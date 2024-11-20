@@ -30,8 +30,7 @@ public class CompleteObjectiveCommandHandler(
 
         var response = new CompleteObjectiveResponse
         {
-            Success = result.Success,
-            CorrectAnswer = result.CorrectAnswer,
+            CompleteObjectiveResult = result
         };
 
         if (userId is null)
@@ -46,7 +45,7 @@ public class CompleteObjectiveCommandHandler(
             return response;
         }
 
-        level.GainExperience(request.QuestId);
+        GainExperienceResult gainExperienceResult = level.GainExperience(request.QuestId);
 
         await _cacheService.RemoveAsync($"level-{userId}", cancellationToken);
 
@@ -57,6 +56,8 @@ public class CompleteObjectiveCommandHandler(
             Value = level.Value,
             Experience = level.Experience,
         };
+        
+        response.GainExperienceResult = gainExperienceResult;
 
         return response;
     }

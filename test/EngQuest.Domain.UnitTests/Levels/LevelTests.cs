@@ -18,7 +18,7 @@ public class LevelTests(ITestOutputHelper testOutputHelper)
         {
             for (int i = 1; i <= 1000; i++)
             {
-                if (!level.GainExperience(quest))
+                if (!level.GainExperience(quest).NewLevel)
                 {
                     continue;
                 }
@@ -37,7 +37,7 @@ public class LevelTests(ITestOutputHelper testOutputHelper)
 
         for (int i = 1; i <= 50; i++)
         {
-            if (level.GainExperience(i))
+            if (level.GainExperience(i).NewLevel)
             {
                 break;
             }
