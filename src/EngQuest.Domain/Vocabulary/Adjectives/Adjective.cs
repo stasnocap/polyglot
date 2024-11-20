@@ -1,10 +1,10 @@
+using EngQuest.Domain.Abstractions;
 using EngQuest.Domain.Shared;
 
 namespace EngQuest.Domain.Vocabulary.Adjectives;
 
-public sealed class Adjective
+public sealed class Adjective : Entity
 {
-    public int Id { get; init; }
     public Text Text { get; private set; }
 
     public Adjective(Text text)

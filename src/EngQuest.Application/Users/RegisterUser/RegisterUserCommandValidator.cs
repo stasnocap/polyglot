@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using EngQuest.Domain.Levels;
+using FluentValidation;
 
 namespace EngQuest.Application.Users.RegisterUser;
 
@@ -13,5 +14,9 @@ internal sealed class RegisterUserCommandValidator : AbstractValidator<RegisterU
         RuleFor(c => c.Email).EmailAddress();
 
         RuleFor(c => c.Password).NotEmpty().MinimumLength(5).WithName("Пароль");
+
+        RuleFor(c => c.Level).LessThanOrEqualTo(2).GreaterThan(0);
+
+        RuleFor(c => c.Experience).LessThanOrEqualTo(Level.RequiredXp[2]).GreaterThanOrEqualTo(0);
     }
 }

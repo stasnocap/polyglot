@@ -23,6 +23,8 @@ using EngQuest.Infrastructure.Outbox;
 using EngQuest.Infrastructure.Repositories;
 using EngQuest.Infrastructure.Repositories.Vocabulary;
 using EngQuest.Domain.Abstractions;
+using EngQuest.Domain.Levels;
+using EngQuest.Domain.Objectives;
 using EngQuest.Domain.Quests;
 using EngQuest.Domain.Users;
 using EngQuest.Domain.Vocabulary;
@@ -55,6 +57,8 @@ public static class DependencyInjection
         AddHealthChecks(services, configuration);
 
         AddApiVersioning(services);
+        
+        AddBackgroundJobs(services, configuration);
 
         return services;
     }
@@ -68,7 +72,9 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ILevelRepository, LevelRepository>();
         services.AddScoped<IQuestRepository, QuestRepository>();
+        services.AddScoped<IObjectiveRepository, ObjectiveRepository>();
 
         services.AddScoped<IVocabularyRepository, VocabularyRepository>();
         services.AddScoped<IAdjectiveRepository, AdjectiveRepository>();

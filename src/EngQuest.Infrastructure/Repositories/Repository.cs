@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EngQuest.Domain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace EngQuest.Infrastructure.Repositories;
 
-public abstract class Repository<T>(ApplicationDbContext dbContext) where T : class
+public abstract class Repository<T>(ApplicationDbContext dbContext) where T : Entity
 {
     protected readonly ApplicationDbContext DbContext = dbContext;
 
@@ -10,7 +11,7 @@ public abstract class Repository<T>(ApplicationDbContext dbContext) where T : cl
     {
         return await DbContext
             .Set<T>()
-            .FirstOrDefaultAsync(user => EF.Property<int>(user, "Id") == id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     public virtual void Add(T entity)

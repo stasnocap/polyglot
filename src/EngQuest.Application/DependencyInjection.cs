@@ -17,6 +17,8 @@ public static class DependencyInjection
             configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
 
             configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            
+            configuration.AddOpenBehavior(typeof(AuthorizeForQuestBehavior<,>));
 
             configuration.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
         });
@@ -24,8 +26,6 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
 
         ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
-
-        services.AddScoped<ObjectiveConverter>();
 
         return services;
     }

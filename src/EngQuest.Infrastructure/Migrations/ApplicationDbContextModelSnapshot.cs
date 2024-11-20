@@ -22,7 +22,43 @@ namespace EngQuest.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("EngQuest.Domain.Quests.Objectives.Objective", b =>
+            modelBuilder.HasSequence("user_id_sequence")
+                .IncrementsBy(10);
+
+            modelBuilder.Entity("EngQuest.Domain.Levels.Level", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("integer")
+                        .HasColumnName("level_xp");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("Value")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("level");
+
+                    b.HasKey("Id")
+                        .HasName("pk_levels");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_levels_user_id");
+
+                    b.ToTable("levels", (string)null);
+                });
+
+            modelBuilder.Entity("EngQuest.Domain.Objectives.Objective", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,25 +98,6 @@ namespace EngQuest.Infrastructure.Migrations
                         .HasName("pk_quests");
 
                     b.ToTable("quests", (string)null);
-                });
-
-            modelBuilder.Entity("EngQuest.Domain.Quests.QuestObjective", b =>
-                {
-                    b.Property<int>("QuestId")
-                        .HasColumnType("integer")
-                        .HasColumnName("quest_id");
-
-                    b.Property<int>("ObjectiveId")
-                        .HasColumnType("integer")
-                        .HasColumnName("objective_id");
-
-                    b.HasKey("QuestId", "ObjectiveId")
-                        .HasName("pk_quest_objectives");
-
-                    b.HasIndex("ObjectiveId")
-                        .HasDatabaseName("ix_quest_objectives_objective_id");
-
-                    b.ToTable("quest_objectives", (string)null);
                 });
 
             modelBuilder.Entity("EngQuest.Domain.Users.Permission", b =>
@@ -170,7 +187,7 @@ namespace EngQuest.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "user_id_sequence");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -627,10 +644,12 @@ namespace EngQuest.Infrastructure.Migrations
 
             modelBuilder.Entity("EngQuest.Infrastructure.Outbox.OutboxMessage", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -679,9 +698,19 @@ namespace EngQuest.Infrastructure.Migrations
                     b.ToTable("role_user", (string)null);
                 });
 
-            modelBuilder.Entity("EngQuest.Domain.Quests.Objectives.Objective", b =>
+            modelBuilder.Entity("EngQuest.Domain.Levels.Level", b =>
                 {
-                    b.OwnsMany("EngQuest.Domain.Quests.Objectives.Word", "Words", b1 =>
+                    b.HasOne("EngQuest.Domain.Users.User", null)
+                        .WithOne()
+                        .HasForeignKey("EngQuest.Domain.Levels.Level", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_levels_user_user_id");
+                });
+
+            modelBuilder.Entity("EngQuest.Domain.Objectives.Objective", b =>
+                {
+                    b.OwnsMany("EngQuest.Domain.Objectives.Word", "Words", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -721,91 +750,39 @@ namespace EngQuest.Infrastructure.Migrations
                                 .HasConstraintName("fk_words_objectives_objective_id");
                         });
 
-                    b.Navigation("Words");
-                });
-
-            modelBuilder.Entity("EngQuest.Domain.Quests.Quest", b =>
-                {
-                    b.OwnsMany("EngQuest.Domain.Quests.Scores.Score", "Scores", b1 =>
+                    b.OwnsMany("EngQuest.Domain.Objectives.QuestId", "QuestIds", b1 =>
                         {
-                            b1.Property<int>("Id")
+                            b1.Property<int>("id")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("integer")
                                 .HasColumnName("id");
 
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("id"));
 
-                            b1.Property<int>("QuestId")
+                            b1.Property<int>("Value")
                                 .HasColumnType("integer")
                                 .HasColumnName("quest_id");
 
-                            b1.Property<int>("UserId")
+                            b1.Property<int>("objective_id")
                                 .HasColumnType("integer")
-                                .HasColumnName("user_id");
+                                .HasColumnName("objective_id");
 
-                            b1.HasKey("Id")
-                                .HasName("pk_scores");
+                            b1.HasKey("id")
+                                .HasName("pk_objective_quest_ids");
 
-                            b1.HasIndex("QuestId")
-                                .HasDatabaseName("ix_scores_quest_id");
+                            b1.HasIndex("objective_id")
+                                .HasDatabaseName("ix_objective_quest_ids_objective_id");
 
-                            b1.ToTable("scores", (string)null);
+                            b1.ToTable("objective_quest_ids", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("QuestId")
-                                .HasConstraintName("fk_scores_quests_quest_id");
-
-                            b1.OwnsOne("EngQuest.Domain.Quests.Scores.Rating", "Rating", b2 =>
-                                {
-                                    b2.Property<int>("ScoreId")
-                                        .HasColumnType("integer")
-                                        .HasColumnName("id");
-
-                                    b2.Property<int>("CorrectNumber")
-                                        .HasColumnType("integer")
-                                        .HasColumnName("rating_correct_number");
-
-                                    b2.Property<float>("Rate")
-                                        .HasColumnType("real")
-                                        .HasColumnName("rating_rate");
-
-                                    b2.Property<int>("WrongNumber")
-                                        .HasColumnType("integer")
-                                        .HasColumnName("rating_wrong_number");
-
-                                    b2.HasKey("ScoreId");
-
-                                    b2.ToTable("scores");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("ScoreId")
-                                        .HasConstraintName("fk_scores_scores_id");
-                                });
-
-                            b1.Navigation("Rating")
-                                .IsRequired();
+                                .HasForeignKey("objective_id")
+                                .HasConstraintName("fk_objective_quest_ids_objectives_objective_id");
                         });
 
-                    b.Navigation("Scores");
-                });
+                    b.Navigation("QuestIds");
 
-            modelBuilder.Entity("EngQuest.Domain.Quests.QuestObjective", b =>
-                {
-                    b.HasOne("EngQuest.Domain.Quests.Objectives.Objective", "Objective")
-                        .WithMany()
-                        .HasForeignKey("ObjectiveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_quest_objectives_objectives_objective_id");
-
-                    b.HasOne("EngQuest.Domain.Quests.Quest", null)
-                        .WithMany("Objectives")
-                        .HasForeignKey("QuestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_quest_objectives_quests_quest_id");
-
-                    b.Navigation("Objective");
+                    b.Navigation("Words");
                 });
 
             modelBuilder.Entity("EngQuest.Domain.Users.RolePermission", b =>
@@ -823,37 +800,6 @@ namespace EngQuest.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_role_permissions_roles_role_id");
-                });
-
-            modelBuilder.Entity("EngQuest.Domain.Users.User", b =>
-                {
-                    b.OwnsOne("EngQuest.Domain.Users.Level", "Level", b1 =>
-                        {
-                            b1.Property<int>("UserId")
-                                .HasColumnType("integer")
-                                .HasColumnName("id");
-
-                            b1.Property<int>("Experience")
-                                .HasColumnType("integer")
-                                .HasColumnName("level_xp");
-
-                            b1.Property<int>("Value")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
-                                .HasDefaultValue(1)
-                                .HasColumnName("level");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId")
-                                .HasConstraintName("fk_users_users_id");
-                        });
-
-                    b.Navigation("Level")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("EngQuest.Domain.Vocabulary.PrimaryVerbs.PrimaryVerb", b =>
@@ -973,11 +919,6 @@ namespace EngQuest.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_role_user_user_users_id");
-                });
-
-            modelBuilder.Entity("EngQuest.Domain.Quests.Quest", b =>
-                {
-                    b.Navigation("Objectives");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using EngQuest.Application.Exceptions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
 namespace EngQuest.Web.Middleware;
 
@@ -63,6 +58,12 @@ internal sealed class ExceptionHandlingMiddleware
                 "Validation error",
                 "One or more validation errors has occurred",
                 validationException.Errors),
+            ForbiddenException forbiddenException => new ExceptionDetails(
+                StatusCodes.Status403Forbidden,
+                "ForbiddenFailure",
+                forbiddenException.Error.Code,
+                forbiddenException.Error.Name,
+                null),
             _ => new ExceptionDetails(
                 StatusCodes.Status500InternalServerError,
                 "ServerError",

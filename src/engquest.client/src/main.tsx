@@ -17,7 +17,8 @@ import Quests from "./routes/quests/quests.tsx";
 import Objective from "./routes/quests/objective.tsx";
 import LogIn, {action as logInAction} from "./routes/login.tsx";
 import SignUp, {action as signUpAction} from "./routes/signup.tsx";
-import {UserProvider} from "./user-context.tsx";
+import {UserProvider} from "./providers/user-provider.tsx";
+import {ThemeProvider} from "./providers/theme-provider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -89,9 +90,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <NextUIProvider className="min-h-screen">
-      <UserProvider>
-        <RouterProvider router={router}/>
-      </UserProvider>
+      <ThemeProvider>
+        <UserProvider>
+          <RouterProvider router={router}/>
+        </UserProvider>
+      </ThemeProvider>
     </NextUIProvider>
   </StrictMode>,
-)
+);

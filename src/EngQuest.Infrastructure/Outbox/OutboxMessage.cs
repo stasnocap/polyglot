@@ -1,8 +1,8 @@
 ﻿namespace EngQuest.Infrastructure.Outbox;
 
-public sealed class OutboxMessage(Guid id, DateTime occurredOnUtc, string type, string content)
+public sealed class OutboxMessage(DateTime occurredOnUtc, string type, string content)
 {
-    public Guid Id { get; init; } = id;
+    public int Id { get; init; }
 
     public DateTime OccurredOnUtc { get; init; } = occurredOnUtc;
 

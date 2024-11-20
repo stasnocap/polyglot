@@ -8,11 +8,15 @@ public static class UserErrors
         "User.Found",
         "Пользователь не найден");
 
+    public static readonly Error Unauthorized = new(
+        "User.Unauthorized",
+        "Пользователь не авторизован");
+
+    public static readonly Error Forbidden = new(
+        "User.Forbidden",
+        "У пользователя недостаточно прав");
+
     public static readonly Error InvalidCredentials = new(
         "User.InvalidCredentials",
         "Неправильный логин или пароль");
-
-    public static readonly Error ScoreAlreadyAdded = new(
-        "User.ScoreAlreadyAdded",
-        "The score is already added");
 }

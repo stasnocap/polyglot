@@ -56,7 +56,6 @@ public sealed class ApplicationDbContext(
                 return domainEvents;
             })
             .Select(domainEvent => new OutboxMessage(
-                Guid.NewGuid(),
                 dateTimeProvider.UtcNow,
                 domainEvent.GetType().Name,
                 JsonConvert.SerializeObject(domainEvent, JsonSerializerSettings)))

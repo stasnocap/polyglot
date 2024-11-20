@@ -1,4 +1,4 @@
-using EngQuest.Domain.Quests.Objectives;
+using EngQuest.Domain.Objectives;
 using EngQuest.Domain.Shared;
 
 namespace EngQuest.Domain.UnitTests.Quests.Objectives;
@@ -9,5 +9,5 @@ internal static class WordData
     
     public static readonly Text Text = new("adjective");
 
-    public const WordType WordType = EngQuest.Domain.Quests.Objectives.WordType.Adjective;
+    public const WordType WordType = Domain.Objectives.WordType.Adjective;
 }

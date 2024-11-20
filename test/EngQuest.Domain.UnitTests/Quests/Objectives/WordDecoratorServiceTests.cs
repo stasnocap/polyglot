@@ -1,5 +1,5 @@
+using EngQuest.Domain.Objectives;
 using FluentAssertions;
-using EngQuest.Domain.Quests.Objectives;
 using EngQuest.Domain.Shared;
 
 namespace EngQuest.Domain.UnitTests.Quests.Objectives;

@@ -109,5 +109,5 @@ internal sealed class ProcessOutboxMessagesJob(
             transaction: transaction);
     }
 
-    internal sealed record OutboxMessageResponse(Guid Id, string Content);
+    internal sealed record OutboxMessageResponse(int Id, string Content);
 }

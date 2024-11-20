@@ -3,7 +3,7 @@ import {Form, useActionData, useNavigate, useSubmit} from "react-router-dom";
 import {EyeFilledIcon, EyeSlashFilledIcon, MailIcon} from "../icons/authentication-icons.tsx";
 import {useEffect, useState} from "react";
 import {post, Result, ApiError} from "../api.ts";
-import {useUser} from "../user-context.tsx";
+import {useUser} from "../providers/user-provider.tsx";
 
 export function action({request}: { request: Request }): Promise<Result> {
   return post(request, 'api/v1/users/login');

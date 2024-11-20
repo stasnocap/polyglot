@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Dapper;
 using EngQuest.Application.Abstractions.Data;
-using EngQuest.Domain.Quests.Objectives;
+using EngQuest.Domain.Objectives;
 using EngQuest.Domain.Shared;
 using EngQuest.Domain.Vocabulary.Adverbs;
 using EngQuest.Domain.Vocabulary.ComparisonAdjectives;
@@ -31,7 +31,7 @@ internal static class SeedDataExtensions
 
         InsertQuests(connection);
         InsertObjectives(connection);
-        InsertQuestObjectives(connection);
+        InsertObjectiveQuestIds(connection);
         InsertWords(connection);
         
         InsertAdjectives(connection);
@@ -1463,12 +1463,12 @@ internal static class SeedDataExtensions
         connection.Execute(wordsSql, words);
     }
 
-    private static void InsertQuestObjectives(IDbConnection connection)
+    private static void InsertObjectiveQuestIds(IDbConnection connection)
     {
         object[] questObjectives = GetQuestObjectives();
 
         const string questObjectivesSql = """
-                                          INSERT INTO public.quest_objectives (quest_id, objective_id)
+                                          INSERT INTO public.objective_quest_ids (quest_id, objective_id)
                                           VALUES (@QuestId, @ObjectiveId);
                                           """;
 

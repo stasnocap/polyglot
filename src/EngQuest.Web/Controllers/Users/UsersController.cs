@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 using Asp.Versioning;
+using EngQuest.Application.Levels.GetLevel;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,7 +11,6 @@ using EngQuest.Application.Users.RegisterUser;
 using EngQuest.Domain.Abstractions;
 using EngQuest.Infrastructure.Authentication;
 using EngQuest.Infrastructure.Authorization;
-using Microsoft.AspNetCore.Http;
 
 namespace EngQuest.Web.Controllers.Users;
 
@@ -25,18 +23,30 @@ public class UsersController(ISender _sender) : ControllerBase
     [HttpGet("me")]
     [HasPermission(Permissions.UsersRead)]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
-    public IActionResult GetLoggedInUser()
+    public async Task<IActionResult> GetLoggedInUser()
     {
         if (!User.Identity?.IsAuthenticated ?? true)
         {
             return NoContent();
         }
 
-        var userResponse = new UserResponse()
+        int userId = User.GetUserId()!.Value;
+
+        Result<LevelResponse> result = await _sender.Send(new GetLevelQuery(userId));
+
+        if (result.IsFailure)
+        {
+            throw new Exception(result.Error.ToString());
+        }
+
+        LevelResponse level = result.Value;
+
+        var userResponse = new UserResponse
         {
             FirstName = User.GetFirstName()!,
             LastName = User.GetLastName()!,
             Email = User.GetEmail()!,
+            Level = level,
         };
 
         return Ok(userResponse);
@@ -52,7 +62,9 @@ public class UsersController(ISender _sender) : ControllerBase
             request.Email,
             request.FirstName,
             request.LastName,
-            request.Password);
+            request.Password,
+            request.Level,
+            request.Experience);
 
         Result<LogInResponse> result = await _sender.Send(command, cancellationToken);
 

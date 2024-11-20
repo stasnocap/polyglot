@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EngQuest.Domain.Quests.Objectives;
+﻿using EngQuest.Domain.Objectives;
+using Microsoft.EntityFrameworkCore;
 using EngQuest.Domain.Vocabulary.Adverbs;
 using EngQuest.Infrastructure.Extensions;
 

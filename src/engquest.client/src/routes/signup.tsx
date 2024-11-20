@@ -3,7 +3,7 @@ import {Form, useActionData, useNavigate, useSubmit} from "react-router-dom";
 import {EyeFilledIcon, EyeSlashFilledIcon, MailIcon} from "../icons/authentication-icons.tsx";
 import {useEffect, useState} from "react";
 import {Result, ValidationError, post} from "../api.ts";
-import {useUser} from "../user-context.tsx";
+import {useUser} from "../providers/user-provider.tsx";
 
 export function action({request}: { request: Request }): Promise<Result> {
   return post(request, 'api/v1/users/register');
@@ -19,7 +19,7 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = useState<ValidationError | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const submit = useSubmit();
-  const { fetchUser } = useUser();
+  const {level, fetchUser} = useUser();
 
   useEffect(() => {
     if (!result) {
@@ -38,7 +38,7 @@ export default function SignUp() {
           setPasswordError(error);
         }
       });
-      
+
       setIsLoading(false);
       return;
     }
@@ -59,6 +59,8 @@ export default function SignUp() {
 
   return (
     <Form className="flex flex-col w-80 mx-auto gap-3" method="post">
+      <Input type="hidden" defaultValue={level.value.toString()} name="level" />
+      <Input type="hidden" defaultValue={level.experience.toString()} name="experience" />
       <Input
         color="primary"
         type="text"
@@ -72,6 +74,7 @@ export default function SignUp() {
         errorMessage={firstNameError?.errorMessage}
         onInput={() => setFirstNameError(null)}
         isClearable
+        autoComplete="off"
       />
       <Input
         color="primary"
@@ -86,6 +89,7 @@ export default function SignUp() {
         onInput={() => setLastNameError(null)}
         isClearable
         isRequired
+        autoComplete="off"
       />
       <Input
         color="primary"
@@ -102,6 +106,7 @@ export default function SignUp() {
         errorMessage={emailError?.errorMessage}
         onInput={() => setEmailError(null)}
         isRequired
+        autoComplete="off"
       />
       <Input
         label="Пароль"

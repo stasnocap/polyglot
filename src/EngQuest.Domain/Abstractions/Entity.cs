@@ -4,7 +4,7 @@ public abstract class Entity
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 
-    protected Entity(Guid id)
+    protected Entity(int id)
     {
         Id = id;
     }
@@ -13,7 +13,7 @@ public abstract class Entity
     {
     }
 
-    public Guid Id { get; init; }
+    public int Id { get; init; }
 
     public IReadOnlyList<IDomainEvent> GetDomainEvents()
     {

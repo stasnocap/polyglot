@@ -5,8 +5,9 @@ import {ObjectiveStarIcon} from "../../icons/objective-star-icon.tsx";
 import {CheckIcon} from "../../icons/check-icon.tsx";
 import {CloseIcon} from "../../icons/close-icon.tsx";
 import {getRandomObjective, completeObjective, CompleteObjectiveResult} from "./quests.ts";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ObjectiveSkeleton from "./objective-skeleton.tsx";
+import {experiencePerFirstQuest, experienceToAchiveFirstLevel, useUser} from "../../providers/user-provider.tsx";
 
 interface Objective {
   objectiveId: number,
@@ -35,7 +36,7 @@ interface ClickHistory {
   wordGroupIndex: number,
 }
 
-function mapObjective(objective: any) : Objective {
+function mapObjective(objective: any): Objective {
   if (!objective) {
     throw new Response("", {
       status: 404,
@@ -112,7 +113,7 @@ export default function Objective() {
   const maxShowGroupCount: number = 4;
   const emptyEngPhrase = ['Переведите предложение'];
 
-  const { questId } = useParams();
+  const {questId} = useParams();
   const [loading, setLoading] = useState(true);
   const [rusPhrase, setRusPhrase] = useState("");
   const [rating, setRating] = useState<Rating | null>();
@@ -121,10 +122,11 @@ export default function Objective() {
   const [isBackspaceDisabled, setIsBackspaceDisabled] = useState(true);
   const [completeObjectiveResult, setCompleteObjectiveResult] = useState<CompleteObjectiveResult | null>(null);
   const [revalidateCounter, setRevalidateCounter] = useState(0);
+  const {level, updateLevel} = useUser();
 
   useEffect(() => {
     setLoading(true);
-    
+
     getRandomObjective(Number(questId))
       .then(x => {
         objective = mapObjective(x);
@@ -177,9 +179,22 @@ export default function Objective() {
       completeObjective(objective.objectiveId, objective.questId, newEngPhrase.join(' '))
         .then(completeResult => {
           setCompleteObjectiveResult(completeResult);
-          
+
           if (completeResult.success) {
             setRevalidateCounter(x => x + 1);
+            if (completeResult.level) {
+              updateLevel(completeResult.level);
+            } else {
+              if (level.experience < experienceToAchiveFirstLevel) {
+                level.experience += experiencePerFirstQuest;
+              }
+              
+              if (level.experience >= experienceToAchiveFirstLevel && level.value === 1) {
+                level.value++;
+              }
+              
+              updateLevel(level);
+            }
           } else {
             clickHistory = [];
             shownGroups.forEach(x => x.disabled = false);
@@ -246,7 +261,7 @@ export default function Objective() {
           <div className="flex justify-center items-center h-full text-xl md:text-5xl bg-success-200 text-success animate-fade absolute w-full opacity-0">
             {getRandomCompliment()}
           </div>
-        ) : (<></>) }
+        ) : (<></>)}
         <div className="grid grid-cols-2 gap-5">
           {shownGroups.map((wordGroup, i) => (
             <ButtonGroup className={"grid grid-cols-2"} key={i} radius="none" data-word-group-index={wordGroup.index} data-group-index={i}>

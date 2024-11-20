@@ -7,14 +7,14 @@ public static class ClaimsPrincipalExtensions
 {
     public static int? GetUserId(this ClaimsPrincipal? principal)
     {
-        string? userId = principal?.FindFirstValue(nameof(User.IdentityId));
+        string? userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
         return int.TryParse(userId, out int parsedUserId) ? parsedUserId : null;
     }
 
     public static string? GetIdentityId(this ClaimsPrincipal? principal)
     {
-        return principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+        return principal?.FindFirstValue(nameof(User.IdentityId));
     }
 
     public static string? GetFirstName(this ClaimsPrincipal? principal)

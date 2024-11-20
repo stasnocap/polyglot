@@ -1,20 +1,17 @@
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownMenu, Dropdown, DropdownTrigger, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownMenu, Dropdown, DropdownTrigger, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Badge} from "@nextui-org/react";
 import {NavLink as RouterLink, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import {useState} from "react";
 import EngQuestLogo from "../icons/engquest-logo.tsx";
 import Palette from "../components/palette.tsx";
 import BrushIcon from "../icons/brush-icon.tsx";
-import {useUser} from "../user-context.tsx";
+import {useUser} from "../providers/user-provider.tsx";
+import {useTheme} from "../providers/theme-provider.tsx";
 
-export default function Header({theme, setTheme}: { theme: string, setTheme: React.Dispatch<React.SetStateAction<string>> }) {
-  const {user, logout} = useUser();
+export default function Header() {
+  const {user, level, logout} = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  function switchTheme(theme: string) {
-    localStorage.setItem("theme", theme);
-    setTheme(theme);
-  }
+  const {switchTheme} = useTheme();
 
   return (
     <Navbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen} disableAnimation className="sticky">
@@ -61,7 +58,7 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end" className="gap-2">
-        <Dropdown className={`${theme} bg-background`}>
+        <Dropdown className="bg-background">
           <NavbarItem>
             <DropdownTrigger>
               <Button
@@ -126,16 +123,19 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
         </Dropdown>
         {user ?
           (<>
-            <Dropdown placement="bottom-end" className={`${theme} bg-background`}>
+            <Dropdown placement="bottom-end" className="bg-background">
               <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  className="transition-transform cursor-pointer"
-                  color="primary"
-                  name="Jason Hughes"
-                  size="sm"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
+                <div>
+                  <Badge content={`${level?.value}`} color="primary" placement="bottom-right">
+                    <Avatar
+                      className="transition-transform cursor-pointer"
+                      color="primary"
+                      name="Hero"
+                      size="sm"
+                      src="avatar.svg"
+                    />
+                  </Badge>
+                </div>
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="flat" className="text-foreground">
                 <DropdownItem key="profile" className="h-14 gap-2" textValue={`Signed in as ${user.email}`}>
@@ -162,7 +162,7 @@ export default function Header({theme, setTheme}: { theme: string, setTheme: Rea
             </NavbarItem>
           </div>)}
       </NavbarContent>
-      <NavbarMenu className={theme}>
+      <NavbarMenu>
         <NavbarMenuItem key="quests">
           <Link
             as="div"

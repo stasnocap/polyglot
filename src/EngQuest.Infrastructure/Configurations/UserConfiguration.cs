@@ -11,6 +11,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable("users");
 
         builder.HasKey(user => user.Id);
+        
+        builder.Property(user => user.Id).UseHiLo("user_id_sequence");
 
         builder.Property(user => user.FirstName)
             .HasMaxLength(200)
@@ -23,16 +25,6 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.Email)
             .HasMaxLength(400)
             .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
-
-        builder.OwnsOne(user => user.Level, level =>
-        {
-            level.Property(x => x.Value)
-                .HasColumnName("level")
-                .HasDefaultValue(1);
-            
-            level.Property(x => x.Experience)
-                .HasColumnName("level_xp");
-        });
 
         builder.HasIndex(user => user.Email).IsUnique();
 

@@ -1,37 +1,63 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using EngQuest.Application.Abstractions.Authentication;
+﻿using EngQuest.Application.Abstractions.Authentication;
+using EngQuest.Application.Abstractions.Caching;
 using EngQuest.Application.Abstractions.Messaging;
+using EngQuest.Application.Levels.GetLevel;
 using EngQuest.Domain.Abstractions;
-using EngQuest.Domain.Quests;
+using EngQuest.Domain.Levels;
+using EngQuest.Domain.Objectives;
 
 namespace EngQuest.Application.Objectives.CompleteObjective;
 
 public class CompleteObjectiveCommandHandler(
-    IQuestRepository _questRepository,
+    IObjectiveRepository _objectiveRepository,
+    ILevelRepository _levelRepository,
+    IUnitOfWork _unitOfWork,
     IUserContext _userContext,
-    IUnitOfWork _unitOfWork) : ICommandHandler<CompleteObjectiveCommand, CompleteObjectiveResult>
+    ICacheService _cacheService) : ICommandHandler<CompleteObjectiveCommand, CompleteObjectiveResponse>
 {
-    [SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
-    public async Task<Result<CompleteObjectiveResult>> Handle(CompleteObjectiveCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CompleteObjectiveResponse>> Handle(CompleteObjectiveCommand request, CancellationToken cancellationToken)
     {
-        Quest? quest = await _questRepository.GetByIdAsync(request.QuestId, cancellationToken);
+        Objective? objective = await _objectiveRepository.GetByIdAsync(request.ObjectiveId, request.QuestId, cancellationToken);
 
-        if (quest is null)
+        if (objective is null)
         {
-            return Result.Failure<CompleteObjectiveResult>(QuestErrors.NotFound);
+            return Result.Failure<CompleteObjectiveResponse>(ObjectiveErrors.NotFound);
         }
 
         int? userId = _userContext.UserId;
 
-        Result<CompleteObjectiveResult> completeObjectiveResult = quest.CompleteObjective(request.Answer, request.ObjectiveId, userId);
-        
-        if (completeObjectiveResult.IsFailure)
-        {
-            return completeObjectiveResult;
-        }
-        
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        CompleteObjectiveResult result = objective.Complete(request.Answer, request.QuestId, userId);
 
-        return completeObjectiveResult;
+        var response = new CompleteObjectiveResponse
+        {
+            Success = result.Success,
+            CorrectAnswer = result.CorrectAnswer,
+        };
+
+        if (userId is null)
+        {
+            return response;
+        }
+
+        Level? level = await _levelRepository.GetByUserIdAsync(userId.Value, cancellationToken);
+
+        if (level is null)
+        {
+            return response;
+        }
+
+        level.GainExperience(request.QuestId);
+
+        await _cacheService.RemoveAsync($"level-{userId}", cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        response.Level = new LevelResponse
+        {
+            Value = level.Value,
+            Experience = level.Experience,
+        };
+
+        return response;
     }
 }

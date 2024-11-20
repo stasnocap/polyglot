@@ -1,4 +1,4 @@
-﻿using EngQuest.Domain.Quests.Objectives;
+﻿using EngQuest.Domain.Objectives;
 using EngQuest.Domain.Vocabulary.Adjectives;
 using EngQuest.Domain.Vocabulary.Adverbs;
 using EngQuest.Domain.Vocabulary.Cities;

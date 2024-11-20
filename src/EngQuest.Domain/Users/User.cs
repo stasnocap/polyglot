@@ -1,18 +1,20 @@
+using EngQuest.Domain.Abstractions;
+using EngQuest.Domain.Users.Events;
+
 namespace EngQuest.Domain.Users;
 
-public sealed class User
+public sealed class User : Entity
 {
     private readonly List<Role> _roles = [];
-    
-    public int Id { get; init; }
+
     public string IdentityId { get; private set; } = string.Empty;
-    
+
     public FirstName FirstName { get; private set; }
     public LastName LastName { get; private set; }
     public Email Email { get; private set; }
 
-    public IReadOnlyList<Role> Roles => [.._roles];
-    
+    public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
+
     private User(FirstName firstName, LastName lastName, Email email)
     {
         FirstName = firstName;
@@ -28,8 +30,10 @@ public sealed class User
     public static User Create(FirstName firstName, LastName lastName, Email email)
     {
         var user = new User(firstName, lastName, email);
-        
+
         user._roles.Add(Role.Registered);
+        
+        user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
 
         return user;
     }

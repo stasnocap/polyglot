@@ -2,26 +2,49 @@
 using EngQuest.Application.Abstractions.Messaging;
 using EngQuest.Application.Objectives.GetObjective;
 using EngQuest.Domain.Abstractions;
+using EngQuest.Domain.Objectives;
 using EngQuest.Domain.Quests;
+using EngQuest.Domain.Vocabulary;
 
 namespace EngQuest.Application.Objectives.GetRandomObjective;
 
-[SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
-public class GetRandomObjectiveQueryHandler(IQuestRepository _questRepository, ObjectiveConverter _objectiveConverter) : IQueryHandler<GetRandomObjectiveQuery, ObjectiveResponse>
+public class GetRandomObjectiveQueryHandler(
+    IVocabularyRepository _vocabularyRepository,
+    IObjectiveRepository _objectiveRepository) : IQueryHandler<GetRandomObjectiveQuery, ObjectiveResponse>
 {
+    private const int WordGroupSize = 6;
+    private const int RightAnswerCount = 1;
+    private const int RandomWordsCount = WordGroupSize - RightAnswerCount;
+
+    [SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
     public async Task<Result<ObjectiveResponse>> Handle(GetRandomObjectiveQuery request, CancellationToken cancellationToken)
     {
-        Quest? quest = await _questRepository.GetByIdAsync(request.QuestId, cancellationToken);
+        Objective? randomObjective = await _objectiveRepository.GetRandomAsync(request.QuestId, cancellationToken);
 
-        if (quest is null)
+        if (randomObjective is null)
         {
             return Result.Failure<ObjectiveResponse>(QuestErrors.NotFound);
         }
-        
-        QuestObjective questObjective = quest.Objectives[Random.Shared.Next(quest.Objectives.Count)];
 
-        ObjectiveResponse objectiveResult = await _objectiveConverter.ConvertAsync(questObjective.Objective, quest, cancellationToken);
+        List<string[]> wordGroups = [];
 
-        return objectiveResult;
+        foreach (Word word in randomObjective.Words.OrderBy(x => x.Number.Value))
+        {
+            List<string> words = await _vocabularyRepository.GetRandomAsync(word, RandomWordsCount, cancellationToken);
+
+            WordDecoratorService.Decorate(word, words);
+
+            words.Insert(Random.Shared.Next(words.Count), word.Text.Value);
+
+            wordGroups.Add([..words]);
+        }
+
+        return new ObjectiveResponse
+        {
+            ObjectiveId = randomObjective.Id,
+            QuestId = request.QuestId,
+            RusPhrase = randomObjective.RusPhrase.Value,
+            WordGroups = [..wordGroups],
+        };
     }
 }

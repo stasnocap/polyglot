@@ -1,4 +1,4 @@
-using EngQuest.Domain.Quests.Objectives;
+using EngQuest.Domain.Objectives;
 
 namespace EngQuest.Infrastructure.Data;
 
