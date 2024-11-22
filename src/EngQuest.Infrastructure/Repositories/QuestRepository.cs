@@ -15,7 +15,7 @@ internal sealed class QuestRepository(ApplicationDbContext dbContext) : Reposito
     }
 
     // TODO: fix this
-    public Task<List<Quest>> GetRangeAsync(int? userId, string? searchTerm, CancellationToken cancellationToken)
+    public Task<List<Quest>> GetRangeAsync(int? userId, CancellationToken cancellationToken)
     {
         return DbContext
             .Set<Quest>()

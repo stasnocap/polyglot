@@ -11,12 +11,12 @@ public class GetQuestsQueryHandler(IQuestRepository _questRepository, IUserConte
     {
         int? currentUserId = _userContext.UserId;
 
-        List<Quest> quests = await _questRepository.GetRangeAsync(currentUserId, request.SearchTerm, cancellationToken);
+        List<Quest> quests = await _questRepository.GetRangeAsync(currentUserId, cancellationToken);
 
-        return Result.Success<IReadOnlyList<QuestResponse>>(quests.Select(l => new QuestResponse
+        return Result.Success<IReadOnlyList<QuestResponse>>(quests.Select(x => new QuestResponse
         {
-            Name = l.Name.Value,
-            QuestId = l.Id
+            Name = x.Name.Value,
+            Id = x.Id
         }).ToList());
     }
 }

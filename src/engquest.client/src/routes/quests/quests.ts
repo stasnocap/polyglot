@@ -6,6 +6,19 @@ export async function getRandomObjective(questId: number) {
   return await response.json();
 }
 
+export async function getQuests() {
+  const response = await fetch('/api/v1/quests');
+
+  const result = await response.json();
+
+  return result as Quest[];
+}
+
+export interface Quest {
+  id: number;
+  name: string;
+}
+
 export interface GainExperienceResult {
   gainedExperience: number;
   newLevel: boolean;
@@ -22,8 +35,10 @@ export interface CompleteObjectiveResponse {
   level: Level | null
 }
 
-export async function completeObjective(exericesId:number, questId: number, answer: string) : Promise<CompleteObjectiveResponse> {
-    const response = await fetch(`/api/v1/objectives/${exericesId}/complete?` + new URLSearchParams({ questId, answer } as any).toString());
+export async function completeObjective(exericesId: number, questId: number, answer: string) {
+  const response = await fetch(`/api/v1/objectives/${exericesId}/complete?` + new URLSearchParams({questId, answer} as any).toString());
 
-  return await response.json();
+  const data = await response.json();
+
+  return data as CompleteObjectiveResponse;
 }

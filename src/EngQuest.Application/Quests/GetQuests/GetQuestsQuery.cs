@@ -1,6 +1,9 @@
-﻿using EngQuest.Application.Abstractions.Messaging;
-using MediatR;
+﻿using EngQuest.Application.Abstractions.Caching;
 
 namespace EngQuest.Application.Quests.GetQuests;
 
-public record GetQuestsQuery(string? SearchTerm) : IQuery<IReadOnlyList<QuestResponse>>;
+public record GetQuestsQuery : ICachedQuery<IReadOnlyList<QuestResponse>>
+{
+    public string CacheKey => "quests";
+    public TimeSpan? Expiration => null;
+}
