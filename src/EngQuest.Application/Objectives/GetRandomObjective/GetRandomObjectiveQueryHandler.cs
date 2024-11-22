@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using EngQuest.Application.Abstractions.Messaging;
+using EngQuest.Application.Extensions;
 using EngQuest.Application.Objectives.GetObjective;
 using EngQuest.Domain.Abstractions;
 using EngQuest.Domain.Objectives;
@@ -16,7 +18,6 @@ public class GetRandomObjectiveQueryHandler(
     private const int RightAnswerCount = 1;
     private const int RandomWordsCount = WordGroupSize - RightAnswerCount;
 
-    [SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
     public async Task<Result<ObjectiveResponse>> Handle(GetRandomObjectiveQuery request, CancellationToken cancellationToken)
     {
         Objective? randomObjective = await _objectiveRepository.GetRandomAsync(request.QuestId, cancellationToken);
@@ -34,10 +35,12 @@ public class GetRandomObjectiveQueryHandler(
 
             WordDecoratorService.Decorate(word, words);
 
-            words.Insert(Random.Shared.Next(words.Count), word.Text.Value);
+            words.Insert(Random.Shared.Next(words.Count), word.Text.Value.ToLower(CultureInfo.InvariantCulture));
 
             wordGroups.Add([..words]);
         }
+
+        wordGroups.Shuffle(count: 4);
 
         return new ObjectiveResponse
         {

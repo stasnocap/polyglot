@@ -364,6 +364,12 @@ dotnet_diagnostic.S4136.severity = none
 # S6605: Collection-specific "Exists" method should be used instead of the "Any" extension
 dotnet_diagnostic.S6605.severity = none
 
+# CA1308: Normalize strings to uppercase
+dotnet_diagnostic.CA1308.severity = none
+
+# CA5394: Do not use insecure randomness
+dotnet_diagnostic.CA5394.severity = none
+
 # Ignore ef core 'Migrations' folder
 [**/Migrations/**]
 dotnet_diagnostic.CA1861.severity = none

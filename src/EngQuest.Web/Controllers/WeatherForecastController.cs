@@ -20,7 +20,6 @@ public class WeatherForecastController : ControllerBase
     ];
 
     [HttpGet]
-    [SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
     public IEnumerable<WeatherForecast> Get()
     {
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast

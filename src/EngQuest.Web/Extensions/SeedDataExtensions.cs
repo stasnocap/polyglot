@@ -1594,11 +1594,11 @@ internal static class SeedDataExtensions
             new { Number = 3, Text = "her.", Type = WordType.Pronoun, ObjectiveId = 8 },
 
             new { Number = 1, Text = "Will", Type = WordType.PrimaryVerb, ObjectiveId = 9 },
-            new { Number = 2, Text = "i", Type = WordType.Pronoun, ObjectiveId = 9 },
+            new { Number = 2, Text = "I", Type = WordType.Pronoun, ObjectiveId = 9 },
             new { Number = 3, Text = "break?", Type = WordType.Verb, ObjectiveId = 9 },
 
             new { Number = 1, Text = "Did", Type = WordType.PrimaryVerb, ObjectiveId = 10 },
-            new { Number = 2, Text = "i", Type = WordType.Pronoun, ObjectiveId = 10 },
+            new { Number = 2, Text = "I", Type = WordType.Pronoun, ObjectiveId = 10 },
             new { Number = 3, Text = "show", Type = WordType.Verb, ObjectiveId = 10 },
             new { Number = 4, Text = "them?", Type = WordType.Pronoun, ObjectiveId = 10 },
 

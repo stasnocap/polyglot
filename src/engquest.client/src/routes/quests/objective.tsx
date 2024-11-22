@@ -130,7 +130,16 @@ export default function Objective() {
     setGainExperienceResult(null);
 
     const button = event.target as HTMLInputElement;
-    const word = button.textContent!;
+    let word = button.textContent!;
+
+    // uppercase first letter
+    if (engPhrase.length === 1 && engPhrase[0] === emptyEngPhrase[0]) {
+      word = `${word[0].toUpperCase()}${word.slice(1)}`;
+    }
+
+    if (word === 'i') {
+      word = 'I';
+    }
 
     const newEngPhrase = engPhrase[engPhrase.length - 1] === emptyEngPhrase[0]
       ? [word]
