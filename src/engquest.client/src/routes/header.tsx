@@ -125,15 +125,17 @@ export default function Header() {
           (<>
             <Dropdown placement="bottom-end" className="bg-background">
               <DropdownTrigger>
-                  <Badge content={`${level.value}`} color="primary" placement="bottom-right">
+                <div>
+                  <Badge content={`${level.value}`} color="primary" className="text-primary-50" placement="bottom-right">
                     <Avatar
                       className="transition-transform cursor-pointer"
                       color="primary"
                       name="Hero"
                       size="sm"
-                      src="avatar.svg"
+                      src="/avatar.svg"
                     />
                   </Badge>
+                </div>
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="flat" className="text-foreground">
                 <DropdownItem key="profile" className="h-14 gap-2" textValue={`Signed in as ${user.email}`}>
