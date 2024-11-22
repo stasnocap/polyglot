@@ -47,42 +47,6 @@ const router = createBrowserRouter([
         path: "quests/:questId",
         element: <Objective/>,
       },
-      {
-        path: "weather",
-        element: <Weather/>
-      },
-      {
-        path: "contacts",
-        element: <ContactRoot/>,
-        errorElement: <ErrorPage/>,
-        loader: rootLoader,
-        action: rootAction,
-        children: [
-          {
-            errorElement: <ErrorPage/>,
-            children: [
-              {index: true, element: <Index/>},
-              {
-                path: ":contactId",
-                element: <Contact/>,
-                loader: contactLoader,
-                action: contactAction,
-              },
-              {
-                path: ":contactId/edit",
-                element: <EditContact/>,
-                loader: contactLoader,
-                action: editAction,
-              },
-              {
-                path: ":contactId/destroy",
-                action: destroyAction,
-                errorElement: <div>Oops! There was an error.</div>,
-              },
-            ]
-          }
-        ],
-      },
     ]
   },
 ]);

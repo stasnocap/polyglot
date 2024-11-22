@@ -36,26 +36,6 @@ export default function Header() {
             </RouterLink>
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link as="div" color="primary">
-            <RouterLink to="/contacts" className={({isActive, isPending}) =>
-              isActive
-                ? "active"
-                : isPending
-                  ? "pending"
-                  : ""
-            } aria-current="page">
-              Contacts
-            </RouterLink>
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link as="div" color="primary">
-            <RouterLink to="/weather">
-              Weather
-            </RouterLink>
-          </Link>
-        </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end" className="gap-2">
         <Dropdown className="bg-background">
@@ -172,30 +152,6 @@ export default function Header() {
           >
             <RouterLink to="/quests">
               Приключение
-            </RouterLink>
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem key="contacts">
-          <Link
-            as="div"
-            color="primary"
-            className="w-full"
-            size="lg"
-          >
-            <RouterLink to="/contacts">
-              Contacts
-            </RouterLink>
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem key="weather">
-          <Link
-            as="div"
-            color="primary"
-            className="w-full"
-            size="lg"
-          >
-            <RouterLink to="/weather">
-              Weather
             </RouterLink>
           </Link>
         </NavbarMenuItem>
