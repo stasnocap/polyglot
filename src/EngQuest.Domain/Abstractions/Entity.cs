@@ -17,7 +17,7 @@ public abstract class Entity
 
     public IReadOnlyList<IDomainEvent> GetDomainEvents()
     {
-        return _domainEvents.ToList();
+        return [.. _domainEvents];
     }
 
     public void ClearDomainEvents()

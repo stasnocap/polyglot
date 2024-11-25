@@ -46,8 +46,9 @@ internal sealed class UserRepresentationModel
 
     public string Username { get; set; }
 
-    internal static UserRepresentationModel FromUser(User user) =>
-        new()
+    internal static UserRepresentationModel FromUser(User user)
+    {
+        return new()
         {
             FirstName = user.FirstName.Value,
             LastName = user.LastName.Value,
@@ -56,7 +57,8 @@ internal sealed class UserRepresentationModel
             Enabled = true,
             EmailVerified = true,
             CreatedTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-            Attributes = new Dictionary<string, List<string>>(),
-            RequiredActions = Array.Empty<string>()
+            Attributes = [],
+            RequiredActions = []
         };
+    }
 }

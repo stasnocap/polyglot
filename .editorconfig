@@ -370,8 +370,27 @@ dotnet_diagnostic.CA1308.severity = none
 # CA5394: Do not use insecure randomness
 dotnet_diagnostic.CA5394.severity = none
 
+# Formatting rule (IDE0055)
+dotnet_diagnostic.IDE0055.severity = none
+
+# Add missing cases to switch statement (IDE0010)
+dotnet_diagnostic.IDE0010.severity = none
+
+# Remove unnecessary using directives (IDE0005)
+dotnet_diagnostic.IDE0005.severity = none
+
+# Remove unnecessary expression value (IDE0058)
+dotnet_diagnostic.IDE0058.severity = none
+
+# Add missing cases to switch expression (IDE0072)
+dotnet_diagnostic.IDE0072.severity = none
+
+# CA1515: Consider making public types internal
+dotnet_diagnostic.CA1515.severity = none
+
 # Ignore ef core 'Migrations' folder
 [**/Migrations/**]
 dotnet_diagnostic.CA1861.severity = none
 dotnet_diagnostic.IDE0161.severity = none
 dotnet_diagnostic.IDE0053.severity = none
+dotnet_diagnostic.IDE0300.severity = none
