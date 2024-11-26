@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {BackspaceIcon} from "../../icons/backspace-icon.tsx";
 import {getRandomObjective, completeObjective, CompleteObjectiveResponse, GainExperienceResult} from "./quests.ts";
 import {useParams} from "react-router-dom";
-import ObjectiveSkeleton from "./objective-skeleton.tsx";
 import {experiencePerFirstQuest, experienceToAchiveFirstLevel, useUser} from "../../providers/user-provider.tsx";
 
 interface Objective {
@@ -221,7 +220,7 @@ export default function Objective() {
     setEngPhrase(engPhrase.length == 0 ? emptyEngPhrase : engPhrase);
   }
 
-  return loading ? (<ObjectiveSkeleton/>) : (
+  return loading ? (<></>) : (
     <>
       <div className="flex justify-between text-lg md:text-3xl items-center">
         <div className="flex-1">

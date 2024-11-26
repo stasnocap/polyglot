@@ -1,0 +1,603 @@
+import Highlight from '../../../components/highlight.tsx'
+
+**Квест 1: Базовая форма глагола**
+
+**🎯 Миссия:**
+Ты станешь мастером времени, осваивая ***настоящее, будущее и прошедшее*** время английских глаголов. Собирай очки опыта за каждое выполненное задание и поднимай свой уровень знаний! 🚀
+
+**💡 Шаг 1: Настоящее время**
+- **🟢 Утвердительные предложения:** Начнем с простого. Используй местоимение <Highlight>(я, ты, он, она, оно)</Highlight> и добавь глагол. Если это <Highlight>he, she или it,</Highlight> к глаголу добавь окончание <Highlight>-s.</Highlight> Например, <Highlight>"He walks"</Highlight> <Highlight>(Он ходит).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>Do</td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td rowSpan="2"><span>love</span></td>
+        </tr>
+        <tr>
+          <td>Does</td>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>love<span className="red">s</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td>don’t <span>love</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>doesn’t <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+- **❌ Отрицательные предложения:** Для отрицания используй вспомогательный глагол <Highlight>do</Highlight> и частицу <Highlight>not.</Highlight> Для <Highlight>he, she, it</Highlight> используй <Highlight>does</Highlight> вместо <Highlight>do.</Highlight> Например, <Highlight>"She does not (doesn't) walk"</Highlight> <Highlight>(Она не ходит).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>Do</td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td rowSpan="2"><span>love</span></td>
+        </tr>
+        <tr>
+          <td>Does</td>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>loves</td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td><span className="red">don’t</span> <span>love</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span className="red">doesn’t</span> <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+- **❓ Вопросительные предложения:** Для вопросов вспомогательный глагол <Highlight>do (или does для he, she, it)</Highlight> ставится в начало. Например, <Highlight>"Do you walk?"</Highlight> <Highlight>(Ты ходишь?).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td><span className="red">Do</span></td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td rowSpan="2"><span>love</span></td>
+        </tr>
+        <tr>
+          <td><span className="red">Does</span></td>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>loves</td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+          </td>
+          <td>don’t <span>love</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>doesn’t <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+**💡 Шаг 2: Прошедшее время**
+- **🟢 Утвердительные предложения:** Используй вторую форму глагола (правильные глаголы получают окончание <Highlight>-ed).</Highlight> Например, <Highlight>"They walked"</Highlight> <Highlight>(Они ходили).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>Did</td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>lov<span className="red">ed</span></span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>did not <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+- **❌ Отрицательные предложения:** Для отрицания используй глагол <Highlight>did</Highlight> и частицу <Highlight>not (didn’t).</Highlight> Например, <Highlight>"He did not (didn’t) walk"</Highlight> <Highlight>(Он не ходил).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>Did</td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>loved</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span className="red">did not</span> <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+- **❓ Вопросительные предложения:** Для вопросов используй глагол <Highlight>did</Highlight> в начале. Например, <Highlight>"Did you walk?"</Highlight> <Highlight>(Ты ходил?).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td><span className="red">Did</span></td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>loved</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>did not <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+**💡 Шаг 3: Будущее время**
+- **🟢 Утвердительные предложения:** Используй глагол <Highlight>will.</Highlight> Например, <Highlight>"We will walk"</Highlight> <Highlight>(Мы будем ходить).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>Will</td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span className="red">will</span> <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>will not <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+- **❌ Отрицательные предложения:** Для отрицания используй <Highlight>will</Highlight> и частицу <Highlight>not (won’t).</Highlight> Например, <Highlight>"She will not (won’t) walk"</Highlight> <Highlight>(Она не будет ходить).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>Will</td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>will <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span className="red">will not</span> <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+- **❓ Вопросительные предложения:** Для вопросов ставь глагол <Highlight>will</Highlight> в начало. Например, <Highlight>"Will they walk?"</Highlight> <Highlight>(Они будут ходить?).</Highlight>
+
+<table className="main">
+  <tbody>
+  <tr>
+    <td className="current">
+      <table>
+        <tbody>
+        <tr>
+          <td><span className="red">Will</span></td>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td><span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>will <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <div>I</div>
+            <div>you</div>
+            <div>we</div>
+            <div>they</div>
+            <div>he</div>
+            <div>she</div>
+          </td>
+          <td>will not <span>love</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
