@@ -18,7 +18,7 @@ public sealed class Level : Entity
 
             Level level = One();
             
-            int[] quests = Enumerable.Range(1, 30).ToArray();
+            int[] quests = Enumerable.Range(1, 31).ToArray();
 
             foreach (int quest in quests)
             {
