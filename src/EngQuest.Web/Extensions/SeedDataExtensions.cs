@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Dapper;
 using EngQuest.Application.Abstractions.Data;
 using EngQuest.Domain.Objectives;
@@ -11,8 +10,6 @@ using EngQuest.Domain.Vocabulary.Compounds;
 using EngQuest.Domain.Vocabulary.Nouns;
 using EngQuest.Domain.Vocabulary.Pronouns;
 using EngQuest.Domain.Vocabulary.Verbs;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable UnusedMember.Local
 
