@@ -415,6 +415,8 @@ internal static class SeedDataExtensions
         [
             new { Text = "what" },
             new { Text = "who" },
+            new { Text = "whom" },
+            new { Text = "whose" },
             new { Text = "where" },
             new { Text = "when" },
             new { Text = "why" },
