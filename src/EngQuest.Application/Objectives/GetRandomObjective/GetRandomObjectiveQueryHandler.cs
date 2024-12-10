@@ -1,5 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using EngQuest.Application.Abstractions.Data;
 using EngQuest.Application.Abstractions.Messaging;
 using EngQuest.Application.Extensions;
 using EngQuest.Application.Objectives.GetObjective;
@@ -11,6 +13,7 @@ using EngQuest.Domain.Vocabulary;
 namespace EngQuest.Application.Objectives.GetRandomObjective;
 
 public class GetRandomObjectiveQueryHandler(
+    ISqlConnectionFactory _sqlConnectionFactory,
     IVocabularyRepository _vocabularyRepository,
     IObjectiveRepository _objectiveRepository) : IQueryHandler<GetRandomObjectiveQuery, ObjectiveResponse>
 {
@@ -27,11 +30,13 @@ public class GetRandomObjectiveQueryHandler(
             return Result.Failure<ObjectiveResponse>(QuestErrors.NotFound);
         }
 
+        using IDbConnection dbConnection = _sqlConnectionFactory.CreateConnection();
+
         List<string[]> wordGroups = [];
 
         foreach (Word word in randomObjective.Words.OrderBy(x => x.Number.Value))
         {
-            List<string> words = await _vocabularyRepository.GetRandomAsync(word, RandomWordsCount, cancellationToken);
+            List<string> words = await _vocabularyRepository.GetRandomAsync(word, RandomWordsCount, dbConnection, cancellationToken);
 
             WordDecoratorService.Decorate(word, words);
 

@@ -27,9 +27,9 @@ internal static class SeedDataExtensions
         using IDbConnection connection = sqlConnectionFactory.CreateConnection();
 
         InsertQuests(connection);
-        InsertObjectives(connection);
-        InsertObjectiveQuestIds(connection);
-        InsertWords(connection);
+        // InsertObjectives(connection);
+        // InsertObjectiveQuestIds(connection);
+        // InsertWords(connection);
         
         InsertAdjectives(connection);
         InsertAdverbs(connection);

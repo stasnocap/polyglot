@@ -1,12 +1,7 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
-using System.Reflection;
 using Dapper;
-using Microsoft.EntityFrameworkCore;
-using EngQuest.Application.Abstractions.Data;
 using EngQuest.Domain.Objectives;
-using EngQuest.Domain.Shared;
 using EngQuest.Domain.Vocabulary;
 using EngQuest.Infrastructure.Data;
 
@@ -14,7 +9,6 @@ namespace EngQuest.Infrastructure.Repositories.Vocabulary;
 
 [SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out")]
 public class VocabularyRepository(
-    ApplicationDbContext _dbContext,
     ComparisonAdjectiveRepository comparisonAdjectiveRepository,
     LetterNumberRepository _letterNumberRepository,
     ModalVerbRepository _modalVerbRepository,
@@ -26,10 +20,8 @@ public class VocabularyRepository(
     NumberWithNounRepository _numberWithNounRepository,
     PronounRepository _pronounRepository) : IVocabularyRepository
 {
-    public async Task<List<string>> GetRandomAsync(Word word, int count, CancellationToken cancellationToken)
+    public async Task<List<string>> GetRandomAsync(Word word, int count, IDbConnection dbConnection, CancellationToken cancellationToken)
     {
-        // IDbConnection connection = _sqlConnectionFactory.CreateConnection();
-
         switch (word.Type)
         {
             case WordType.Adjective:
@@ -38,29 +30,20 @@ public class VocabularyRepository(
             case WordType.Language:
             case WordType.Preposition:
             case WordType.QuestionWord:
-                Type wordType = WordTypes.GetWordType(word.Type);
+                string wordText = word.Text.GetWord();
+                
+                string tableName = TableNames.GetTableName(word.Type);
+                
+                string sql = $"""
+                              SELECT text FROM {tableName}
+                              WHERE text != @Word
+                              ORDER BY random()
+                              LIMIT @Count
+                              """;
+                
+                IEnumerable<string> words = await dbConnection.QueryAsync<string>(sql, new { Word = wordText, Count = count });
 
-                // string wordText = word.Text.GetWord();
-                // string tableName = TableNames.GetTableName(word.Type);
-                // const string sql = """
-                //               SELECT text FROM @TableName
-                //               WHERE text != @Word
-                //               ORDER BY random()
-                //               LIMIT @Count
-                //               """;
-                //
-                // var words = await connection.QueryAsync(sql, new { TableName = tableName, Word = wordText, Count = count });
-
-                List<object> words = await _dbContext.GetAll(wordType)
-                    .AsNoTracking()
-                    .Where(w => word.Text.GetWord() != EF.Property<Text>(w, "Text"))
-                    .OrderBy(w => Guid.NewGuid())
-                    .Take(count)
-                    .ToListAsync(cancellationToken);
-
-                PropertyInfo textProperty = wordType.GetProperty("Text")!;
-
-                return words.Select(x => ((Text)textProperty.GetValue(x)!).Value).ToList();
+                return words.ToList();
             case WordType.Adverb:
                 return await _adverbRepository.GetRandomAdverbsAsync(word, count, cancellationToken);
             case WordType.Compound:
