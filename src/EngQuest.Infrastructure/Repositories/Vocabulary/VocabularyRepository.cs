@@ -52,32 +52,31 @@ public class VocabularyRepository(
                     string tableName = TableNames.GetTableName(word.Type);
 
                     string sql = $"""
-                                  WITH cte AS (SELECT id, type
+                                  WITH target AS (SELECT id, type
                                                FROM {tableName}
                                                WHERE text = @Text
                                                LIMIT 1)
                                                
                                   SELECT text
                                   FROM {tableName} AS x
-                                  WHERE (SELECT COUNT(*) FROM cte) = 0
-                                     OR (x.type = (SELECT type FROM cte) AND x.id != (SELECT id FROM cte))
+                                  WHERE (SELECT COUNT(*) FROM target) = 0
+                                     OR (x.type = (SELECT type FROM target) AND x.id != (SELECT id FROM target))
                                   ORDER BY random()
                                   LIMIT @Count;
                                   """;
-
 
                     IEnumerable<string> words = await dbConnection.QueryAsync<string>(sql, new { Count = count, Text = wordText });
 
                     return words.ToList();
                 }
             case WordType.ComparisonAdjective:
-                return await comparisonAdjectiveRepository.GetRandomComparisonAdjectivesAsync(word, count, cancellationToken);
+                return await comparisonAdjectiveRepository.GetRandomComparisonAdjectivesAsync(word, count, dbConnection);
             case WordType.LetterNumber:
-                return await _letterNumberRepository.GetRandomLetterNumbersAsync(word, count, cancellationToken);
+                return await _letterNumberRepository.GetRandomLetterNumbersAsync(word, count, dbConnection);
             case WordType.ModalVerb:
-                return await _modalVerbRepository.GetRandomModalVerbsAsync(word, count, cancellationToken);
+                return await _modalVerbRepository.GetRandomModalVerbsAsync(word, count, dbConnection);
             case WordType.Noun:
-                return await _nounRepository.GetRandomNounsAsync(word, count, cancellationToken);
+                return await _nounRepository.GetRandomNounsAsync(word, count, dbConnection);
             case WordType.PrimaryVerb:
                 return await _primaryVerbRepository.GetRandomPrimaryVerbsAsync(word, count, cancellationToken);
             case WordType.Verb:
