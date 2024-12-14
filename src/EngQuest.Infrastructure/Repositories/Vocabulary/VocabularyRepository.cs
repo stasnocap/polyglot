@@ -82,7 +82,7 @@ public class VocabularyRepository(
             case WordType.Verb:
                 return await _verbRepository.GetRandomVerbsAsync(word, count, cancellationToken);
             case WordType.NumberWithNoun:
-                return await _numberWithNounRepository.GetRandomNumberWithNounsAsync(word, count, cancellationToken);
+                return await _numberWithNounRepository.GetRandomNumberWithNounsAsync(word, count, dbConnection);
             case WordType.None:
             default:
                 throw new ApplicationException();
