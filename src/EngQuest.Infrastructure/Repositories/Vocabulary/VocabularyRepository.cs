@@ -7,7 +7,6 @@ using EngQuest.Infrastructure.Data;
 
 namespace EngQuest.Infrastructure.Repositories.Vocabulary;
 
-[SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out")]
 public class VocabularyRepository(
     ComparisonAdjectiveRepository comparisonAdjectiveRepository,
     LetterNumberRepository _letterNumberRepository,
