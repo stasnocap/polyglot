@@ -78,7 +78,7 @@ public class VocabularyRepository(
             case WordType.Noun:
                 return await _nounRepository.GetRandomNounsAsync(word, count, dbConnection);
             case WordType.PrimaryVerb:
-                return await _primaryVerbRepository.GetRandomPrimaryVerbsAsync(word, count, cancellationToken);
+                return await _primaryVerbRepository.GetRandomPrimaryVerbsAsync(word, count, dbConnection);
             case WordType.Verb:
                 return await _verbRepository.GetRandomVerbsAsync(word, count, cancellationToken);
             case WordType.NumberWithNoun:
