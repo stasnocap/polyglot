@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Dapper;
 using EngQuest.Application.Abstractions.Data;
 using EngQuest.Application.Abstractions.Messaging;
 using EngQuest.Application.Extensions;
@@ -13,8 +14,7 @@ namespace EngQuest.Application.Objectives.GetRandomObjective;
 
 public class GetRandomObjectiveQueryHandler(
     ISqlConnectionFactory _sqlConnectionFactory,
-    IVocabularyRepository _vocabularyRepository,
-    IObjectiveRepository _objectiveRepository) : IQueryHandler<GetRandomObjectiveQuery, ObjectiveResponse>
+    IVocabularyRepository _vocabularyRepository) : IQueryHandler<GetRandomObjectiveQuery, ObjectiveResponse>
 {
     private const int WordGroupSize = 6;
     private const int RightAnswerCount = 1;
@@ -22,26 +22,45 @@ public class GetRandomObjectiveQueryHandler(
 
     public async Task<Result<ObjectiveResponse>> Handle(GetRandomObjectiveQuery request, CancellationToken cancellationToken)
     {
-        Objective? randomObjective = await _objectiveRepository.GetRandomAsync(request.QuestId, cancellationToken);
+        using IDbConnection dbConnection = _sqlConnectionFactory.CreateConnection();
+
+        const string sql = """
+                        SELECT o.rus_phrase, w.number AS number, w.text AS text, w.type as type
+                        FROM objectives o
+                        INNER JOIN words AS w ON w.objective_id = o.id
+                        WHERE o.id IN (
+                            SELECT objective_id 
+                            FROM objective_quest_ids i 
+                            WHERE i.quest_id = @QuestId
+                            LIMIT 1
+                        )
+                        ORDER BY random()
+                     """;
+
+        ObjectiveDto? randomObjective  = null;
+        await dbConnection.QueryAsync<ObjectiveDto, WordDto, ObjectiveDto>(sql, (obj, word) =>
+        {
+            randomObjective ??= obj;
+            randomObjective.Words.Add(word);
+            return obj;
+        }, new { QuestId = 1 }, splitOn: "number");
 
         if (randomObjective is null)
         {
             return Result.Failure<ObjectiveResponse>(QuestErrors.NotFound);
         }
 
-        using IDbConnection dbConnection = _sqlConnectionFactory.CreateConnection();
-
         List<string[]> wordGroups = [];
 
-        foreach (Word word in randomObjective.Words.OrderBy(x => x.Number.Value))
+        foreach (WordDto word in randomObjective.Words.OrderBy(x => x.Number))
         {
             List<string> words = await _vocabularyRepository.GetRandomAsync(word, RandomWordsCount, dbConnection, cancellationToken);
 
-            WordDecoratorService.Decorate(word, words);
+            WordDecoratorService.Decorate(word.Text, words);
 
             words.Insert(Random.Shared.Next(words.Count), word.Text.Value.ToLower(CultureInfo.InvariantCulture));
 
-            wordGroups.Add([..words]);
+            wordGroups.Add([.. words]);
         }
 
         wordGroups.Shuffle(count: 4);
@@ -51,7 +70,22 @@ public class GetRandomObjectiveQueryHandler(
             ObjectiveId = randomObjective.Id,
             QuestId = request.QuestId,
             RusPhrase = randomObjective.RusPhrase.Value,
-            WordGroups = [..wordGroups],
+            WordGroups = [.. wordGroups],
         };
+    }
+
+    [SnakeCaseMapping]
+    public class ObjectiveDto
+    {
+        public required string RusPhrase { get; init; }
+        public HashSet<WordDto> Words { get; init; } = [];
+    }
+
+    [SnakeCaseMapping]
+    public class WordDto
+    {
+        public required int Number { get; init; }
+        public required string Text { get; init; }
+        public required WordType Type { get; init; }
     }
 }

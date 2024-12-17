@@ -27,7 +27,7 @@ internal static class SeedDataExtensions
         ISqlConnectionFactory sqlConnectionFactory = scope.ServiceProvider.GetRequiredService<ISqlConnectionFactory>();
         using IDbConnection connection = sqlConnectionFactory.CreateConnection();
 
-        InsertQuests(connection);
+        // InsertQuests(connection);
         // InsertObjectives(connection);
         // InsertObjectiveQuestIds(connection);
         // InsertWords(connection);
